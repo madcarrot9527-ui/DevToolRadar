@@ -7,7 +7,7 @@
 ![检索页](docs/screenshot.png)
 
 **零第三方依赖**——只用 Python 标准库（`urllib`、`concurrent.futures`、手写的单文件网页和 stdio MCP 协议），
-装个 Python 就能跑，不需要 `pip install`。需要 Python 3.9+，开发与实测环境是 3.11 / 3.13。
+装个 Python 就能跑，不需要 `pip install`。需要 Python 3.9+，实测过 3.11 / 3.13 / 3.14。
 
 ## 快速开始
 
