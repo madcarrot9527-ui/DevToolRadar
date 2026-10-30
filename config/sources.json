@@ -1,0 +1,359 @@
+{
+  "_comment": "DevToolRadar 数据源配置。修改后下次刷新生效，无需改代码。",
+  "github": {
+    "enabled": true,
+    "min_stars": 800,
+    "pushed_within_days": 540,
+    "per_page": 100,
+    "max_pages_per_query": 1,
+    "sort": "stars",
+    "queries": [
+      {
+        "q": "topic:developer-tools",
+        "label": "开发工具"
+      },
+      {
+        "q": "topic:cli",
+        "label": "命令行工具"
+      },
+      {
+        "q": "topic:api-client",
+        "label": "接口调试"
+      },
+      {
+        "q": "topic:http-client",
+        "label": "HTTP 客户端"
+      },
+      {
+        "q": "topic:mock",
+        "label": "Mock 数据"
+      },
+      {
+        "q": "topic:testing",
+        "label": "测试"
+      },
+      {
+        "q": "topic:e2e-testing",
+        "label": "端到端测试"
+      },
+      {
+        "q": "topic:load-testing",
+        "label": "压测"
+      },
+      {
+        "q": "topic:devops",
+        "label": "DevOps"
+      },
+      {
+        "q": "topic:kubernetes",
+        "label": "K8s"
+      },
+      {
+        "q": "topic:monitoring",
+        "label": "监控"
+      },
+      {
+        "q": "topic:ci-cd",
+        "label": "CI/CD"
+      },
+      {
+        "q": "topic:database",
+        "label": "数据库"
+      },
+      {
+        "q": "topic:orm",
+        "label": "ORM"
+      },
+      {
+        "q": "topic:data-visualization",
+        "label": "数据可视化"
+      },
+      {
+        "q": "topic:ui-components",
+        "label": "UI 组件库"
+      },
+      {
+        "q": "topic:low-code",
+        "label": "低代码"
+      },
+      {
+        "q": "topic:workflow",
+        "label": "工作流"
+      },
+      {
+        "q": "topic:llm",
+        "label": "大模型"
+      },
+      {
+        "q": "topic:ai-agents",
+        "label": "AI Agent"
+      },
+      {
+        "q": "topic:rag",
+        "label": "RAG"
+      },
+      {
+        "q": "topic:code-generation",
+        "label": "代码生成"
+      },
+      {
+        "q": "topic:self-hosted",
+        "label": "自托管"
+      },
+      {
+        "q": "topic:note-taking",
+        "label": "笔记"
+      },
+      {
+        "q": "topic:knowledge-base",
+        "label": "知识库"
+      },
+      {
+        "q": "topic:terminal",
+        "label": "终端"
+      },
+      {
+        "q": "topic:vscode-extension",
+        "label": "VSCode 插件"
+      },
+      {
+        "q": "topic:proxy",
+        "label": "代理"
+      },
+      {
+        "q": "topic:tunnel",
+        "label": "内网穿透"
+      },
+      {
+        "q": "topic:authentication",
+        "label": "认证鉴权"
+      },
+      {
+        "q": "topic:security",
+        "label": "安全"
+      },
+      {
+        "q": "topic:web-scraping",
+        "label": "爬虫抓取"
+      },
+      {
+        "q": "topic:pdf",
+        "label": "PDF 处理"
+      },
+      {
+        "q": "topic:image-processing",
+        "label": "图像处理"
+      },
+      {
+        "q": "topic:text-to-image",
+        "label": "文生图"
+      },
+      {
+        "q": "topic:text-to-speech",
+        "label": "语音合成"
+      },
+      {
+        "q": "topic:vector-database",
+        "label": "向量数据库"
+      },
+      {
+        "q": "topic:documentation",
+        "label": "文档"
+      },
+      {
+        "q": "topic:markdown",
+        "label": "Markdown"
+      },
+      {
+        "q": "topic:screenshot",
+        "label": "截图录屏"
+      },
+      {
+        "q": "topic:project-management",
+        "label": "项目管理"
+      },
+      {
+        "q": "topic:docker",
+        "label": "容器"
+      },
+      {
+        "q": "topic:containers",
+        "label": "容器运行时"
+      },
+      {
+        "q": "topic:message-queue",
+        "label": "消息队列"
+      },
+      {
+        "q": "topic:object-storage",
+        "label": "对象存储"
+      },
+      {
+        "q": "topic:secrets-management",
+        "label": "密钥管理"
+      },
+      {
+        "q": "topic:logging",
+        "label": "日志"
+      },
+      {
+        "q": "topic:bundler",
+        "label": "构建打包"
+      },
+      {
+        "q": "topic:reverse-proxy",
+        "label": "反向代理"
+      }
+    ]
+  },
+  "awesome": {
+    "_comment": "解析 awesome-* 仓库 README 的条目。这些列表是人工精选，质量高于纯 star 排序。",
+    "enabled": true,
+    "max_items_per_repo": 1000,
+    "repos": [
+      {
+        "repo": "awesome-selfhosted/awesome-selfhosted",
+        "label": "自托管替代方案",
+        "branch": "master"
+      },
+      {
+        "repo": "vinta/awesome-python",
+        "label": "Python 生态",
+        "branch": "master"
+      },
+      {
+        "repo": "1c7/chinese-independent-developer",
+        "label": "中国独立开发者项目",
+        "branch": "master",
+        "fixed_category": "中国独立开发者项目"
+      },
+      {
+        "repo": "ruanyf/weekly",
+        "label": "阮一峰科技周刊",
+        "branch": "master",
+        "mode": "weekly"
+      },
+      {
+        "repo": "agarrharr/awesome-cli-apps",
+        "label": "命令行应用",
+        "branch": "master"
+      },
+      {
+        "repo": "viatsko/awesome-vscode",
+        "label": "VSCode 插件精选",
+        "branch": "master"
+      },
+      {
+        "repo": "awesome-foss/awesome-sysadmin",
+        "label": "系统运维",
+        "branch": "master"
+      },
+      {
+        "repo": "enaqx/awesome-react",
+        "label": "React 生态",
+        "branch": "master"
+      },
+      {
+        "repo": "vuejs/awesome-vue",
+        "label": "Vue 生态",
+        "branch": "master"
+      },
+      {
+        "repo": "sdras/awesome-actions",
+        "label": "GitHub Actions",
+        "branch": "master"
+      },
+      {
+        "repo": "k4m4/terminals-are-sexy",
+        "label": "终端工具",
+        "branch": "master"
+      },
+      {
+        "repo": "e2b-dev/awesome-ai-agents",
+        "label": "AI Agent 项目",
+        "branch": "main"
+      }
+    ]
+  },
+  "pinned": {
+    "_comment": "必收录仓库。纯 topic 搜索会漏掉一些核心工具（它们没打热门 topic），这里按仓库全名直接抓，保证一定在索引里。注意 core API 未认证只有 60 次/小时，所以抓过的仓库会缓存 7 天，加新条目时一次只花几个额度。",
+    "repos": [
+      "ggerganov/llama.cpp",
+      "ollama/ollama",
+      "vllm-project/vllm",
+      "apache/jmeter",
+      "wg/wrk",
+      "tsenart/vegeta",
+      "grafana/k6",
+      "locustio/locust",
+      "postmanlabs/postman-app-support",
+      "Kong/insomnia",
+      "usebruno/bruno",
+      "microsoft/vscode",
+      "neovim/neovim",
+      "junegunn/fzf",
+      "sharkdp/bat",
+      "BurntSushi/ripgrep",
+      "jqlang/jq",
+      "dbeaver/dbeaver",
+      "hoppscotch/hoppscotch",
+      "httpie/httpie",
+      "psf/black",
+      "astral-sh/ruff",
+      "prettier/prettier",
+      "docker/compose",
+      "kubernetes/kubectl",
+      "derailed/k9s",
+      "FFmpeg/FFmpeg",
+      "jesseduffield/lazygit",
+      "tldr-pages/tldr",
+      "ShareX/ShareX",
+      "obsproject/obs-studio",
+      "flameshot-org/flameshot",
+      "GoogleChromeLabs/squoosh",
+      "ImageOptim/ImageOptim",
+      "dani-garcia/vaultwarden",
+      "CorentinTh/it-tools",
+      "excalidraw/excalidraw",
+      "ohmyzsh/ohmyzsh",
+      "danielmiessler/fabric",
+      "satnaing/shadcn-admin",
+      "moby/moby",
+      "postgres/postgres",
+      "mongodb/mongo",
+      "redis/redis",
+      "elastic/elasticsearch",
+      "elastic/kibana",
+      "apache/kafka",
+      "rabbitmq/rabbitmq-server",
+      "minio/minio",
+      "hashicorp/vault",
+      "hashicorp/terraform",
+      "grafana/loki",
+      "tailscale/tailscale",
+      "cloudflare/cloudflared",
+      "the-tcpdump-group/tcpdump",
+      "curl/curl",
+      "webpack/webpack",
+      "denoland/deno",
+      "nodejs/node",
+      "gchq/CyberChef",
+      "syncthing/syncthing",
+      "logseq/logseq",
+      "laurent22/joplin"
+    ]
+  },
+  "cn": {
+    "_comment": "国内工具无公开 API，靠人工种子 + 定期存活校验。新增工具直接在此追加。",
+    "enabled": true,
+    "check_alive": true,
+    "check_timeout_sec": 12
+  },
+  "http": {
+    "user_agent": "DevToolRadar/1.0 (+local tool index)",
+    "timeout_sec": 25,
+    "retries": 2,
+    "delay_no_token_sec": 7.5,
+    "delay_with_token_sec": 2.2
+  }
+}

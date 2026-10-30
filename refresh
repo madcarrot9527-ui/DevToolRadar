@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+# 手动刷新入口（macOS / Linux）。逻辑全在 src/refresh.py，Windows 用 refresh.cmd。
+#
+# 用法：
+#   ./refresh              完整刷新 + 自检，约 15-20 分钟（元数据齐全时更快）
+#   ./refresh --fast       不联网，用缓存重建，约 7 秒
+set -e
+DIR=$(cd "$(dirname "$0")" && pwd)
+
+if [ -n "$DEVTOOLRADAR_PYTHON" ]; then
+    exec "$DEVTOOLRADAR_PYTHON" "$DIR/src/refresh.py" "$@"
+elif command -v python3 >/dev/null 2>&1; then
+    exec python3 "$DIR/src/refresh.py" "$@"
+else
+    exec python "$DIR/src/refresh.py" "$@"
+fi

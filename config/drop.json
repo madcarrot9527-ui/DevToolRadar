@@ -1,0 +1,28 @@
+{
+  "_comment": [
+    "下架表：确认「不是工具」的条目，在 normalize 阶段直接丢弃。",
+    "",
+    "为什么需要它：awesome 列表和周刊是按「文章/资源」组织的，不全是工具。",
+    "解析器只认 markdown 列表项，于是教程、面试题、路线图、产品需求投票板",
+    "都会被抓进来。这些东西放进「工具雷达」里，查什么都排不上用场，",
+    "还会稀释检索结果 —— 查「React」时冒出一篇官方教程，用户点进去发现不是工具。",
+    "",
+    "判定标准（很严，不确定的一律不进来，宁可留着也不要误删）：",
+    "  1. 内容是对某项技术的讲解/教程/面试题/速查表，不是可运行的东西",
+    "  2. 页面是需求投票板、反馈看板这类根本不是产品的东西",
+    "  3. 页面是某个工具的官方文档片段，不是工具本身",
+    "",
+    "注意：awesome-xxx 这类「清单仓库」不在此列。它们虽然是资源索引而非工具，",
+    "但确实指向一批工具，留着比删掉有用。要清理那一类需要单独判断。"
+  ],
+  "by_url": {
+    "https://react.dev/learn": "React 官方教程，讲概念和用法，不是工具",
+    "https://code.visualstudio.com/docs/nodejs/reactjs-tutorial": "VS Code 官方文档里的一篇 React 教程，不是工具",
+    "https://github.com/sudheerj/reactjs-interview-questions": "React 面试题库，纯问答内容，不是工具",
+    "https://www.patterns.dev": "前端设计模式文章站，是读物不是工具",
+    "https://probot.github.io/docs/deployment": "Probot 的部署文档片段，不是工具本身",
+    "https://sagahq.canny.io": "产品需求投票看板（Canny），不是产品",
+    "https://second.canny.io": "产品需求投票看板（Canny），不是产品",
+    "https://kellenok.github.io/cure-script/1-the-basic-types-of-sentences.html": "日语语法教程，从周刊里误抓，和开发工具无关"
+  }
+}

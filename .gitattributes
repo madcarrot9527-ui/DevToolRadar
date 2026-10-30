@@ -1,0 +1,13 @@
+# 仓库里统一存 LF，检出时按平台转换。
+* text=auto
+
+# 这两个是无扩展名的 sh 脚本，必须是 LF——CRLF 的 shebang 在 Linux/macOS 上
+# 直接报 "bad interpreter: /usr/bin/env sh^M"，而 Windows 上生成的仓库默认会转 CRLF。
+tool    text eol=lf
+refresh text eol=lf
+
+# Windows 批处理用 CRLF（某些 cmd 版本对 LF 的 .bat 处理有坑）
+*.cmd text eol=crlf
+
+# 二进制，别做任何转换
+*.png binary

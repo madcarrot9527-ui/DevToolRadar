@@ -1,0 +1,23 @@
+# ---- 运行时产物 ----
+__pycache__/
+*.py[cod]
+logs/
+*.tmp
+
+# ---- 数据：只提交「clone 完就能用」的那部分 ----
+# 入库：data/tools.json（索引）、data/stats.json、data/gh_meta.json、data/gh_moved.json、site/index.html
+# 下面的 raw_*.json 是抓取中间产物，跑一次 src/update.py 就能重来，放进去只会让每天刷新的 diff 变成几 MB
+data/raw_*.json
+data/health.json
+# README 页面缓存（2.6 MB / 24 个文件），删了下次重新下
+data/.cache/
+
+# ---- 本机环境 ----
+.workbuddy/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ---- 配置备份 ----
+config/*.bak*

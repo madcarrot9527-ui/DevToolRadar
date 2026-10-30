@@ -1,0 +1,644 @@
+{
+ "_comment": "中英术语映射。根本矛盾：用户用中文问，GitHub 工具描述是英文，字面匹配永远为 0。这张表把中文概念展开成英文词，让「压缩图片」能命中 desc 里写着 compress images 的工具，从而在同一个场景标签内部也分得出高下。按需增补，key 是中文词，value 是英文等价词。\n# 2026-10-30：`限流` 试过映射 rate limit/throttling，结果是爬虫工具全窜上来——\n# \"respects API rate limits\" 是这类项目的描述套话。词表解决不了，已回滚。",
+ "terms": {
+  "压缩": [
+   "compress",
+   "compression",
+   "minify",
+   "optimizer",
+   "optimize",
+   "squoosh"
+  ],
+  "抠图": [
+   "background removal",
+   "remove background",
+   "remove image background",
+   "background remover",
+   "matting",
+   "cutout",
+   "rembg",
+   "bg remove"
+  ],
+  "水印": [
+   "watermark",
+   "watermarking"
+  ],
+  "截图": [
+   "screenshot",
+   "screen capture",
+   "screencast",
+   "capture screen",
+   "snapshot",
+   "screen shot",
+   "screenshot tool"
+  ],
+  "录屏": [
+   "screen recording",
+   "screen recorder",
+   "record screen",
+   "screencast",
+   "video recording",
+   "record video",
+   "screenrecord",
+   "gif recorder"
+  ],
+  "爬虫": [
+   "scraper",
+   "crawler",
+   "spider",
+   "scraping",
+   "crawl"
+  ],
+  "抓取": [
+   "scrape",
+   "scraping",
+   "crawl",
+   "crawler",
+   "extract"
+  ],
+  "解析": [
+   "parser",
+   "parsing",
+   "parse",
+   "extract",
+   "extraction"
+  ],
+  "转换": [
+   "convert",
+   "converter",
+   "conversion",
+   "transform"
+  ],
+  "生成": [
+   "generate",
+   "generator",
+   "generation",
+   "gen"
+  ],
+  "监控": [
+   "monitor",
+   "monitoring",
+   "observability",
+   "watch"
+  ],
+  "告警": [
+   "alert",
+   "alerting",
+   "alarm",
+   "notify"
+  ],
+  "部署": [
+   "deploy",
+   "deployment",
+   "release",
+   "ship"
+  ],
+  "打包": [
+   "bundle",
+   "bundler",
+   "build",
+   "package"
+  ],
+  "编译": [
+   "compile",
+   "compiler",
+   "build"
+  ],
+  "测试": [
+   "test",
+   "testing",
+   "spec",
+   "assert"
+  ],
+  "压测": [
+   "load test",
+   "stress test",
+   "benchmark",
+   "load testing",
+   "performance test",
+   "benchmarking",
+   "benchmark tool",
+   "load generator",
+   "stress testing"
+  ],
+  "调试": [
+   "debug",
+   "debugger",
+   "inspect",
+   "devtools",
+   "dev tool"
+  ],
+  "日志": [
+   "log",
+   "logging",
+   "logger",
+   "log viewer",
+   "spdlog",
+   "logrus",
+   "loguru",
+   "zap",
+   "zerolog",
+   "structured logging"
+  ],
+  "缓存": [
+   "cache",
+   "caching",
+   "cdn"
+  ],
+  "队列": [
+   "queue",
+   "messaging",
+   "broker",
+   "mq"
+  ],
+  "搜索": [
+   "search",
+   "full-text",
+   "fulltext",
+   "index"
+  ],
+  "加密": [
+   "encrypt",
+   "encryption",
+   "crypto",
+   "cipher"
+  ],
+  "解密": [
+   "decrypt",
+   "decryption"
+  ],
+  "权限": [
+   "permission",
+   "auth",
+   "rbac",
+   "acl",
+   "access control"
+  ],
+  "登录": [
+   "login",
+   "sign in",
+   "signin",
+   "auth",
+   "oauth"
+  ],
+  "文档": [
+   "doc",
+   "docs",
+   "documentation",
+   "wiki"
+  ],
+  "笔记": [
+   "note",
+   "notes",
+   "notebook",
+   "note-taking",
+   "knowledge base",
+   "second brain"
+  ],
+  "图标": [
+   "icon",
+   "icons",
+   "glyph"
+  ],
+  "字体": [
+   "font",
+   "fonts",
+   "typeface"
+  ],
+  "配色": [
+   "color",
+   "palette",
+   "theme",
+   "colors"
+  ],
+  "表格": [
+   "table",
+   "spreadsheet",
+   "excel",
+   "grid"
+  ],
+  "图表": [
+   "chart",
+   "charts",
+   "graph",
+   "plot",
+   "diagram"
+  ],
+  "大屏": [
+   "dashboard",
+   "visualization",
+   "dataviz",
+   "bi"
+  ],
+  "视频": [
+   "video",
+   "movie",
+   "mp4"
+  ],
+  "音频": [
+   "audio",
+   "sound",
+   "music"
+  ],
+  "语音": [
+   "speech",
+   "voice",
+   "tts",
+   "asr"
+  ],
+  "识别": [
+   "recognition",
+   "recognize",
+   "ocr",
+   "detect",
+   "detection"
+  ],
+  "翻译": [
+   "translate",
+   "translation",
+   "translator"
+  ],
+  "代理": [
+   "proxy",
+   "gateway",
+   "forward"
+  ],
+  "穿透": [
+   "tunnel",
+   "tunneling",
+   "nat",
+   "frp",
+   "ngrok"
+  ],
+  "镜像": [
+   "image",
+   "docker image",
+   "registry"
+  ],
+  "容器": [
+   "container",
+   "docker",
+   "podman"
+  ],
+  "编排": [
+   "orchestration",
+   "orchestrator",
+   "compose"
+  ],
+  "调度": [
+   "scheduler",
+   "scheduling",
+   "cron",
+   "airflow"
+  ],
+  "任务": [
+   "task",
+   "job",
+   "worker",
+   "queue"
+  ],
+  "定时": [
+   "cron",
+   "scheduled",
+   "timer",
+   "schedule"
+  ],
+  "备份": [
+   "backup",
+   "restore",
+   "snapshot"
+  ],
+  "同步": [
+   "sync",
+   "synchronization",
+   "synchronize"
+  ],
+  "上传": [
+   "upload",
+   "file upload"
+  ],
+  "下载": [
+   "download",
+   "downloader"
+  ],
+  "邮件": [
+   "email",
+   "mail",
+   "smtp",
+   "newsletter"
+  ],
+  "短信": [
+   "sms",
+   "text message",
+   "short message"
+  ],
+  "推送": [
+   "push",
+   "notification",
+   "notify"
+  ],
+  "二维码": [
+   "qrcode",
+   "qr code",
+   "barcode"
+  ],
+  "去重": [
+   "deduplication",
+   "dedupe",
+   "duplicate",
+   "unique"
+  ],
+  "格式化": [
+   "format",
+   "formatter",
+   "pretty",
+   "prettify",
+   "beautify"
+  ],
+  "脚手架": [
+   "scaffold",
+   "boilerplate",
+   "starter",
+   "template",
+   "generator"
+  ],
+  "模板": [
+   "template",
+   "boilerplate",
+   "starter"
+  ],
+  "组件": [
+   "component",
+   "components",
+   "widget",
+   "ui kit"
+  ],
+  "样式": [
+   "style",
+   "styles",
+   "css",
+   "styling"
+  ],
+  "动画": [
+   "animation",
+   "animate",
+   "motion",
+   "transition"
+  ],
+  "地图": [
+   "map",
+   "maps",
+   "geo",
+   "gis"
+  ],
+  "日历": [
+   "calendar",
+   "date picker"
+  ],
+  "支付": [
+   "payment",
+   "pay",
+   "checkout",
+   "billing"
+  ],
+  "订单": [
+   "order",
+   "orders",
+   "commerce"
+  ],
+  "评论": [
+   "comment",
+   "comments",
+   "discussion"
+  ],
+  "收藏": [
+   "bookmark",
+   "favorite",
+   "save"
+  ],
+  "分享": [
+   "share",
+   "sharing"
+  ],
+  "协作": [
+   "collaboration",
+   "collaborative",
+   "realtime",
+   "multiplayer"
+  ],
+  "编辑器": [
+   "editor",
+   "ide",
+   "code editor"
+  ],
+  "终端": [
+   "terminal",
+   "shell",
+   "console",
+   "tty"
+  ],
+  "命令": [
+   "command",
+   "cli",
+   "command line"
+  ],
+  "自动化": [
+   "automation",
+   "automate",
+   "workflow",
+   "pipeline"
+  ],
+  "数据库": [
+   "database",
+   "db",
+   "sql",
+   "storage"
+  ],
+  "接口": [
+   "api",
+   "endpoint",
+   "rest",
+   "http"
+  ],
+  "网页": [
+   "web",
+   "webpage",
+   "browser",
+   "html"
+  ],
+  "对比": [
+   "diff",
+   "compare",
+   "comparison"
+  ],
+  "版本": [
+   "version",
+   "release",
+   "changelog"
+  ],
+  "依赖": [
+   "dependency",
+   "dependencies",
+   "package manager"
+  ],
+  "漏洞": [
+   "vulnerability",
+   "cve",
+   "security",
+   "exploit"
+  ],
+  "安全": [
+   "security",
+   "secure",
+   "safety",
+   "audit"
+  ],
+  "性能": [
+   "performance",
+   "perf",
+   "benchmark",
+   "profiling",
+   "speed"
+  ],
+  "内存": [
+   "memory",
+   "heap",
+   "ram"
+  ],
+  "网络": [
+   "network",
+   "http",
+   "tcp",
+   "socket"
+  ],
+  "文件": [
+   "file",
+   "files",
+   "file manager"
+  ],
+  "图片": [
+   "image",
+   "images",
+   "photo",
+   "picture",
+   "img"
+  ],
+  "文字": [
+   "text",
+   "string",
+   "char"
+  ],
+  "颜色": [
+   "color",
+   "colors",
+   "palette"
+  ],
+  "消息": [
+   "message",
+   "message queue",
+   "mq"
+  ],
+  "批量": [
+   "batch",
+   "bulk",
+   "mass"
+  ],
+  "清理": [
+   "clean",
+   "cleaner",
+   "cleanup",
+   "purge"
+  ],
+  "验证": [
+   "validate",
+   "validation",
+   "validator",
+   "verify"
+  ],
+  "转换格式": [
+   "format conversion",
+   "convert format"
+  ],
+  "去广告": [
+   "adblock",
+   "ad blocker",
+   "ad blocking",
+   "block ads",
+   "ads & trackers",
+   "adguard",
+   "pi-hole",
+   "pihole",
+   "blocklist"
+  ],
+  "广告拦截": [
+   "adblock",
+   "ad blocker",
+   "ad blocking",
+   "block ads",
+   "ads & trackers",
+   "adguard",
+   "pi-hole",
+   "pihole",
+   "blocklist"
+  ],
+  "向量检索": [
+   "vector search",
+   "vector database",
+   "embedding",
+   "similarity search",
+   "ann search",
+   "vector store",
+   "rag"
+  ],
+  "shell 美化": [
+   "zsh theme",
+   "prompt theme",
+   "oh-my-zsh",
+   "starship",
+   "powerlevel10k",
+   "shell prompt"
+  ],
+  "静态检查": [
+   "lint",
+   "linter",
+   "static analysis",
+   "code analysis",
+   "code smell"
+  ],
+  "数据库客户端": [
+   "database client",
+   "sql client",
+   "db gui",
+   "database gui",
+   "sql editor"
+  ],
+  "文件同步": [
+   "file sync",
+   "file synchronization",
+   "sync files",
+   "syncthing",
+   "file sharing",
+   "sync tool"
+  ],
+  "文本对比": [
+   "diff",
+   "text diff",
+   "diff viewer",
+   "side-by-side diff"
+  ],
+  "json 格式化": [
+   "json formatter",
+   "pretty print",
+   "beautify json",
+   "json beautifier",
+   "json viewer"
+  ],
+  "json 美化": [
+   "json formatter",
+   "pretty print",
+   "beautify json",
+   "json beautifier",
+   "json viewer"
+  ]
+ }
+}

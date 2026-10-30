@@ -1,0 +1,1721 @@
+{
+  "_comment": "场景标签映射表。三个作用：(1) kw 给工具打标签；(2) alias 把用户口语翻译成标签；(3) weak=true 表示该标签极易被误伤（每个项目都说自己支持 docker/可自托管/有流水线），判定阈值更严，防止按场景浏览时被灌满不相干条目。",
+  "tags": [
+    {
+      "label": "API 调试",
+      "desc": "调 HTTP 接口、看请求响应",
+      "kw": [
+        "api client",
+        "http client",
+        "rest client",
+        "postman",
+        "insomnia",
+        "bruno",
+        "hoppscotch",
+        "httpie",
+        "接口调试",
+        "调试接口",
+        "api testing",
+        "request builder",
+        "api 调试",
+        "接口测试"
+      ],
+      "alias": [
+        "调接口",
+        "测接口",
+        "看请求",
+        "请求响应",
+        "调 http"
+      ]
+    },
+    {
+      "label": "抓包代理",
+      "desc": "抓 HTTP 请求、拦包改包、中间人调试",
+      "kw": [
+        "mitm",
+        "mitmproxy",
+        "packet capture",
+        "intercept request",
+        "intercept traffic",
+        "network traffic",
+        "wireshark",
+        "tcpdump",
+        "proxyman",
+        "whistle",
+        "charles proxy",
+        "fiddler",
+        "抓包",
+        "拦包",
+        "改包",
+        "请求拦截",
+        "网络嗅探"
+      ],
+      "alias": [
+        "抓包",
+        "抓请求",
+        "拦请求",
+        "改请求",
+        "看手机请求",
+        "手机抓包",
+        "中间人",
+        "代理调试"
+      ]
+    },
+    {
+      "label": "接口 Mock",
+      "desc": "造假数据、模拟后端接口",
+      "kw": [
+        "mock server",
+        "mock data",
+        "mock api",
+        "api mock",
+        "http mock",
+        "http stub",
+        "stub http",
+        "service virtualization",
+        "fake rest api",
+        "fake api",
+        "fake data",
+        "假数据",
+        "mockjs",
+        "wiremock",
+        "json-server",
+        "模拟接口",
+        "测试桩"
+      ],
+      "alias": [
+        "造数据",
+        "造测试数据",
+        "模拟接口",
+        "假接口",
+        "mock",
+        "桩数据",
+        "测试数据",
+        "后端没好"
+      ]
+    },
+    {
+      "label": "API 文档",
+      "desc": "写接口文档、生成 OpenAPI",
+      "kw": [
+        "openapi",
+        "swagger",
+        "api doc",
+        "api documentation",
+        "redoc",
+        "接口文档",
+        "api spec",
+        "raml",
+        "graphql schema",
+        "接口管理"
+      ],
+      "alias": [
+        "写接口文档",
+        "接口文档",
+        "生成文档",
+        "api 文档",
+        "接口管理"
+      ]
+    },
+    {
+      "label": "认证鉴权",
+      "desc": "登录、OAuth、权限、SSO",
+      "kw": [
+        "authentication",
+        "authorization",
+        "oauth",
+        "jwt",
+        "single sign-on",
+        "单点登录",
+        "登录鉴权",
+        "权限管理",
+        "auth server",
+        "keycloak",
+        "casbin",
+        "sa-token",
+        "sso",
+        "rbac"
+      ],
+      "alias": [
+        "登录",
+        "做登录",
+        "权限",
+        "单点登录",
+        "sso",
+        "鉴权",
+        "用户认证",
+        "权限系统"
+      ]
+    },
+    {
+      "label": "数据库",
+      "desc": "连库、查数据、管表结构",
+      "kw": [
+        "database",
+        "sql client",
+        "mysql",
+        "postgresql",
+        "postgres",
+        "mongodb",
+        "redis",
+        "sqlite",
+        "clickhouse",
+        "数据库",
+        "db client",
+        "dbeaver",
+        "navicat",
+        "数据库管理",
+        "database client",
+        "database tool",
+        "sql editor",
+        "database management",
+        "oltp",
+        "olap"
+      ],
+      "alias": [
+        "连库",
+        "查数据库",
+        "看表",
+        "mysql",
+        "数据库管理",
+        "sql",
+        "数据库客户端"
+      ]
+    },
+    {
+      "label": "ORM",
+      "desc": "对象映射、少写 SQL",
+      "kw": [
+        "orm",
+        "sql builder",
+        "query builder",
+        "mybatis",
+        "prisma",
+        "sequelize",
+        "typeorm",
+        "hibernate",
+        "jpa",
+        "数据访问层"
+      ],
+      "alias": [
+        "对象映射",
+        "少写 sql",
+        "数据访问",
+        "orm 框架"
+      ]
+    },
+    {
+      "label": "数据可视化",
+      "desc": "做图表、仪表盘、数据大屏、流程图",
+      "kw": [
+        "chart",
+        "visualization",
+        "dashboard",
+        "data viz",
+        "plot",
+        "图表",
+        "可视化",
+        "大屏",
+        "business intelligence",
+        "echarts",
+        "d3.js",
+        "报表",
+        "flowchart",
+        "sequence diagram",
+        "diagram",
+        "流程图",
+        "时序图"
+      ],
+      "alias": [
+        "做图表",
+        "图表",
+        "大屏",
+        "看板",
+        "仪表盘",
+        "画图",
+        "数据展示",
+        "流程图",
+        "画流程图",
+        "时序图",
+        "架构图",
+        "画个图"
+      ]
+    },
+    {
+      "label": "数据处理",
+      "desc": "清洗、转换、搬数据、算表",
+      "kw": [
+        "etl",
+        "data pipeline",
+        "dataframe",
+        "csv",
+        "excel",
+        "pandas",
+        "data processing",
+        "数据处理",
+        "数据同步",
+        "数据清洗",
+        "spark",
+        "数据集成"
+      ],
+      "alias": [
+        "处理表格",
+        "清洗数据",
+        "导数据",
+        "数据转换",
+        "excel 处理",
+        "算表",
+        "数据迁移"
+      ]
+    },
+    {
+      "label": "前端 UI",
+      "desc": "组件库、样式方案、设计系统",
+      "kw": [
+        "ui component",
+        "component library",
+        "design system",
+        "组件库",
+        "react component",
+        "vue component",
+        "tailwind",
+        "css framework",
+        "前端框架",
+        "样式库",
+        "中后台"
+      ],
+      "alias": [
+        "组件库",
+        "ui 库",
+        "样式",
+        "界面框架",
+        "前端组件"
+      ]
+    },
+    {
+      "label": "构建打包",
+      "desc": "打包、编译、构建提速",
+      "kw": [
+        "bundler",
+        "build tool",
+        "webpack",
+        "vite",
+        "rollup",
+        "esbuild",
+        "parcel",
+        "构建工具",
+        "打包工具",
+        "turbopack",
+        "编译工具"
+      ],
+      "alias": [
+        "打包",
+        "构建",
+        "编译",
+        "打包提速",
+        "构建工具"
+      ]
+    },
+    {
+      "label": "单元测试",
+      "desc": "写单测、跑断言、覆盖率",
+      "kw": [
+        "unit test",
+        "jest",
+        "vitest",
+        "pytest",
+        "junit",
+        "mocha",
+        "单元测试",
+        "test framework",
+        "assertion",
+        "测试框架",
+        "覆盖率",
+        "mock framework"
+      ],
+      "alias": [
+        "写测试",
+        "单测",
+        "测试覆盖率",
+        "断言"
+      ]
+    },
+    {
+      "label": "E2E 测试",
+      "desc": "浏览器自动化、端到端回归",
+      "kw": [
+        "e2e",
+        "end-to-end",
+        "playwright",
+        "cypress",
+        "selenium",
+        "puppeteer",
+        "自动化测试",
+        "ui test",
+        "browser automation",
+        "端到端",
+        "浏览器自动化"
+      ],
+      "alias": [
+        "自动化测试",
+        "浏览器测试",
+        "端到端",
+        "ui 测试",
+        "自动点页面",
+        "回归测试"
+      ]
+    },
+    {
+      "label": "性能压测",
+      "desc": "压测、基准测试、性能剖析",
+      "kw": [
+        "benchmark",
+        "load test",
+        "stress test",
+        "k6",
+        "jmeter",
+        "locust",
+        "wrk",
+        "压测",
+        "性能测试",
+        "性能分析",
+        "profiler",
+        "profiling"
+      ],
+      "alias": [
+        "压测",
+        "压力测试",
+        "性能测试",
+        "并发测试",
+        "扛不扛得住",
+        "性能分析",
+        "接口压测",
+        "http 压测",
+        "并发压测",
+        "抗压"
+      ]
+    },
+    {
+      "label": "代码质量",
+      "desc": "lint、格式化、静态扫描",
+      "kw": [
+        "linter",
+        "eslint",
+        "prettier",
+        "formatter",
+        "code quality",
+        "static analysis",
+        "sonarqube",
+        "代码规范",
+        "代码检查",
+        "code review",
+        "格式化",
+        "静态分析"
+      ],
+      "alias": [
+        "代码检查",
+        "格式化",
+        "lint",
+        "代码规范",
+        "代码审查"
+      ]
+    },
+    {
+      "label": "开发者工具箱",
+      "desc": "一堆小工具的合集：JSON 格式化、编码解码、哈希、UUID、正则、时间戳",
+      "kw": [
+        "online tools",
+        "swiss army knife for developers",
+        "开发者工具集",
+        "开发者在线工具",
+        "在线小工具集"
+      ],
+      "alias": [
+        "uuid",
+        "正则",
+        "正则表达式",
+        "base64",
+        "编码解码",
+        "哈希",
+        "时间戳",
+        "json 格式化",
+        "url 编码",
+        "jwt",
+        "瑞士军刀",
+        "开发者工具箱",
+        "小工具合集",
+        "md5",
+        "sha1",
+        "sha256",
+        "哈希值",
+        "编码转换",
+        "json 美化",
+        "json 查看"
+      ]
+    },
+    {
+      "label": "容器与 K8s",
+      "desc": "容器、编排、镜像",
+      "kw": [
+        "docker",
+        "kubernetes",
+        "k8s",
+        "container",
+        "helm",
+        "容器",
+        "容器编排",
+        "podman",
+        "镜像",
+        "云原生"
+      ],
+      "alias": [
+        "docker",
+        "k8s",
+        "容器",
+        "部署容器",
+        "编排"
+      ],
+      "weak": true
+    },
+    {
+      "label": "CI/CD",
+      "desc": "流水线、自动构建发布",
+      "kw": [
+        "ci-cd",
+        "continuous integration",
+        "continuous delivery",
+        "pipeline",
+        "github actions",
+        "jenkins",
+        "gitlab ci",
+        "持续集成",
+        "流水线",
+        "自动化部署",
+        "devops 流水线"
+      ],
+      "alias": [
+        "流水线",
+        "自动部署",
+        "持续集成",
+        "ci",
+        "自动构建"
+      ],
+      "weak": true
+    },
+    {
+      "label": "监控告警",
+      "desc": "指标、链路追踪、报警",
+      "kw": [
+        "monitoring",
+        "observability",
+        "metrics",
+        "prometheus",
+        "grafana",
+        "apm",
+        "distributed tracing",
+        "监控",
+        "告警",
+        "可观测",
+        "health check"
+      ],
+      "alias": [
+        "监控",
+        "报警",
+        "告警",
+        "链路追踪",
+        "服务挂了",
+        "指标"
+      ]
+    },
+    {
+      "label": "日志与追踪",
+      "desc": "收集、搜索、分析日志",
+      "kw": [
+        "logging",
+        "logger",
+        "log management",
+        "log analysis",
+        "log aggregation",
+        "log collector",
+        "log viewer",
+        "structured logging",
+        "log parsing",
+        "log pipeline",
+        "日志",
+        "日志采集",
+        "日志分析",
+        "日志管理",
+        "日志查询"
+      ],
+      "alias": [
+        "日志",
+        "打日志",
+        "看日志",
+        "日志分析",
+        "日志平台",
+        "elk",
+        "日志监控"
+      ]
+    },
+    {
+      "label": "Web 框架",
+      "desc": "搭后端服务、写 API 服务端",
+      "kw": [
+        "web framework",
+        "backend framework",
+        "full-stack framework",
+        "microservice framework",
+        "web 框架",
+        "后端框架",
+        "服务端框架",
+        "mvc framework",
+        "full stack framework",
+        "backend as a service",
+        "baas",
+        "application server"
+      ],
+      "alias": [
+        "搭后端",
+        "写后端",
+        "后端框架",
+        "web 框架",
+        "服务端"
+      ]
+    },
+    {
+      "label": "CMS 与建站",
+      "desc": "做网站、博客、文档站",
+      "kw": [
+        "cms",
+        "headless cms",
+        "content management system",
+        "static site generator",
+        "blog engine",
+        "blogging platform",
+        "site generator",
+        "website builder",
+        "建站",
+        "静态站点",
+        "博客系统",
+        "内容管理",
+        "文档站"
+      ],
+      "alias": [
+        "建站",
+        "搭博客",
+        "做官网",
+        "静态站点",
+        "cms",
+        "博客"
+      ]
+    },
+    {
+      "label": "代码生成",
+      "desc": "由 schema 或模板生成代码",
+      "kw": [
+        "code generation",
+        "code generator",
+        "codegen",
+        "scaffolding",
+        "abstract syntax tree",
+        "metaprogramming",
+        "annotation processor",
+        "代码生成",
+        "代码生成器",
+        "脚手架",
+        "代码模板"
+      ],
+      "alias": [
+        "生成代码",
+        "代码生成器",
+        "脚手架",
+        "根据 schema 生成"
+      ]
+    },
+    {
+      "label": "包管理与仓库",
+      "desc": "管依赖、发私有包",
+      "kw": [
+        "package manager",
+        "dependency manager",
+        "package registry",
+        "module proxy",
+        "package repository",
+        "version manager",
+        "包管理",
+        "依赖管理",
+        "私有仓库",
+        "私有源"
+      ],
+      "alias": [
+        "装包",
+        "依赖管理",
+        "私有源",
+        "包管理器"
+      ]
+    },
+    {
+      "label": "调试与剖析",
+      "desc": "断点、看变量、找性能瓶颈",
+      "kw": [
+        "debugger",
+        "debugging tool",
+        "debugging",
+        "profiler",
+        "profiling",
+        "breakpoint",
+        "stack trace",
+        "memory analysis",
+        "调试",
+        "调试器",
+        "性能剖析",
+        "断点"
+      ],
+      "alias": [
+        "调试",
+        "找 bug",
+        "看变量",
+        "性能剖析",
+        "断点"
+      ]
+    },
+    {
+      "label": "对象存储",
+      "desc": "存文件、S3 兼容、分布式存储",
+      "kw": [
+        "object storage",
+        "s3 compatible",
+        "distributed storage",
+        "block storage",
+        "storage system",
+        "对象存储",
+        "分布式存储",
+        "块存储",
+        "文件存储"
+      ],
+      "alias": [
+        "存文件",
+        "对象存储",
+        "s3",
+        "分布式存储"
+      ]
+    },
+    {
+      "label": "数据分析与实验",
+      "desc": "跑数据、做实验、管特征",
+      "kw": [
+        "jupyter",
+        "data science",
+        "experiment tracking",
+        "mlops",
+        "feature store",
+        "data version",
+        "数据分析",
+        "实验管理",
+        "特征平台",
+        "数据版本"
+      ],
+      "alias": [
+        "跑 notebook",
+        "做实验",
+        "数据分析",
+        "mlops"
+      ]
+    },
+    {
+      "label": "编译器与虚拟机",
+      "desc": "把源码变成机器能跑的东西",
+      "kw": [
+        "compiler",
+        "interpreter",
+        "virtual machine",
+        "webassembly",
+        "transpiler",
+        "jit compiler",
+        "bytecode",
+        "编译器",
+        "解释器",
+        "虚拟机",
+        "字节码"
+      ],
+      "alias": [
+        "编译器",
+        "解释器",
+        "虚拟机",
+        "把代码编译"
+      ]
+    },
+    {
+      "label": "Markdown 处理",
+      "desc": "解析、转换、渲染 markdown",
+      "kw": [
+        "markdown parser",
+        "markdown processor",
+        "markdown converter",
+        "markdown component",
+        "markdown-based",
+        "markdown authoring",
+        "markdown 解析",
+        "markdown 转换",
+        "markdown 渲染"
+      ],
+      "alias": [
+        "markdown",
+        "md 转换",
+        "解析 md"
+      ]
+    },
+    {
+      "label": "桌面与系统工具",
+      "desc": "本地装的工具、系统增强",
+      "kw": [
+        "desktop app",
+        "desktop application",
+        "file manager",
+        "system utility",
+        "windows utility",
+        "桌面应用",
+        "文件管理器",
+        "系统工具",
+        "系统增强"
+      ],
+      "alias": [
+        "桌面软件",
+        "系统工具",
+        "文件管理"
+      ]
+    },
+    {
+      "label": "代码编辑器",
+      "desc": "写代码的编辑器本体",
+      "kw": [
+        "code editor",
+        "text editor",
+        "source code editor",
+        "代码编辑器",
+        "文本编辑器"
+      ],
+      "alias": [
+        "编辑器",
+        "写代码的软件",
+        "ide"
+      ]
+    },
+    {
+      "label": "语言运行时",
+      "desc": "跑 JS/WASM 等代码的引擎",
+      "kw": [
+        "javascript runtime",
+        "js runtime",
+        "webassembly runtime",
+        "wasm runtime",
+        "runtime environment",
+        "运行时",
+        "js 运行时",
+        "runtime for javascript",
+        "javascript engine",
+        "js engine"
+      ],
+      "alias": [
+        "运行时",
+        "跑 js",
+        "wasm 运行时"
+      ]
+    },
+    {
+      "label": "区块链",
+      "desc": "链、合约、钱包",
+      "kw": [
+        "blockchain",
+        "smart contract",
+        "ethereum",
+        "solidity",
+        "cryptocurrency",
+        "web3",
+        "defi",
+        "区块链",
+        "智能合约",
+        "加密货币"
+      ],
+      "alias": [
+        "链",
+        "合约",
+        "web3",
+        "钱包"
+      ]
+    },
+    {
+      "label": "CRM 与 ERP",
+      "desc": "客户、订单、进销存",
+      "kw": [
+        "crm",
+        "erp",
+        "enterprise resource planning",
+        "customer relationship",
+        "客户关系管理",
+        "进销存",
+        "企业资源"
+      ],
+      "alias": [
+        "客户管理",
+        "erp",
+        "crm",
+        "进销存"
+      ]
+    },
+    {
+      "label": "部署托管",
+      "desc": "上线、托管、无服务器",
+      "kw": [
+        "deploy",
+        "deployment",
+        "hosting",
+        "serverless",
+        "paas",
+        "部署",
+        "上线",
+        "托管",
+        "vercel",
+        "netlify",
+        "cloudbase",
+        "静态托管",
+        "边缘计算"
+      ],
+      "alias": [
+        "上线",
+        "部署",
+        "托管",
+        "发布",
+        "放服务器",
+        "静态网站托管"
+      ],
+      "weak": true
+    },
+    {
+      "label": "内网穿透",
+      "desc": "把本地服务暴露到公网",
+      "kw": [
+        "tunnel",
+        "ngrok",
+        "frp",
+        "内网穿透",
+        "端口映射",
+        "expose local",
+        "localhost tunnel",
+        "公网访问"
+      ],
+      "alias": [
+        "穿透",
+        "公网访问",
+        "端口映射",
+        "外网访问本地",
+        "让外面访问",
+        "调试回调"
+      ]
+    },
+    {
+      "label": "网关与反向代理",
+      "desc": "Nginx / Caddy / Traefik 这类入口层：反向代理、API 网关、负载均衡",
+      "kw": [
+        "api gateway",
+        "reverse proxy",
+        "ingress controller",
+        "edge proxy",
+        "nginx",
+        "caddy",
+        "traefik",
+        "haproxy",
+        "kong",
+        "apisix",
+        "tengine",
+        "ocelot",
+        "envoy",
+        "angie"
+      ],
+      "alias": [
+        "网关",
+        "反向代理",
+        "反代",
+        "入口网关",
+        "api 网关",
+        "负载均衡",
+        "ingress"
+      ]
+    },
+    {
+      "label": "自托管",
+      "desc": "自己部署私有化服务",
+      "kw": [
+        "self-hosted",
+        "selfhosted",
+        "self host",
+        "自建服务",
+        "私有部署",
+        "docker compose",
+        "开源自部署",
+        "私有化"
+      ],
+      "alias": [
+        "自己部署",
+        "私有化",
+        "自建",
+        "开源替代",
+        "自建服务"
+      ],
+      "weak": true
+    },
+    {
+      "label": "AI 编码",
+      "desc": "代码补全、AI 写代码",
+      "kw": [
+        "copilot",
+        "code completion",
+        "ai coding",
+        "code generation",
+        "代码补全",
+        "代码生成",
+        "通义灵码",
+        "codeium",
+        "tabnine",
+        "ai ide",
+        "编程助手",
+        "cursor"
+      ],
+      "alias": [
+        "ai 写代码",
+        "代码补全",
+        "ai 编程",
+        "自动补全",
+        "ai 结对编程"
+      ]
+    },
+    {
+      "label": "大模型应用",
+      "desc": "LLM 应用、RAG、Agent 编排",
+      "kw": [
+        "llm",
+        "rag",
+        "ai agent",
+        "prompt engineering",
+        "大模型",
+        "智能体",
+        "chatbot",
+        "langchain",
+        "知识库问答",
+        "检索增强",
+        "agent framework",
+        "workflow llm"
+      ],
+      "alias": [
+        "接大模型",
+        "rag",
+        "智能问答",
+        "ai 应用",
+        "知识库问答",
+        "智能体",
+        "用 gpt",
+        "接模型",
+        "做 ai",
+        "ai agent",
+        "ai 智能体"
+      ]
+    },
+    {
+      "label": "AI 绘图",
+      "desc": "文生图、出素材图",
+      "kw": [
+        "text-to-image",
+        "stable diffusion",
+        "midjourney",
+        "image generation",
+        "文生图",
+        "ai 绘图",
+        "出图",
+        "flux",
+        "comfyui",
+        "图像生成",
+        "绘图工具"
+      ],
+      "alias": [
+        "生成图片",
+        "文生图",
+        "ai 画图",
+        "出图",
+        "ai 绘图",
+        "生成配图"
+      ]
+    },
+    {
+      "label": "AI 视频",
+      "desc": "文生视频、数字人",
+      "kw": [
+        "text-to-video",
+        "video generation",
+        "文生视频",
+        "视频生成",
+        "数字人",
+        "sora",
+        "图生视频",
+        "口播"
+      ],
+      "alias": [
+        "生成视频",
+        "文生视频",
+        "ai 视频",
+        "数字人",
+        "图生视频"
+      ]
+    },
+    {
+      "label": "语音处理",
+      "desc": "TTS、ASR、配音、转写",
+      "kw": [
+        "text-to-speech",
+        "speech recognition",
+        "speech synthesis",
+        "tts",
+        "asr",
+        "语音合成",
+        "语音识别",
+        "配音",
+        "转写",
+        "whisper",
+        "音色克隆"
+      ],
+      "alias": [
+        "文字转语音",
+        "语音转文字",
+        "tts",
+        "配音",
+        "转写",
+        "语音合成",
+        "识别语音"
+      ]
+    },
+    {
+      "label": "模型服务",
+      "desc": "模型推理、部署、微调",
+      "kw": [
+        "inference",
+        "model serving",
+        "llm inference",
+        "vllm",
+        "ollama",
+        "模型推理",
+        "模型部署",
+        "模型量化",
+        "fine-tuning",
+        "微调",
+        "模型托管",
+        "推理框架"
+      ],
+      "alias": [
+        "跑模型",
+        "模型部署",
+        "本地跑大模型",
+        "推理",
+        "微调模型",
+        "模型加速",
+        "本地大模型",
+        "本地跑模型",
+        "本地部署模型",
+        "跑本地模型",
+        "开源模型本地"
+      ]
+    },
+    {
+      "label": "终端增强",
+      "desc": "终端、shell、命令行效率",
+      "kw": [
+        "terminal",
+        "shell",
+        "zsh",
+        "bash",
+        "终端",
+        "命令行增强",
+        "tmux",
+        "starship",
+        "oh-my-zsh",
+        "dotfiles",
+        "命令提示符"
+      ],
+      "alias": [
+        "终端",
+        "命令行",
+        "shell 美化",
+        "终端工具",
+        "命令补全"
+      ]
+    },
+    {
+      "label": "编辑器插件",
+      "desc": "VSCode / Neovim / JetBrains 插件",
+      "kw": [
+        "vscode extension",
+        "editor plugin",
+        "neovim",
+        "jetbrains",
+        "编辑器",
+        "ide 插件",
+        "emacs",
+        "语言服务器",
+        "language server"
+      ],
+      "alias": [
+        "插件",
+        "vscode 插件",
+        "编辑器",
+        "ide 插件"
+      ]
+    },
+    {
+      "label": "笔记知识库",
+      "desc": "记笔记、建个人知识库",
+      "kw": [
+        "note-taking",
+        "notes app",
+        "knowledge base",
+        "wiki",
+        "笔记",
+        "知识库",
+        "文档管理",
+        "obsidian",
+        "logseq",
+        "双链笔记",
+        "mind map",
+        "mindmap",
+        "思维导图"
+      ],
+      "alias": [
+        "记笔记",
+        "笔记软件",
+        "知识库",
+        "wiki",
+        "个人知识库"
+      ]
+    },
+    {
+      "label": "项目管理",
+      "desc": "需求、任务、看板、Bug 跟踪",
+      "kw": [
+        "project management",
+        "task management",
+        "issue tracker",
+        "kanban",
+        "项目管理",
+        "任务管理",
+        "看板",
+        "敏捷开发",
+        "需求管理",
+        "缺陷跟踪"
+      ],
+      "alias": [
+        "管项目",
+        "任务管理",
+        "看板",
+        "bug 跟踪",
+        "需求管理",
+        "敏捷"
+      ]
+    },
+    {
+      "label": "文档协作",
+      "desc": "在线文档、Markdown 编辑",
+      "kw": [
+        "documentation",
+        "markdown editor",
+        "文档协作",
+        "在线文档",
+        "markdown 编辑",
+        "文档生成",
+        "排版",
+        "技术写作",
+        "docs site"
+      ],
+      "alias": [
+        "写文档",
+        "markdown",
+        "在线文档",
+        "文档站",
+        "技术文档"
+      ]
+    },
+    {
+      "label": "密码密钥",
+      "desc": "管密码、管密钥、管凭证",
+      "kw": [
+        "password manager",
+        "secret management",
+        "vault",
+        "密码管理",
+        "密钥管理",
+        "credential",
+        "bitwarden",
+        "1password",
+        "环境变量管理"
+      ],
+      "alias": [
+        "管密码",
+        "密钥",
+        "密码管理",
+        "凭证",
+        "secret"
+      ]
+    },
+    {
+      "label": "文件同步",
+      "desc": "传文件、同步、对象存储",
+      "kw": [
+        "file sync",
+        "file transfer",
+        "文件同步",
+        "网盘",
+        "文件传输",
+        "sftp",
+        "rsync",
+        "对象存储",
+        "文件分享",
+        "大文件传输"
+      ],
+      "alias": [
+        "传文件",
+        "同步文件",
+        "网盘",
+        "大文件传输",
+        "分享文件"
+      ]
+    },
+    {
+      "label": "即时通讯",
+      "desc": "IM、聊天、消息推送",
+      "kw": [
+        "instant messaging",
+        "chat sdk",
+        "messaging",
+        "即时通讯",
+        "聊天",
+        "消息推送",
+        "客服系统",
+        "websocket 聊天",
+        "推送服务"
+      ],
+      "alias": [
+        "聊天",
+        "im",
+        "消息推送",
+        "客服",
+        "即时通讯"
+      ]
+    },
+    {
+      "label": "邮件短信",
+      "desc": "发邮件、发短信、通知",
+      "kw": [
+        "email",
+        "smtp",
+        "mail server",
+        "邮件",
+        "短信",
+        "notification service",
+        "通知服务",
+        "邮件模板",
+        "邮件营销"
+      ],
+      "alias": [
+        "发邮件",
+        "发短信",
+        "邮件",
+        "通知",
+        "验证码"
+      ]
+    },
+    {
+      "label": "安全测试",
+      "desc": "渗透、漏洞扫描、加固",
+      "kw": [
+        "security",
+        "pentest",
+        "penetration test",
+        "vulnerability",
+        "安全",
+        "渗透测试",
+        "漏洞扫描",
+        "vulnerability scanner",
+        "port scanner",
+        "security scanner",
+        "安全加固",
+        "cve",
+        "代码审计",
+        "waf"
+      ],
+      "alias": [
+        "安全扫描",
+        "漏洞",
+        "渗透",
+        "安全检查",
+        "漏洞扫描"
+      ]
+    },
+    {
+      "label": "爬虫抓取",
+      "desc": "抓网页、采集数据",
+      "kw": [
+        "scraping",
+        "scraper",
+        "crawler",
+        "spider",
+        "爬虫",
+        "数据抓取",
+        "数据采集",
+        "headless browser",
+        "反爬",
+        "采集器"
+      ],
+      "alias": [
+        "爬虫",
+        "抓网页",
+        "采集数据",
+        "抓数据",
+        "爬站"
+      ]
+    },
+    {
+      "label": "PDF 文档",
+      "desc": "解析、生成、转换 PDF",
+      "kw": [
+        "pdf",
+        "pdf parser",
+        "pdf generation",
+        "文档解析",
+        "ocr",
+        "文档转换",
+        "docx",
+        "电子签章",
+        "pdf 编辑"
+      ],
+      "alias": [
+        "pdf",
+        "解析 pdf",
+        "处理 pdf",
+        "文档解析",
+        "pdf 转换",
+        "ocr",
+        "word 转 pdf"
+      ]
+    },
+    {
+      "label": "截图录屏",
+      "desc": "截图、录屏、GIF 录制、标注",
+      "kw": [
+        "screenshot",
+        "screen capture",
+        "screen recording",
+        "screencast",
+        "gif recorder",
+        "截图",
+        "录屏",
+        "截屏",
+        "screen recorder",
+        "sharex",
+        "flameshot",
+        "snipaste"
+      ],
+      "alias": [
+        "截图",
+        "截屏",
+        "录屏",
+        "屏幕录制",
+        "gif 录制",
+        "抓屏",
+        "录视频",
+        "录个屏"
+      ]
+    },
+    {
+      "label": "图像处理",
+      "desc": "压缩、抠图、水印、批处理",
+      "kw": [
+        "image processing",
+        "image compression",
+        "图片处理",
+        "图片压缩",
+        "抠图",
+        "水印",
+        "resize",
+        "图像识别",
+        "图片编辑"
+      ],
+      "alias": [
+        "压缩图片",
+        "抠图",
+        "水印",
+        "图片处理",
+        "批量改图",
+        "图片压缩"
+      ]
+    },
+    {
+      "label": "视频处理",
+      "desc": "转码、剪辑、合成、下载",
+      "kw": [
+        "video processing",
+        "ffmpeg",
+        "视频处理",
+        "视频转码",
+        "视频剪辑",
+        "视频合成",
+        "字幕",
+        "录屏",
+        "video downloader",
+        "download video",
+        "youtube-dl",
+        "视频下载",
+        "下载视频"
+      ],
+      "alias": [
+        "剪辑",
+        "转码",
+        "处理视频",
+        "录屏",
+        "视频压缩"
+      ]
+    },
+    {
+      "label": "原型设计",
+      "desc": "画原型、做设计稿、交互稿",
+      "kw": [
+        "prototype",
+        "wireframe",
+        "mockup",
+        "原型设计",
+        "设计稿",
+        "figma",
+        "sketch",
+        "ui design",
+        "交互设计",
+        "高保真",
+        "whiteboard",
+        "白板"
+      ],
+      "alias": [
+        "画原型",
+        "原型",
+        "设计稿",
+        "做界面图",
+        "交互稿"
+      ]
+    },
+    {
+      "label": "图标素材",
+      "desc": "找图标、字体、插画、素材",
+      "kw": [
+        "icon",
+        "svg icon",
+        "font",
+        "图标",
+        "字体",
+        "emoji",
+        "favicon",
+        "素材库",
+        "插画",
+        "设计资源"
+      ],
+      "alias": [
+        "图标",
+        "找图标",
+        "字体",
+        "素材",
+        "插画"
+      ]
+    },
+    {
+      "label": "学习资源",
+      "desc": "教程、路线图、精选清单",
+      "kw": [
+        "awesome",
+        "tutorial",
+        "course",
+        "learn",
+        "教程",
+        "学习路线",
+        "指南",
+        "handbook",
+        "roadmap",
+        "面试",
+        "cheatsheet",
+        "学习资源",
+        "guide",
+        "best practices"
+      ],
+      "alias": [
+        "教程",
+        "学习",
+        "面试",
+        "路线图",
+        "入门",
+        "速查表"
+      ],
+      "weak": true
+    },
+    {
+      "label": "低代码",
+      "desc": "可视化搭页面、配表单",
+      "kw": [
+        "low-code",
+        "no-code",
+        "nocode",
+        "低代码",
+        "零代码",
+        "可视化搭建",
+        "form builder",
+        "page builder",
+        "可视化开发"
+      ],
+      "alias": [
+        "低代码",
+        "拖拽搭建",
+        "可视化建站",
+        "零代码",
+        "配表单"
+      ]
+    },
+    {
+      "label": "工作流自动化",
+      "desc": "串流程、定时任务、RPA",
+      "kw": [
+        "workflow automation",
+        "workflow engine",
+        "automation",
+        "n8n",
+        "zapier",
+        "工作流",
+        "自动化流程",
+        "定时任务",
+        "流程编排",
+        "rpa",
+        "调度平台"
+      ],
+      "alias": [
+        "定时任务",
+        "自动化",
+        "串流程",
+        "流程编排",
+        "定时器",
+        "定时跑",
+        "cron"
+      ],
+      "weak": true
+    },
+    {
+      "label": "消息队列",
+      "desc": "异步解耦、事件流",
+      "kw": [
+        "message queue",
+        "kafka",
+        "rabbitmq",
+        "pulsar",
+        "mqtt",
+        "消息队列",
+        "事件流",
+        "消息中间件",
+        "rocketmq"
+      ],
+      "alias": [
+        "消息队列",
+        "kafka",
+        "异步消息",
+        "解耦"
+      ]
+    },
+    {
+      "label": "缓存",
+      "desc": "缓存、CDN、加速",
+      "kw": [
+        "cache",
+        "memcached",
+        "缓存",
+        "cdn",
+        "内容分发",
+        "加速",
+        "redis 缓存"
+      ],
+      "alias": [
+        "缓存",
+        "cdn",
+        "加速",
+        "内容分发"
+      ]
+    },
+    {
+      "label": "搜索",
+      "desc": "全文检索、向量检索",
+      "kw": [
+        "search engine",
+        "full-text search",
+        "elasticsearch",
+        "meilisearch",
+        "全文检索",
+        "向量检索",
+        "站内搜索",
+        "搜索引擎",
+        "fuzzy finder",
+        "recursively search",
+        "search tool",
+        "code search",
+        "vector search",
+        "fzf",
+        "fuzzy search",
+        "模糊搜索",
+        "模糊查找",
+        "find files"
+      ],
+      "alias": [
+        "搜索",
+        "全文检索",
+        "站内搜索",
+        "向量检索",
+        "模糊查找",
+        "模糊搜索",
+        "搜文件"
+      ]
+    },
+    {
+      "label": "代理客户端",
+      "desc": "V2Ray / Clash / sing-box 等代理客户端与订阅工具",
+      "kw": [
+        "v2ray",
+        "xray",
+        "v2rayn",
+        "v2rayng",
+        "sing-box",
+        "singbox",
+        "clashmeta",
+        "mihomo",
+        "shadowsocks",
+        "hysteria",
+        "naiveproxy",
+        "tuic",
+        "vless",
+        "vmess",
+        "trojan-go",
+        "proxychains",
+        "wireproxy",
+        "代理客户端",
+        "订阅节点",
+        "机场订阅"
+      ],
+      "alias": [
+        "科学上网",
+        "代理客户端",
+        "代理工具",
+        "代理软件",
+        "翻墙",
+        "梯子",
+        "机场",
+        "clash",
+        "v2ray",
+        "节点订阅"
+      ]
+    }
+  ]
+}
