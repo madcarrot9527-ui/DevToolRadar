@@ -74,6 +74,11 @@ def check_data() -> dict:
         p = DATA / name
         if p.exists():
             rec("PASS", name, f"{_age_days(p):.1f} 天前")
+        elif name != "stats.json":
+            # raw_*.json 不入库，刚 clone 下来必然没有——那不是故障，是首次运行。
+            # 但也不能完全当没事：缓存没了意味着下一次刷新必须联网从头抓。
+            rec("WARN", name, "不存在（首次运行属正常；跑一次完整刷新会生成，"
+                              "在那之前 --fast 不可用）")
         else:
             rec("WARN", name, "缺失")
     return {"tools": tools}
