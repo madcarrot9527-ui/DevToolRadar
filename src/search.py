@@ -437,10 +437,34 @@ def tag_desc() -> dict[str, str]:
             for t in load_config("scenarios.json").get("tags", [])}
 
 
+def tag_count() -> int:
+    """能力位个数。给提示语用——写死数字的那版，加第 69 个场景之后所有
+    「68 个场景里没有」的报错就变成假话了。"""
+    return len(load_config("scenarios.json").get("tags", []))
+
+
+def slug_suffix(t: dict) -> str:
+    """给同名条目补的「(owner/name)」，只在它真的能区分时返回。
+
+    slug 是「同名条目」才标的，共 197 条。但其中 138 条的尾段和名字一模一样
+    （redis 的 slug 是 redis/redis、psf/requests 的 slug 是 psf/requests），
+    直接拼上去就是「redis redis/redis」——把名字写了两遍，反而更难读。
+    真正有信息量的是尾段不同的那批：redis（redis-py）、ollama（ollama-python）。
+    """
+    s = (t.get("slug") or "").strip()
+    if not s:
+        return ""
+    tail = s.split("/")[-1].strip().lower()
+    name = (t.get("name") or "").strip().lower()
+    if not tail or tail == name:
+        return ""
+    return f" ({s})"
+
+
 def resolve_tag(name: str) -> str | None:
     """把模型给的说法解析成场景标签。
 
-    模型不一定记得住 68 个标签的准确写法，会写「登录」「权限」「后台」这种。所以：
+    模型不一定记得住每个标签的准确写法，会写「登录」「权限」「后台」这种。所以：
     先精确匹配标签，再走别名/中文关键词，最后退到双向子串。解析不出来就返回 None，
     让上层如实告诉模型「这个能力位索引里没有」，而不是硬套一个错的场景。
     """
@@ -478,7 +502,7 @@ def compose(slots: list[str], per_slot: int = 2,
     就一次把每个位的头几名取回来，顺带报出取不到的位（缺口）。
 
     返回每项：{slot(原话), label(解析到的场景), total, tools[]}，label 为 None 表示
-    这个说法在 68 个场景里没有对应能力位。
+    这个说法在现有能力位里没有对应场景。
     """
     out: list[dict] = []
     used: set[str] = set()

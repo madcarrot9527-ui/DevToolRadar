@@ -112,9 +112,7 @@ def _signals(t: dict) -> str:
 def _fmt_full(i: int, t: dict) -> str:
     src = SRC_CN.get(t.get("origin", ""), t.get("origin", ""))
     # 同名条目（bun / tabby / goose）带上 slug，否则两行长得一样分不清
-    nm = t.get('name', '')
-    if t.get("slug"):
-        nm = f"{nm} ({t['slug']})"
+    nm = t.get('name', '') + S.slug_suffix(t)
     head = [f"{i}. {nm}  [{src}]"]
     if t.get("stars"):
         st = t["stars"]
@@ -148,9 +146,7 @@ def _fmt_brief(t: dict) -> str:
     st = t.get("stars") or 0
     star = f"★{st/1000:.1f}k" if st >= 1000 else (f"★{st}" if st else "")
     tail = f" — {d[:70]}{'…' if len(d) > 70 else ''}" if d else ""
-    nm = t.get('name', '')
-    if t.get("slug"):
-        nm = f"{nm} ({t['slug']})"
+    nm = t.get('name', '') + S.slug_suffix(t)
     return f"  · {nm} [{src}] {star}{tail}".rstrip()
 
 
@@ -265,9 +261,7 @@ def tool_compose_stack(args: dict) -> str:
                 bits.append(t["lang"])
             if t.get("pushed_at"):
                 bits.append(t["pushed_at"])
-            nm = t.get("name", "")
-            if t.get("slug"):
-                nm += f" ({t['slug']})"
+            nm = t.get("name", "") + S.slug_suffix(t)
             blocks.append(f"{i}. {nm}  {' · '.join(bits)}")
             if t.get("desc"):
                 d = t["desc"]
@@ -278,7 +272,7 @@ def tool_compose_stack(args: dict) -> str:
             blocks.append("   （这一格筛完没有剩余，都已在别的能力位里出现过）")
     if gaps:
         blocks.append("\n缺口：" + "、".join(f"「{g}」" for g in gaps)
-                      + " 在 68 个能力位里没有对应场景。这块要么自己写，"
+                      + f" 在 {S.tag_count()} 个能力位里没有对应场景。这块要么自己写，"
                         "要么换个说法再 find_tool 试一次。")
     blocks.append("\n拼装注意：以上只有元数据（star / 语言 / 维护状态 / 场景标签），"
                   "不含许可协议、部署方式、性能数据，装之前先看项目文档。"

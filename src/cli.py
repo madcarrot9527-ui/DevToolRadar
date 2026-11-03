@@ -125,7 +125,8 @@ def cmd_compose(args) -> int:
     gaps = [x for x in items if not x["label"]]
     for item in items:
         if not item["label"]:
-            print(f"\n[{_c('31', '缺口', color)}] 「{item['slot']}」— 68 个场景里没有对应能力位")
+            print(f"\n[{_c('31', '缺口', color)}] 「{item['slot']}」— "
+                  f"{s.tag_count()} 个能力位里没有对应场景")
             continue
         print(f"\n[{_c('1;36', item['label'], color)}] "
               f"（说「{item['slot']}」，该场景共 {item['total']} 条，这里取前 {len(item['tools'])}）")
@@ -137,8 +138,8 @@ def cmd_compose(args) -> int:
                 bits.append("国内")
             if t.get("pushed_at"):
                 bits.append(t["pushed_at"])
-            slug = f" {t['slug']}" if t.get("slug") else ""
-            print(f"  · {t.get('name','')}{slug}  {' '.join(bits)}")
+            nm = t.get('name', '') + s.slug_suffix(t)
+            print(f"  · {nm}  {' '.join(bits)}")
             if t.get("desc"):
                 d = t["desc"]
                 print(f"    {d[:88]}{'…' if len(d) > 88 else ''}")
@@ -176,7 +177,7 @@ def cmd_find(args) -> int:
     for i, t in enumerate(rows, 1):
         name = _c("1;36", t.get("name", ""), color)
         # 同名条目（bun / tabby / goose）带上 slug，否则两行长得一样分不清
-        slug = _c("90", f" {t['slug']}", color) if t.get("slug") else ""
+        slug = _c("90", s.slug_suffix(t), color)
         src = t.get("origin", "")
         badge = _c("35" if src == "cn" else ("34" if src == "github" else "32"),
                    f"[{SRC_LABEL.get(src, src)}]", color)

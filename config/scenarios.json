@@ -1275,14 +1275,17 @@
         "rsync",
         "对象存储",
         "文件分享",
-        "大文件传输"
+        "大文件传输",
+        "file synchronization",
+        "syncthing"
       ],
       "alias": [
         "传文件",
         "同步文件",
         "网盘",
         "大文件传输",
-        "分享文件"
+        "分享文件",
+        "syncthing"
       ]
     },
     {
@@ -1726,6 +1729,53 @@
         "clash",
         "v2ray",
         "节点订阅"
+      ]
+    },
+    {
+      "label": "桌面应用开发",
+      "desc": "用 Electron / Tauri / PyQt 写桌面程序，打包成 exe",
+      "kw": [
+        "electron",
+        "electron-builder",
+        "electron forge",
+        "tauri",
+        "wails",
+        "nwjs",
+        "nw.js",
+        "pyqt",
+        "pyqt5",
+        "pyqt6",
+        "pyside",
+        "pyside6",
+        "pyinstaller",
+        "nuitka",
+        "desktop app framework",
+        "cross-platform desktop",
+        "桌面应用框架",
+        "桌面客户端",
+        "打包成 exe",
+        "单文件可执行",
+        "py to exe",
+        "auto-py-to-exe",
+        ".py to .exe",
+        "standalone executable",
+        "single executable",
+        "into executables"
+      ],
+      "alias": [
+        "桌面应用开发",
+        "桌面程序",
+        "写桌面程序",
+        "开发桌面应用",
+        "桌面应用框架",
+        "桌面客户端",
+        "打包成 exe",
+        "打包 exe",
+        "exe 打包",
+        "单文件可执行",
+        "electron",
+        "tauri",
+        "pyinstaller"
       ]
     }
   ]

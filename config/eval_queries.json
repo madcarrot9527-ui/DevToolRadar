@@ -34,6 +34,8 @@
     "AI 绘图": ["stable-diffusion-webui", "ComfyUI", "Fooocus"],
     "数据库客户端": ["dbeaver", "beekeeper-studio", "pgadmin4", "tableplus"],
     "文件同步": ["syncthing", "rclone", "seaweedfs"],
-    "笔记": ["obsidian", "logseq", "joplin", "siyuan"]
+    "笔记": ["obsidian", "logseq", "joplin", "siyuan"],
+    "桌面程序": ["electron", "tauri", "pyinstaller", "wails"],
+    "打包成 exe": ["electron-builder", "auto-py-to-exe", "pyinstaller", "nuitka"]
   }
 }

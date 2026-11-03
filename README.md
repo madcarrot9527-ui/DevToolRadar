@@ -2,7 +2,7 @@
 
 按「你想干什么」找开发工具，而不是按技术栈。覆盖 GitHub 高星项目、awesome 人工精选清单、国内 SaaS/AI 产品，每天自动刷新。
 
-现在是 **5426 个工具**，68 个场景标签。**每一条都有自己的一句话说明**，没有一条是空的、也没有两条共用同一段说明。
+现在是 **5498 个工具**，69 个场景标签。**每一条都有自己的一句话说明**，没有一条是空的、也没有两条共用同一段说明。
 
 > 这个数字每轮刷新都会变，下面提到具体条数的地方都是写那一刻的快照。想知道当前值：`python src/cli.py stats`。
 
@@ -14,7 +14,7 @@
 ## 一分钟上手
 
 **只想搜工具的话，双击仓库根目录的「打开雷达.cmd」。** 浏览器直接打开检索页，
-5426 条随你搜。
+5498 条随你搜。
 
 不用装 Python、不用联网、不用起服务——网页里带着全部数据。macOS / Linux 双击
 `site/index.html`，或者 `open site/index.html`。
@@ -41,7 +41,7 @@ git clone https://github.com/<your-name>/DevToolRadar.git
 cd DevToolRadar
 ```
 
-仓库里带着索引和网页快照，clone 完直接打开 `site/index.html` 就有 5426 条可搜——
+仓库里带着索引和网页快照，clone 完直接打开 `site/index.html` 就有 5498 条可搜——
 离线、零外部请求、不需要服务器。
 
 想要命令行：
@@ -125,7 +125,7 @@ MCP server 提供五个工具：
   数据库 / 部署），它按格给候选、报缺口、跨格去重。用户说「我要做个 X」时用这个，
   而不是只挑一个工具交差
 - `compare_tools` — 并排比两三个候选
-- `list_scenarios` — 68 个能力位，每个带一句话说明和当前最强的两条
+- `list_scenarios` — 69 个能力位，每个带一句话说明和当前最强的两条
 - `get_stats` — 数据总量与新鲜度
 
 **验证是否生效**：重启客户端后问两句——
@@ -195,7 +195,7 @@ $p = [Environment]::GetEnvironmentVariable("Path","User")
 难点不是「收集工具」，是「让『造数据』这种说法命中『接口 Mock』这个标签」。三层机制：
 
 **第一层：场景标签，不按技术栈**
-68 个标签全部是「你要干什么」——接口 Mock、内网穿透、性能压测、抠图、截图录屏。不是 React / Python / Go。
+69 个标签全部是「你要干什么」——接口 Mock、内网穿透、性能压测、抠图、截图录屏。不是 React / Python / Go。
 
 **第二层：口语 → 标签的别名表**
 你问「造测试数据」「定时任务」「让外面访问我的本地服务」，配置里各标签的 `alias` 把这些说法翻译成场景。只取最长匹配，避免「本地大模型」同时命中「模型服务」和「大模型应用」。
@@ -265,7 +265,7 @@ python tools/audit_data.py -d desc  # 细看说明缺口
 python tools/find.py -e bun         # 看单条的全部字段
 ```
 
-### 说明：5426 条全都有，没有一条是空的
+### 说明：5498 条全都有，没有一条是空的
 
 这件事不是自然发生的。有三类条目天生没有说明：
 
@@ -308,6 +308,12 @@ awesome 列表是按「文章/资源」组织的，解析器只认 markdown 列�
 修法是在数据里算一次 slug（GitHub 用 `owner/repo`，其他站用域名），网页、CLI、MCP 三端
 直接读同一个字段，不各自去猜。只在「slug 真的不同」时才标——同域名下的不同路径区分不了，
 那类交给官网合并逻辑处理。
+
+但「有 slug」和「该显示」是两件事：197 条里 138 条的 slug 尾段和名字一模一样
+（redis 的 slug 是 `redis/redis`、psf/requests 的 slug 是 `psf/requests`），
+原样拼上去就是「redis redis/redis」，把名字写了两遍。所以显示前过一道判断：
+尾段等于名字就不打，只有 `redis (redis/redis-py)`、`ollama (ollama/ollama-python)`
+这种分得清的才显示。
 
 **顺便说一个没做的事**：`joplin` 的官网是 `joplinapp.org`、`micro` 是 `micro-editor.github.io`、
 `jenkins` 是 `jenkins-ci.org`，域名主体和工具名对不齐，所以官网条目和仓库条目没合并，两组都在。
@@ -370,7 +376,7 @@ DevToolRadar/
 │   ├── search.py              检索核心（CLI/MCP/skill 共用）
 │   └── cli.py                 命令行入口
 ├── data/
-│   ├── tools.json             归一化后的索引（当前 5426 条）
+│   ├── tools.json             归一化后的索引（当前 5498 条）
 │   ├── stats.json             刷新时间、各源状态、分布统计
 │   └── raw_*.json             各源原始落盘（单源故障时的回退）
 ├── tools/
@@ -464,7 +470,7 @@ python src/update.py --no-cn            # 不动国内清单
 
 `kw` 用于给工具打标签，`alias` 用于理解你的问法。改完跑一次 `python src/update.py`。
 
-**加一批 GitHub 仓库**：`config/sources.json` 的 `github.queries` 加 topic；如果某个核心工具怎么都搜不到，加到 `pinned.repos` 白名单（实测纯 topic 搜索会漏掉约 13/29 的核心工具）。
+**加一批 GitHub 仓库**：`config/sources.json` 的 `github.queries` 加 topic；如果某个核心工具怎么都搜不到，加到 `pinned.repos` 白名单。白名单不是可有可无的补充，是主力：2026-11-04 那次刷新里，73 个白名单仓库中有 **40 个** 不在任何一次 topic 检索结果里（`llama.cpp`、`Fabric`、`electron` 本体都是靠白名单才进来的）。topic 检索适合捞「一大片相似的东西」，白名单负责「少一个都不行」的那批。
 
 **补「工具自己标了功能、但没被收进来」的场景**：`config/topic_map.json`。GitHub 的 topics 多数是技术栈（python/docker/cli），但有一批词说的就是功能本身（`image-processing`、`text-to-speech`、`note-taking`），这张表把这类 topic 映射到场景。约束是只补空——已有标签的条目一律不碰，所以是纯增量。加新键前先按注释里的验收方法抽查，`tunnel`、`mock`、`web-scraping` 三个键就是抽查后删掉的。
 
@@ -479,24 +485,22 @@ python src/update.py --no-cn            # 不动国内清单
 ## 已知限制
 
 - **兜底检索只看字面，理解不了所有说法**。主判定（词表 + 场景翻译）一条都没命中时，会退到
-  「按字面最接近」：把查询拆成相邻二字词和单字、按稀有度加权比对整条记录，再拿 68 个场景名
+  「按字面最接近」：把查询拆成相邻二字词和单字、按稀有度加权比对整条记录，再拿 69 个场景名
   做一层意图推断（「我想抓手机上的包」→ 拆成 抓/手/机/包 → 场景名「抓包代理」同时含「抓」「包」）。
   12 条口语问法实测都能给出可用的前 3 条，但它不懂「帮我搞定证书」是要 Let's Encrypt 客户端。
   结果上方出现「没有完全匹配的」那行灰字时，就是这套在兜底。
 
-- **库里只有成品，几乎没有零件**。做桌宠要 Electron 本体、electron-builder、pyinstaller，
-  这三个在库里分别是「没有 / 没有 / 原始数据里有但无场景被丢弃」。`桌面与系统工具` 那 48 条
-  全是「用 Electron 做出来的成品软件」。所以「我自己写一个桌面程序」这类需求，组合出来的
-  那一格给的是 Pake（网站转桌面应用），不是开发框架。
-  这不是排序能修的：抓取源是 `config/sources.json` 里的 `topic:` 列表 + awesome 清单，
-  electron / tauri 根本不在任何一次 GitHub 检索里。要补得做三件事——加 topic 抓取
-  （`topic:electron`、`topic:tauri`、`topic:pyinstaller`）、新建一个能力位（68 → 69）、
-  跑一次完整刷新（约 15 分钟，不带 token 会被限流拖到更久）。属于产品决定，没动。
+- **零件还是不够细**。`桌面应用开发` 这一格已经建起来了（50 条，Electron / Tauri / Wails / PyQt /
+  Nuitka / PyInstaller / electron-builder 都在，见下一条），但它只覆盖「用什么写、怎么打包」，
+  不覆盖「托盘图标、自动更新、代码签名」这类具体能力——问「客户端怎么自动更新」仍然没有对应场景。
+  另外 `topic:electron` 那 334 个仓库（绝大多数是「用 Electron 做出来的成品」）故意没抓：
+  加进来只会让这一格从「零件」再次混成「成品」，而那批东西 `桌面与系统工具` 已经在装了。
 
-- **`构建打包` 一个标签装了两类东西**：前端打包器（vite ★84k、webpack ★66k）和单文件
-  打包（nexe）共用一格，问「打包成 exe」时排前面的是 esbuild。拆开需要新建类目，而现有
-  数据里真正的单文件打包工具只有 nexe 一条（用正则捞「exe/executable/单文件」能捞到 55 条，
-  逐条看下去 54 条是误伤），一条支撑不起一个类目——建了就是给一个工具开一格。
+- **`构建打包` 还是只装前端打包器**：vite ★84k、webpack ★66k、esbuild 在这格，而单文件打包
+  （PyInstaller ★13k、Nuitka ★15k、auto-py-to-exe ★5.0k、pyfuze、nexe）归到了 `桌面应用开发`。
+  没给它们单开一格，是因为「把 Python 打成 exe」本来就是桌面程序交付的最后一步，拆走会把
+  pyinstaller 从「写桌面程序」那一格里拔出来。代价是 `构建打包` 这个词仍然歧义：
+  问「打包成 exe」现在能落到 exe 那批（走别名），问「打包」还是优先给前端打包器。
 
 - **泛词查询的排序一般**：问「部署」，前几条是 terraform、jhipster 这类描述里频繁出现「部署」
   的项目，而不是 dokploy、coolify 这些部署平台本体；问「部署托管」这个场景名才准。原因是

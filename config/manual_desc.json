@@ -120,6 +120,8 @@
     "https://github.com/canonical/lxd": "Canonical 维护的系统容器与虚拟机管理器，用命令行或 REST API 管集群，比 Docker 更接近轻量虚拟机",
     "https://github.com/lxc/incus": "LXD 的社区分叉版：LXD 转由 Canonical 独占后，原维护团队接手继续做的系统容器与虚拟机管理器",
     "https://github.com/mudkipme/MoeMemos": "自托管的碎片笔记应用，随手记想法再按时间回看，数据放在自己的服务器上",
-    "https://github.com/mudkipme/MoeMemosAndroid": "MoeMemos 的 Android 客户端，配合自托管服务端记录随手想法"
+    "https://github.com/mudkipme/MoeMemosAndroid": "MoeMemos 的 Android 客户端，配合自托管服务端记录随手想法",
+    "https://github.com/LC044/WeChatMsg": "微信聊天记录导出与分析工具：把 PC 微信的聊天记录导出来，做成可检索、可分析的本地数据",
+    "https://github.com/GUI-for-Cores/GUI.for.Clash": "Clash 内核的图形界面客户端，用 Go + Wails 写成桌面程序，配置订阅、切换节点、看流量都在一个窗口里"
   }
 }

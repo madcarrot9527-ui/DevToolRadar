@@ -622,7 +622,10 @@ def build(tools: list[dict] | None = None) -> str:
             .replace("__STATS__", stats))
 
     out = SITE_DIR / "index.html"
-    out.write_text(html, encoding="utf-8")
+    # newline="\n" 不能省：Windows 上 write_text 默认把 \n 翻成 \r\n，于是每次
+    # 重建都整文件变成 CRLF，git 每次都提示「换行会被替换」，diff 里也混进
+    # 只有换行不同的噪声。仓库里 .gitattributes 定了 eol=lf，这里就得跟着写 LF。
+    out.write_text(html, encoding="utf-8", newline="\n")
     size_kb = out.stat().st_size / 1024
     log(f"检索页已生成：{out}（{size_kb:.0f} KB，{len(tools)} 条，{len(tags)} 个场景入口）")
     return str(out)

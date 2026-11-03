@@ -203,6 +203,26 @@
       {
         "q": "topic:reverse-proxy",
         "label": "反向代理"
+      },
+      {
+        "q": "topic:pyqt",
+        "label": "桌面应用开发"
+      },
+      {
+        "q": "topic:pyside6",
+        "label": "桌面应用开发"
+      },
+      {
+        "q": "topic:wails",
+        "label": "桌面应用开发"
+      },
+      {
+        "q": "topic:pyinstaller",
+        "label": "打包分发"
+      },
+      {
+        "q": "topic:nuitka",
+        "label": "打包分发"
       }
     ]
   },
@@ -340,7 +360,17 @@
       "gchq/CyberChef",
       "syncthing/syncthing",
       "logseq/logseq",
-      "laurent22/joplin"
+      "laurent22/joplin",
+      "electron/electron",
+      "electron-userland/electron-builder",
+      "electron/forge",
+      "tauri-apps/tauri",
+      "wailsapp/wails",
+      "Nuitka/Nuitka",
+      "pyinstaller/pyinstaller",
+      "pyside/pyside-setup",
+      "flet-dev/flet",
+      "nwjs/nw.js"
     ]
   },
   "cn": {
