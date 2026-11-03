@@ -7,6 +7,10 @@
 
 第 2 级是必须的。用户不会说"接口 Mock"，他会说"造测试数据"。
 打分公式与网页版保持一致，避免命令行和网页给出互相矛盾的排序。
+
+第 3 级（`rescue`）只在 1、2 两级一条都没命中时启用：按「查询里的字有多稀罕」
+做字面兜底。因为用户在搜索框里写的是句子，「我要做一个后台管理系统」整句一个
+词表概念都碰不上时，给一片空白比给几条沾边的更糟 —— 后者至少能顺着点下去。
 """
 from __future__ import annotations
 
@@ -323,6 +327,110 @@ def is_list(t: dict) -> bool:
                 or _NAME_ONLY_REF.search(name))
 
 
+# 兜底检索用的虚词。整句里这些字几乎不含信息，留着只会让「我要做一个」这种前缀
+# 拖高覆盖率、把不相干的条目捞上来。
+_STOP_CHARS = set(
+    "我你他她它想要能可么吗呢吧啊的了是在有和与或就都也还太很把给对从到"
+    "做个弄找用请帮写啥咋什哪这那些呀哈上下里中"
+)
+_EN_WORD = re.compile(r"[a-z0-9][a-z0-9+.#_-]*")
+
+
+def _rescue_seq(query: str) -> list[str]:
+    """句子里「剩下的内容」：英文按词，中文按单字，虚词丢掉，保持原顺序。"""
+    ql = norm(query)
+    seq: list[str] = []
+    seen: set[str] = set()
+    for m in _EN_WORD.finditer(ql):
+        w = m.group(0)
+        if len(w) >= 2 and w not in seen:
+            seen.add(w)
+            seq.append(w)
+    for ch in ql:
+        if CJK.match(ch) and ch not in _STOP_CHARS and ch not in seen:
+            seen.add(ch)
+            seq.append(ch)
+    return seq
+
+
+def _rescue_bigrams(seq: list[str]) -> list[str]:
+    """相邻两格拼成的二字词：「后台管理系统」→ 后台 / 管理 / 系统。"""
+    return [seq[i] + seq[i + 1] for i in range(len(seq) - 1)]
+
+
+def rescue(query: str, rows: list[dict], limit: int = 12) -> list[dict]:
+    """一条都没命中时的字面兜底，见模块开头第 3 级召回。
+
+    两档证据，二字词优先于单字：
+      - 二字词：用户原话里连着的两个词。命中它说明命中的是「词组」而不是散落的字，
+        「后台管理系统」靠的是「后台」「管理」，跟一个恰好含「管」字的项目不是一回事。
+      - 单字：只在整句几乎被覆盖（≥80%）时才认，用来兜拆不开的情况。
+
+    每个词都按「越稀罕越值钱」加权（log(N/df)），所以查询里的「机」「包」这种常见字
+    权重低，靠它们蹭不进结果。
+
+    只看字面、不看语义，所以它给的是「最接近」而不是「对」——网页上会明写这句话。
+    只在 0 命中时调用，不会改动任何已有查询的排序。
+    """
+    seq = _rescue_seq(query)
+    if not seq:
+        return []
+    grams = _rescue_bigrams(seq)
+    texts = [" ".join([
+        (t.get("name") or "").lower(),
+        " ".join(t.get("tags") or []).lower(),
+        (t.get("category") or "").lower(),
+        (t.get("desc") or "").lower(),
+    ]) for t in rows]
+    n = len(texts)
+
+    def _w(term: str) -> float:
+        df = sum(1 for s in texts if term in s)
+        return math.log((n + 1) / (df + 1)) if df else 0.0
+
+    wg = {g: _w(g) for g in grams}
+    wc = {c: _w(c) for c in seq}
+    tg, tc = sum(wg.values()), sum(wc.values())
+    if tg <= 0 and tc <= 0:
+        return []
+
+    # 标签层证据：把查询里的字拿去和场景名比对。「我想抓手机上的包」拆开是
+    # 抓/手/机/包，虽然没有「抓包」这个连词，但「抓包代理」这个场景名同时含「抓」和「包」。
+    # 这类命中比逐字匹配可信得多，所以命中的条目直接提到最前面。
+    #
+    # 阈值 0.4 是量出来的：该查询对「抓包代理」的加权覆盖率 0.48，第二名候选只有 0.33，
+    # 中间有明显空档。再放宽，「我要做一个后台管理系统」就会被判成「桌面与系统工具」（0.33）。
+    inferred: set[str] = set()
+    if len([c for c in seq if CJK.match(c)]) >= 2:
+        labels: dict[str, set[str]] = {}
+        for t in rows:
+            for g in t.get("tags") or []:
+                labels.setdefault(g, set(g))
+        best = sorted(
+            ((sum(wc[c] for c in seq if wc[c] and c in lc) / tc, lab)
+             for lab, lc in labels.items()),
+            reverse=True)
+        if best and best[0][0] >= 0.4 and (len(best) == 1 or best[0][0] - best[1][0] >= 0.1):
+            inferred.add(best[0][1])
+
+    out: list[tuple[int, int, float, float, dict]] = []
+    for t, s in zip(rows, texts):
+        g_hit = [g for g in grams if wg[g] and g in s]
+        c_hit = [c for c in seq if wc[c] and c in s]
+        bg = sum(wg[g] for g in g_hit) / tg if tg else 0.0
+        cg = sum(wc[c] for c in c_hit) / tc if tc else 0.0
+        bias = 0 if (inferred & set(t.get("tags") or [])) else 1
+        # 场景名推断命中的条目，字面上一个字都对不上也要留下——「抓包代理」里的工具
+        # 描述是英文的，跟「我想抓手机上的包」一个汉字都不重合。
+        if bias and not g_hit and cg < 0.8:
+            continue
+        # 清单/教材沉底：它们只是「提到过这个词」，不是做这件事的工具。
+        out.append((bias, 2 if is_list(t) else 0, len(g_hit), bg, cg, t))
+    out.sort(key=lambda x: (x[0], x[1], -x[2], -x[3], -x[4], -(x[5].get("stars") or 0)))
+    return [t for *_, t in out[:limit]]
+
+
+
 def search(query: str = "", *, tag: str = "", src: str = "", zh: bool = False,
            limit: int = 12) -> list[dict]:
     rows = load_index()
@@ -365,7 +473,9 @@ def search(query: str = "", *, tag: str = "", src: str = "", zh: bool = False,
                 -(t.get("quality") or 0))
 
     scored.sort(key=_key)
-    return [t for _, t in scored[:limit]]
+    if scored:
+        return [t for _, t in scored[:limit]]
+    return rescue(query, rows, limit)
 
 
 # 曾尝试过一条更粗的不变量：「每个场景前 3 条必须有一条代表作」，

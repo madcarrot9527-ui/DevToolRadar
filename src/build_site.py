@@ -157,7 +157,7 @@ const sortEl = document.getElementById('sort');
 const chipsEl = document.getElementById('chips');
 const resetEl = document.getElementById('reset');
 
-let activeTag = '', selIdx = -1, view = [], PAGE = 60, shown = PAGE;
+let activeTag = '', selIdx = -1, view = [], PAGE = 60, shown = PAGE, chipsAll = false, rescued = false;
 
 // 去掉口语化停用词，让「我要找个能 mock 接口的」也能命中
 const STOP = /^(我要|我想|我想找|找一?个|找个|有没有|什么|怎么|如何|帮我|可以|能|用来|用于|一个|的|了|吗|呢|啊|工具|软件|库|平台|方案|推荐)+/g;
@@ -226,6 +226,68 @@ function hitStrict(tk, text){
   if(/[\u4e00-\u9fff]/.test(tk)) return text.includes(tk);
   const esc = tk.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return new RegExp('(^|[^a-z0-9])' + esc + '([^a-z0-9]|$)', 'i').test(text);
+}
+
+// ---- 兜底检索：只有在主判定一条都没命中时才走 ----
+// 用户在搜索框里写的是句子（「我要做一个后台管理系统」），而 score() 只认词表里的
+// 概念。整句一个概念都碰不上时给一片空白，比给几条沾边的更糟。
+// 与 src/search.py 的 rescue() 同一套规则，两边必须一致，否则网页和命令行两种结果。
+const STOP_CHARS = new Set('我你他她它想要能可么吗呢吧啊的了是在有和与或就都也还太很把给对从到做个弄找用请帮写啥咋什哪这那些呀哈上下里中'.split(''));
+function rescueSeq(raw){
+  const ql = norm(raw), seq = [], seen = new Set();
+  (ql.match(/[a-z0-9][a-z0-9+.#_-]*/g) || []).forEach(w=>{
+    if(w.length >= 2 && !seen.has(w)){ seen.add(w); seq.push(w); }
+  });
+  for(const ch of ql){
+    if(/[\u4e00-\u9fff]/.test(ch) && !STOP_CHARS.has(ch) && !seen.has(ch)){ seen.add(ch); seq.push(ch); }
+  }
+  return seq;
+}
+function rescue(raw, rows, limit){
+  const seq = rescueSeq(raw);
+  if(!seq.length) return [];
+  const grams = [];
+  for(let i=0;i+1<seq.length;i++) grams.push(seq[i]+seq[i+1]);
+  const texts = rows.map(t=>((t.n||'')+' '+(t.g||[]).join(' ')+' '+(t.c||'')+' '+(t.d||'')).toLowerCase());
+  const N = texts.length, memo = {};
+  const wOf = tk=>{
+    if(memo[tk] !== undefined) return memo[tk];
+    let df = 0;
+    for(const s of texts) if(s.includes(tk)) df++;
+    return memo[tk] = df ? Math.log((N+1)/(df+1)) : 0;
+  };
+  const wg = grams.map(wOf), wc = seq.map(wOf);
+  const tg = wg.reduce((a,b)=>a+b,0), tc = wc.reduce((a,b)=>a+b,0);
+  if(tg <= 0 && tc <= 0) return [];
+  // 标签层证据：查询里的字和场景名比。「我想抓手机上的包」拆开是 抓/手/机/包，
+  // 没有「抓包」这个连词，但场景名「抓包代理」同时含「抓」和「包」。这类命中
+  // 比逐字匹配可信，命中的条目直接提到最前面。阈值 0.4 与 Python 端同一套实测值。
+  const labels = {};
+  rows.forEach(t=>(t.g||[]).forEach(g=>{ if(!labels[g]) labels[g] = new Set(g); }));
+  let inferred = '';
+  if(seq.filter(c=>/[\u4e00-\u9fff]/.test(c)).length >= 2){
+    const rated = Object.keys(labels).map(lab=>{
+      let got = 0;
+      seq.forEach((c,j)=>{ if(wc[j] && labels[lab].has(c)) got += wc[j]; });
+      return [tc ? got/tc : 0, lab];
+    }).sort((a,b)=> b[0]-a[0] || (a[1]<b[1]?-1:1));
+    if(rated.length && rated[0][0] >= 0.4 && (rated.length === 1 || rated[0][0] - rated[1][0] >= 0.1)){
+      inferred = rated[0][1];
+    }
+  }
+  const out = [];
+  rows.forEach((t,i)=>{
+    let gh = 0, bg = 0, cg = 0;
+    grams.forEach((g,j)=>{ if(wg[j] && texts[i].includes(g)){ gh++; bg += wg[j]; } });
+    seq.forEach((c,j)=>{ if(wc[j] && texts[i].includes(c)) cg += wc[j]; });
+    bg = tg ? bg/tg : 0;
+    cg = tc ? cg/tc : 0;
+    const bias = inferred && (t.g||[]).includes(inferred) ? 0 : 1;
+    if(bias && !gh && cg < 0.8) return;
+    out.push([bias, isRef(t)?2:0, -gh, -bg, -cg, -(t.st||0), t]);
+  });
+  out.sort((a,b)=> a[0]-b[0] || a[1]-b[1] || a[2]-b[2] || a[3]-b[3] || a[4]-b[4] || a[5]-b[5]);
+  return out.slice(0, limit).map(x=>x[6]);
 }
 
 function score(t, raw){
@@ -331,17 +393,25 @@ function renderChips(){
   all.textContent = '全部';
   all.onclick = ()=>{ activeTag=''; renderChips(); apply(); };
   chipsEl.appendChild(all);
-  TAGS.slice(0,22).forEach(([name,n])=>{
+  (chipsAll ? TAGS : TAGS.slice(0,22)).forEach(([name,n])=>{
     const c = document.createElement('div');
     c.className = 'chip' + (activeTag===name?' on':'');
     c.innerHTML = name.replace(/&/g,'&amp;') + '<span class="cnt">'+n+'</span>';
     c.onclick = ()=>{ activeTag = (activeTag===name?'':name); renderChips(); apply(); };
     chipsEl.appendChild(c);
   });
+  if(TAGS.length > 22){
+    const more = document.createElement('div');
+    more.className = 'chip';
+    more.textContent = chipsAll ? '收起' : '更多 ' + (TAGS.length - 22);
+    more.onclick = ()=>{ chipsAll = !chipsAll; renderChips(); };
+    chipsEl.appendChild(more);
+  }
 }
 
 function apply(){
   const raw = q.value;
+  rescued = false;
   const src = srcEl.value;
   const zh = zhEl.checked;
   const hot = hotEl.checked;
@@ -378,6 +448,10 @@ function apply(){
       return bb - ba || (b[1].st||0)-(a[1].st||0) || (b[1].q||0)-(a[1].q||0);
     });
     view = scored.map(x=>x[1]);
+    if(!view.length){
+      const got = rescue(raw, rows, 300);
+      if(got.length){ view = got; rescued = true; }
+    }
   } else {
     view = rows.slice();
     const s = sortEl.value;
@@ -408,6 +482,12 @@ function draw(){
   }
 
   const frag = document.createDocumentFragment();
+  if(rescued){
+    const note = document.createElement('div');
+    note.className = 'more';
+    note.textContent = '没有完全匹配的，下面按字面最接近的排。换个说法更准，比如只说关键词：抓包 / mock 接口';
+    frag.appendChild(note);
+  }
   const limit = Math.min(shown, view.length);
   for(let i=0;i<limit;i++){
     const t = view[i];
@@ -505,12 +585,14 @@ def build(tools: list[dict] | None = None) -> str:
             row[short] = v
         packed.append(row)
 
-    # 标签热度，供顶部快捷入口用
+    # 标签热度，供顶部快捷入口用。全量下发、页面上先露 22 个、剩下的点「更多」展开：
+    # 只下发 24 个热门标签时，「爬虫抓取」「缓存」「消息队列」这些场景在网页上根本
+    # 没有入口，用户只能靠搜索框撞词。
     counter = Counter()
     for t in tools:
         for g in t.get("tags") or []:
             counter[g] += 1
-    tags = [[k, v] for k, v in counter.most_common(24)]
+    tags = [[k, v] for k, v in counter.most_common()]
 
     by_src = Counter(t.get("origin") for t in tools)
     stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -542,7 +624,7 @@ def build(tools: list[dict] | None = None) -> str:
     out = SITE_DIR / "index.html"
     out.write_text(html, encoding="utf-8")
     size_kb = out.stat().st_size / 1024
-    log(f"检索页已生成：{out}（{size_kb:.0f} KB，{len(tools)} 条，{len(tags)} 个热门标签）")
+    log(f"检索页已生成：{out}（{size_kb:.0f} KB，{len(tools)} 条，{len(tags)} 个场景入口）")
     return str(out)
 
 
