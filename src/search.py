@@ -24,7 +24,8 @@ CJK = re.compile(r"[\u4e00-\u9fff]")
 # 口语化前缀/停用词：「我要找个能 mock 接口的」等价于「mock 接口」
 STOP_PREFIX = re.compile(
     r"^(我要|我想找|我想|帮我找|帮我|找个|找一个|找|有没有|什么|怎么|如何|可以|能|"
-    r"用来|用于|一个|一款|工具|软件|库|平台|方案|推荐|的|了|吗|呢|啊|请|想)+"
+    r"用来|用于|做一个|做个|弄一个|弄个|搞一个|搞个|写一个|写个|搭一个|搭个|"
+    r"建一个|建个|整一个|整个|一个|一款|工具|软件|库|平台|方案|推荐|的|了|吗|呢|啊|请|想)+"
 )
 
 # 中文查询展开出的英文词命中「名字」时给的分。
@@ -419,6 +420,64 @@ def _rescue_bigrams(seq: list[str]) -> list[str]:
     return [seq[i] + seq[i + 1] for i in range(len(seq) - 1)]
 
 
+def _tag_texts(rows: list[dict]) -> list[str]:
+    """每条工具的可匹配文本。rescue 与 infer_tag 共用同一份拼法，避免两处口径漂移。"""
+    return [" ".join([
+        (t.get("name") or "").lower(),
+        " ".join(t.get("tags") or []).lower(),
+        (t.get("category") or "").lower(),
+        (t.get("desc") or "").lower(),
+    ]) for t in rows]
+
+
+def _infer_from_weights(wc: dict[str, float], tc: float, seq: list[str],
+                        rows: list[dict]) -> str | None:
+    """按「查询里的字覆盖了多少场景名」推断场景，输入是算好的字权重。
+
+    口语不会说出场景名本身，但会说出组成它的字：「抓手机上的包」拆开是抓/手/机/包，
+    没有「抓包」这个连词，而「抓包代理」这个名字同时含「抓」和「包」。
+
+    阈值 0.4 是量出来的：该查询对「抓包代理」的加权覆盖率 0.48，第二名候选只有 0.33，
+    中间有明显空档；再放宽，「我要做一个后台管理系统」会被判成「桌面与系统工具」（0.33）。
+    0.1 的领先差是防止两个场景贴在一起时硬选一个。
+    """
+    if len([c for c in seq if CJK.match(c)]) < 2 or tc <= 0:
+        return None
+    labels: dict[str, set[str]] = {}
+    for t in rows:
+        for g in t.get("tags") or []:
+            labels.setdefault(g, set(g))
+    best = sorted(
+        ((sum(wc[c] for c in seq if wc[c] and c in lc) / tc, lab)
+         for lab, lc in labels.items()),
+        reverse=True)
+    if best and best[0][0] >= 0.4 and (len(best) == 1 or best[0][0] - best[1][0] >= 0.1):
+        return best[0][1]
+    return None
+
+
+def infer_tag(query: str, rows: list[dict] | None = None) -> str | None:
+    """从查询用字推断场景标签，不依赖场景名里的连词。
+
+    rescue() 一直有这段判据，却只服务 search() 的第三级召回；compose 走 resolve_tag，
+    于是同一句话在 find_tool 能给出 mitmproxy、在 compose 报「没有对应能力位」。
+    抽出来给两边共用——判据只有一个，说法不同不该得到不同的答案。
+    """
+    seq = _rescue_seq(query)
+    if not seq:
+        return None
+    rows = rows if rows is not None else load_index()
+    texts = _tag_texts(rows)
+    n = len(texts)
+
+    def _w(term: str) -> float:
+        df = sum(1 for s in texts if term in s)
+        return math.log((n + 1) / (df + 1)) if df else 0.0
+
+    wc = {c: _w(c) for c in seq}
+    return _infer_from_weights(wc, sum(wc.values()), seq, rows)
+
+
 def rescue(query: str, rows: list[dict], limit: int = 12) -> list[dict]:
     """一条都没命中时的字面兜底，见模块开头第 3 级召回。
 
@@ -437,12 +496,7 @@ def rescue(query: str, rows: list[dict], limit: int = 12) -> list[dict]:
     if not seq:
         return []
     grams = _rescue_bigrams(seq)
-    texts = [" ".join([
-        (t.get("name") or "").lower(),
-        " ".join(t.get("tags") or []).lower(),
-        (t.get("category") or "").lower(),
-        (t.get("desc") or "").lower(),
-    ]) for t in rows]
+    texts = _tag_texts(rows)
     n = len(texts)
 
     def _w(term: str) -> float:
@@ -455,24 +509,11 @@ def rescue(query: str, rows: list[dict], limit: int = 12) -> list[dict]:
     if tg <= 0 and tc <= 0:
         return []
 
-    # 标签层证据：把查询里的字拿去和场景名比对。「我想抓手机上的包」拆开是
-    # 抓/手/机/包，虽然没有「抓包」这个连词，但「抓包代理」这个场景名同时含「抓」和「包」。
-    # 这类命中比逐字匹配可信得多，所以命中的条目直接提到最前面。
-    #
-    # 阈值 0.4 是量出来的：该查询对「抓包代理」的加权覆盖率 0.48，第二名候选只有 0.33，
-    # 中间有明显空档。再放宽，「我要做一个后台管理系统」就会被判成「桌面与系统工具」（0.33）。
-    inferred: set[str] = set()
-    if len([c for c in seq if CJK.match(c)]) >= 2:
-        labels: dict[str, set[str]] = {}
-        for t in rows:
-            for g in t.get("tags") or []:
-                labels.setdefault(g, set(g))
-        best = sorted(
-            ((sum(wc[c] for c in seq if wc[c] and c in lc) / tc, lab)
-             for lab, lc in labels.items()),
-            reverse=True)
-        if best and best[0][0] >= 0.4 and (len(best) == 1 or best[0][0] - best[1][0] >= 0.1):
-            inferred.add(best[0][1])
+    # 标签层证据：命中的条目直接提到最前面。判据与 resolve_tag 共用
+    # （见 _infer_from_weights）——两处各写一份的话，同一句话在两条路径上
+    # 会得到不同答案，之前就是这样：find_tool 能出 mitmproxy，compose 报缺口。
+    _lab = _infer_from_weights(wc, tc, seq, rows)
+    inferred: set[str] = {_lab} if _lab else set()
 
     out: list[tuple[int, int, float, float, dict]] = []
     for t, s in zip(rows, texts):
@@ -546,11 +587,19 @@ def resolve_tag(name: str) -> str | None:
         for t in terms:
             if not t:
                 continue
-            if t in q or q in t:
+            # q in t 必须卡长度比例，否则任何短词都会命中长别名：
+            # 「网页」是「抓网页」的子串，于是「写个网页」被判成爬虫抓取。
+            # 和 query_tags 用同一个 0.6 门槛，两条路径的宽严标准才一致。
+            if t in q or (q in t and len(q) >= len(t) * 0.6):
                 ln = min(len(t), len(q))
                 if ln > best_ln:
                     best_ln, best = ln, lab
-    return best
+    if best:
+        return best
+    # 四级兜底：字覆盖推断。前三关都要求「说法里出现场景词」，可口语从不这么说话
+    # ——「抓手机上的包」里没有「抓包」这个连词。退到「查询里的字覆盖了多少场景名」，
+    # 判据与 rescue() 共用，所以 find_tool 与 compose 对同一句话给出同一个场景。
+    return infer_tag(name)
 
 
 def compose(slots: list[str], per_slot: int = 2,

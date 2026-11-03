@@ -87,6 +87,8 @@
   "第九批 2 条（标签纠错，随「搜笔记找不到 joplin」一起查出来的）：siyuan-note/siyuan 原挂「大模型应用」、b3log.org/siyuan（同一个产品的官网入口）原挂「容器与 K8s」。两者都是「话题蹭词」的产物：仓库 topics 里有 ai/llm，官网描述里有 docker 部署。后果是搜「笔记」时思源笔记拿 0 分——不是排在后面，是压根召回不到。改判「笔记知识库」，这是它的第一身份。"
  ],
  "by_url": {
+  "https://github.com/Graphify-Labs/graphify": null,
+  "https://github.com/ruvnet/RuView": null,
   "https://github.com/OpenHands/OpenHands": "AI 编码",
   "https://github.com/lobehub/lobehub": "大模型应用",
   "https://github.com/binhnguyennus/awesome-scalability": "学习资源",
@@ -718,7 +720,7 @@
   "https://github.com/Unity-Technologies/EntityComponentSystemSamples": null,
   "https://github.com/siyuan-note/siyuan": "笔记知识库",
   "https://b3log.org/siyuan": "笔记知识库",
-  "https://github.com/tensorflow/tensorflow": "模型服务",
+  "https://github.com/tensorflow/tensorflow": "数据分析与实验",
   "https://github.com/huggingface/transformers": "模型服务",
   "https://github.com/keras-team/keras": "模型服务",
   "https://github.com/jax-ml/jax": "模型服务",
