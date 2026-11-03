@@ -69,7 +69,7 @@ def expand_en(qn: str) -> list[tuple[str, list[str]]]:
     return [(zh, ens) for zh, ens in terms.items() if zh and zh in qn and len(zh) == best]
 
 
-def _apply_also(rows: list[dict]) -> None:
+def apply_also(rows: list[dict]) -> None:
     """把场景标签里声明的「跨格成员」补进条目的 tags。
 
     打标签天生是单归属的：manual_tags.json 一个 url 只能存一个标签，规则也只算出
@@ -97,7 +97,7 @@ def _apply_also(rows: list[dict]) -> None:
 
 def load_index() -> list[dict]:
     rows = load_json(DATA_DIR / "tools.json", []) or []
-    _apply_also(rows)
+    apply_also(rows)
     return rows
 
 

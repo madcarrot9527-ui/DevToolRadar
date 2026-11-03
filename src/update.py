@@ -102,6 +102,13 @@ def main() -> int:
     import normalize
     tools = normalize.normalize(rows)
 
+    # 跨格归属（scenarios.json 的 tag.also）必须落在数据里，不能只在检索时算。
+    # build_site / doctor / get_stats 都是直接读 tools.json 的，只在 search.load_index()
+    # 里合并会让网页场景页比命令行少几条（「构建打包」55 和 60 的差别），
+    # 而且这种不一致不会报错，只会让人以为某天的数据丢了。
+    import search
+    search.apply_also(tools)
+
     # 数量骤降等于静默丢数据。正常的日间波动在 1% 以内（新收录、去重搬家互相抵消），
     # 超过 10% 只可能是某个源大面积抓取失败。这时候写盘就是把故障固化成「新数据」，
     # 而且下一次刷新会拿这个更小的基数当基准，一路滑下去都没人拦。
