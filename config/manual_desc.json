@@ -122,6 +122,11 @@
     "https://github.com/mudkipme/MoeMemos": "自托管的碎片笔记应用，随手记想法再按时间回看，数据放在自己的服务器上",
     "https://github.com/mudkipme/MoeMemosAndroid": "MoeMemos 的 Android 客户端，配合自托管服务端记录随手想法",
     "https://github.com/LC044/WeChatMsg": "微信聊天记录导出与分析工具：把 PC 微信的聊天记录导出来，做成可检索、可分析的本地数据",
-    "https://github.com/GUI-for-Cores/GUI.for.Clash": "Clash 内核的图形界面客户端，用 Go + Wails 写成桌面程序，配置订阅、切换节点、看流量都在一个窗口里"
+    "https://github.com/GUI-for-Cores/GUI.for.Clash": "Clash 内核的图形界面客户端，用 Go + Wails 写成桌面程序，配置订阅、切换节点、看流量都在一个窗口里",
+    "https://github.com/blender/blender": "开源三维创作套件：建模、雕刻、UV、骨骼绑定、动画、渲染、合成、视频剪辑在同一条管线里，几何节点做程序化生成，内置 Python API，做游戏资产和动画短片都靠它",
+    "https://github.com/GNOME/gimp": "开源位图修图与图像合成软件：图层、蒙版、通道、路径、选区、调色、批量处理脚本都齐，Linux 上事实标准的 Photoshop 替代品",
+    "https://github.com/inkscape/inkscape": "开源矢量绘图软件：原生编辑 SVG，路径节点、布尔运算、位图描摹、文字排版，用来画图标、logo、插画和印刷刀版图",
+    "https://github.com/penpot/penpot": "开源设计协作平台：矢量绘图加原型交互再加设计稿交付，跑在浏览器里可自托管，Figma 的开源替代",
+    "https://github.com/KDE/krita": "开源数字绘画软件：笔刷引擎、图层与图层组、动画时间轴、笔迹稳定器和素材包，画插画、漫画和逐帧动画用，也常拿来做贴图"
   }
 }

@@ -421,7 +421,7 @@ def _rescue_bigrams(seq: list[str]) -> list[str]:
 
 
 def _tag_texts(rows: list[dict]) -> list[str]:
-    """每条工具的可匹配文本。rescue 与 infer_tag 共用同一份拼法，避免两处口径漂移。"""
+    """每条工具的可匹配文本。rescue 与 _infer_from_weights 共用同一份拼法，避免两处口径漂移。"""
     return [" ".join([
         (t.get("name") or "").lower(),
         " ".join(t.get("tags") or []).lower(),
@@ -454,28 +454,6 @@ def _infer_from_weights(wc: dict[str, float], tc: float, seq: list[str],
     if best and best[0][0] >= 0.4 and (len(best) == 1 or best[0][0] - best[1][0] >= 0.1):
         return best[0][1]
     return None
-
-
-def infer_tag(query: str, rows: list[dict] | None = None) -> str | None:
-    """从查询用字推断场景标签，不依赖场景名里的连词。
-
-    rescue() 一直有这段判据，却只服务 search() 的第三级召回；compose 走 resolve_tag，
-    于是同一句话在 find_tool 能给出 mitmproxy、在 compose 报「没有对应能力位」。
-    抽出来给两边共用——判据只有一个，说法不同不该得到不同的答案。
-    """
-    seq = _rescue_seq(query)
-    if not seq:
-        return None
-    rows = rows if rows is not None else load_index()
-    texts = _tag_texts(rows)
-    n = len(texts)
-
-    def _w(term: str) -> float:
-        df = sum(1 for s in texts if term in s)
-        return math.log((n + 1) / (df + 1)) if df else 0.0
-
-    wc = {c: _w(c) for c in seq}
-    return _infer_from_weights(wc, sum(wc.values()), seq, rows)
 
 
 def rescue(query: str, rows: list[dict], limit: int = 12) -> list[dict]:
@@ -596,10 +574,22 @@ def resolve_tag(name: str) -> str | None:
                     best_ln, best = ln, lab
     if best:
         return best
-    # 四级兜底：字覆盖推断。前三关都要求「说法里出现场景词」，可口语从不这么说话
-    # ——「抓手机上的包」里没有「抓包」这个连词。退到「查询里的字覆盖了多少场景名」，
-    # 判据与 rescue() 共用，所以 find_tool 与 compose 对同一句话给出同一个场景。
-    return infer_tag(name)
+    # 刻意**不**用 infer_tag 兜底。试过，退回来了。
+    #
+    # 加它的动机是「同一句话，find_tool 能出 mitmproxy，compose 却报缺口」——
+    # 看着像不一致。但两条路径的职责本来就不同：
+    #   find_tool 给「最接近的几条」并明写仅供参考，猜错了用户一眼能看出来；
+    #   compose 拿场景去取整格候选，猜错了就是整格错，用户还以为那是对的。
+    # 所以 compose 宁可报缺口，逼模型把「抓手机上的包」重新拆成「抓包代理」。
+    #
+    # 实测它错得多离谱（按字覆盖率挑场景）：
+    #   做关卡   -> 网关与反向代理（「关」命中）
+    #   做播客   -> 代理客户端（「客」命中）
+    #   工单系统  -> 桌面与系统工具（「工」「系」「统」命中，覆盖 0.73）
+    #   做推荐系统 -> 桌面与系统工具（「系」「统」命中）
+    # 而正确的那一例「抓手机上的包」覆盖只有 0.48 —— 正例与反例的数值区间重叠，
+    # 调阈值分不开。分辨这两个，靠的是「抓包代理」是不是个真实品类，不是字面。
+    return None
 
 
 def compose(slots: list[str], per_slot: int = 2,

@@ -223,6 +223,30 @@
       {
         "q": "topic:nuitka",
         "label": "打包分发"
+      },
+      {
+        "q": "topic:pixel-art",
+        "label": "像素画"
+      },
+      {
+        "q": "topic:stable-diffusion",
+        "label": "AI 绘图引擎"
+      },
+      {
+        "q": "topic:image-editor",
+        "label": "图像编辑"
+      },
+      {
+        "q": "topic:vector-graphics",
+        "label": "矢量设计"
+      },
+      {
+        "q": "topic:3d-modeling",
+        "label": "三维建模"
+      },
+      {
+        "q": "topic:design-tools",
+        "label": "设计工具"
       }
     ]
   },
@@ -370,7 +394,14 @@
       "pyinstaller/pyinstaller",
       "pyside/pyside-setup",
       "flet-dev/flet",
-      "nwjs/nw.js"
+      "nwjs/nw.js",
+      "GNOME/gimp",
+      "KDE/krita",
+      "inkscape/inkscape",
+      "blender/blender",
+      "penpot/penpot",
+      "comfyanonymous/ComfyUI",
+      "piskelapp/piskel"
     ]
   },
   "cn": {

@@ -349,7 +349,9 @@
       "desc": "浏览器自动化、端到端回归",
       "kw": [
         "e2e",
-        "end-to-end",
+        "end-to-end test",
+        "end-to-end testing",
+        "end 2 end",
         "playwright",
         "cypress",
         "selenium",
@@ -357,7 +359,7 @@
         "自动化测试",
         "ui test",
         "browser automation",
-        "端到端",
+        "端到端测试",
         "浏览器自动化"
       ],
       "alias": [
@@ -1791,6 +1793,111 @@
         "electron",
         "tauri",
         "pyinstaller"
+      ]
+    },
+    {
+      "label": "图像编辑",
+      "desc": "修图、调色、图层合成、绘画",
+      "kw": [
+        "image editor",
+        "photo editor",
+        "raster graphics",
+        "photo editing",
+        "image manipulation",
+        "digital painting",
+        "图层",
+        "图像编辑",
+        "修图",
+        "调色",
+        "画笔",
+        "照片编辑"
+      ],
+      "alias": [
+        "修图",
+        "调色",
+        "照片编辑",
+        "图片编辑",
+        "图层编辑",
+        "p图",
+        "图像编辑"
+      ]
+    },
+    {
+      "label": "矢量绘图",
+      "desc": "画矢量图、编辑 SVG、绘制插画",
+      "kw": [
+        "vector graphics",
+        "svg editor",
+        "vector editor",
+        "illustration tool",
+        "矢量图",
+        "矢量绘图",
+        "矢量编辑",
+        "svg 编辑"
+      ],
+      "also": [
+        "https://github.com/inkscape/inkscape",
+        "https://github.com/penpot/penpot"
+      ],
+      "alias": [
+        "画矢量图",
+        "矢量图",
+        "矢量绘图",
+        "画插画",
+        "矢量编辑"
+      ]
+    },
+    {
+      "label": "像素与精灵",
+      "desc": "像素画、精灵图、逐帧动画素材",
+      "kw": [
+        "pixel art",
+        "sprite",
+        "spritesheet",
+        "pixel editor",
+        "tileset",
+        "pixel art editor",
+        "像素画",
+        "精灵图",
+        "像素图",
+        "瓦片图",
+        "逐帧动画",
+        "帧动画"
+      ],
+      "alias": [
+        "像素画",
+        "画像素",
+        "精灵图",
+        "像素图",
+        "做像素",
+        "逐帧动画",
+        "帧动画",
+        "spritesheet"
+      ]
+    },
+    {
+      "label": "三维建模",
+      "desc": "建 3D 模型、渲染、绑定",
+      "kw": [
+        "3d modeling",
+        "3d model",
+        "cad",
+        "mesh editing",
+        "3d rendering",
+        "3d printing",
+        "三维建模",
+        "建模",
+        "三维模型",
+        "三维渲染",
+        "网格模型"
+      ],
+      "alias": [
+        "建模",
+        "3d 建模",
+        "三维建模",
+        "做个模型",
+        "画模型",
+        "3d 模型"
       ]
     }
   ]
