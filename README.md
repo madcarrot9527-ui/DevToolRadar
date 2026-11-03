@@ -539,21 +539,29 @@ PDF补丁丁、这图能改、匠工具箱——全是「专用工具箱」，�
   场景表按「你想干什么」设计，没有「基础库」这个类目，硬建一个只会把列表稀释掉。
   它们照样能被搜到，只是不出现在场景导航里。
 
-- **「学习资源」是个收容所：221 条的唯一标签就是它，其中一批根本不是学习资源**。
-  举几个能看出问题的：`pytorch`、`keras`、`jax`、`xgboost`、`optuna`（机器学习库）、
-  `swiper`（触摸轮播组件）、`autopep8`（代码格式化）。它们能进来，是因为场景词表里的
-  「学习资源」有两个泛词——`learn` 和 `awesome`——而 awesome 清单的分类名恰好写着
-  `Machine Learning` / `React Awesome Components`，子串命中，于是机器学习变成了「学习」、
-  「Awesome 组件」变成了「学习资源」。
-  这个归属是错的，但**不能直接把这两个词删掉**：实测删掉 `learn` 后，有 33 条唯一标签
-  是「学习资源」的条目会变成无场景，按现在的规则会从索引里消失（`pytorch` 十万星一起没）。
-  要正确处理只有三条路，每条都有代价：
-  - 新开「机器学习框架」类目：会重演「为库建类目」那次的稀释问题，lib / tool 的边界要重新划
-  - 逐条人工归类进现有场景（`模型服务` / `数据分析与实验` / `前端 UI`）：最准，但量大
-  - 维持现状：能被搜到，只是归类难看，按场景浏览时会混进来
+- **「学习资源」原来是收容所，2026-11-03 逐条清过一遍**。病根是场景词表里的两个泛词：
+  「学习资源」的 `learn` 和 `awesome`，在 awesome 清单的分类名里子串命中——
+  分类叫 `Machine Learning` 的（`pytorch`、`keras`、`jax`、`xgboost`、`optuna`）变成「学习」，
+  分类叫 `React Awesome Components` 的（`swiper` 这类组件）变成「学习资源」。
+  当时 220 条的唯一标签是它，混着一大堆库和组件。
 
-  目前选的是第三条。`The Fuck` 是唯一人工改判过的——它是命令行纠错工具，跟学习没关系，
-  纯粹因为分类名叫 `Command Line Learning` 撞上 `learn`。
+  处理方式是把这 220 条逐条读完，按「这个工具被用来干什么」判到现有场景，一条一个：
+
+  | 去向 | 条数 | 例子 |
+  |---|---|---|
+  | 模型服务 | 9 | `pytorch`、`tensorflow`、`keras`、`jax`、`transformers`、`pytorch-lightning` |
+  | 数据分析与实验 | 16 | `scikit-learn`、`xgboost`、`optuna`、`sktime`、`statsforecast`、`Netron` |
+  | 前端 UI | 22 | `swiper`、`react-select`、`taiga-ui`、`vue-i18n`、`react-big-calendar` |
+  | 终端增强 | 10 | `tldr`、`navi`、`cheat`、`autojump`、`z.lua`、`howdoi`、`explainshell` |
+  | CI/CD | 5 | ML 流水线动作、`cml` |
+  | 其他 | 13 | `mockey`/`respx`→单元测试、`autopep8`→代码质量、`grobid`→PDF、`letta`→大模型应用… |
+
+  改判 75 条，剩下的 145 条确实是教程、路线图、awesome 清单、速查表、面试题、技术媒体，保持原样。
+
+  **没有动根因**：删掉 `learn` 会让这些库变成无场景、按规则从索引里消失（实测 5426 → 5393，
+  `pytorch` 十万星一起没）；删掉 `awesome` 会同时打掉一堆真的 awesome 清单。
+  所以新抓进来的机器学习库还会落进「学习资源」，靠 `config/manual_tags.json` 这张人工表纠——
+  这是这套系统一贯的处理方式：规则负责覆盖量，人工表负责纠错，两者不互相冒充。
 
 - **网页已经过截图验证**：无头 Chrome `--headless=new --screenshot` 可用，注意 `--screenshot=` 必须给
   Windows 绝对路径，相对路径会报「拒绝访问 0x5」。
