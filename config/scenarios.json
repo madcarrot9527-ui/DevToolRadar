@@ -235,7 +235,11 @@
         "画流程图",
         "时序图",
         "架构图",
-        "画个图"
+        "画个图",
+        "经营分析",
+        "业务分析",
+        "数据看板",
+        "bi"
       ]
     },
     {
@@ -615,7 +619,10 @@
         "网站",
         "静态站点",
         "cms",
-        "博客"
+        "博客",
+        "内容发布站",
+        "内容站",
+        "发文章"
       ]
     },
     {
@@ -1223,7 +1230,10 @@
         "看板",
         "bug 跟踪",
         "需求管理",
-        "敏捷"
+        "敏捷",
+        "团队协作",
+        "协作工具",
+        "多人协作"
       ]
     },
     {
@@ -1898,6 +1908,196 @@
         "做个模型",
         "画模型",
         "3d 模型"
+      ]
+    },
+    {
+      "label": "变现计费",
+      "desc": "接入支付、订阅扣费、开发票、按量计费",
+      "kw": [
+        "payment gateway",
+        "payments platform",
+        "subscription billing",
+        "metered billing",
+        "usage based billing",
+        "merchant of record",
+        "billing system",
+        "invoice",
+        "invoicing",
+        "支付",
+        "计费",
+        "订阅收费",
+        "收费",
+        "发票",
+        "收款",
+        "支付网关"
+      ],
+      "alias": [
+        "接入支付",
+        "怎么收钱",
+        "收钱",
+        "收款",
+        "做订阅",
+        "订阅收费",
+        "做付费",
+        "付费会员",
+        "按量计费",
+        "开发票",
+        "支付集成",
+        "接支付"
+      ],
+      "also": [
+        "https://github.com/juspay/hyperswitch",
+        "https://github.com/invoiceninja/invoiceninja",
+        "https://github.com/polarsource/polar",
+        "https://github.com/killbill/killbill"
+      ]
+    },
+    {
+      "label": "移动端",
+      "desc": "做手机 App、跨平台开发、打包上架",
+      "kw": [
+        "react native",
+        "flutter",
+        "expo",
+        "capacitor",
+        "ionic",
+        "mobile app",
+        "移动端",
+        "手机应用",
+        "安卓应用",
+        "打包 apk",
+        "应用商店上架"
+      ],
+      "alias": [
+        "做个 app",
+        "做个应用",
+        "安卓",
+        "安卓应用",
+        "苹果应用",
+        "手机 app",
+        "手机应用",
+        "跨平台 app",
+        "打包 apk",
+        "上架应用商店",
+        "移动端",
+        "上架 app",
+        "上架",
+        "打包成 apk",
+        "打成 apk"
+      ],
+      "also": [
+        "https://github.com/flutter/flutter",
+        "https://github.com/react/react-native",
+        "https://github.com/expo/expo",
+        "https://github.com/ionic-team/capacitor",
+        "https://github.com/NativeScript/nativescript"
+      ]
+    },
+    {
+      "label": "硬件IoT",
+      "desc": "单片机、传感器、固件、智能家居",
+      "kw": [
+        "iot",
+        "arduino",
+        "esp32",
+        "esp8266",
+        "raspberry pi",
+        "firmware",
+        "microcontroller",
+        "rtos",
+        "embedded system",
+        "物联网",
+        "嵌入式",
+        "单片机",
+        "固件",
+        "智能家居"
+      ],
+      "alias": [
+        "物联网",
+        "单片机",
+        "接传感器",
+        "写固件",
+        "控制硬件",
+        "智能家居",
+        "做硬件",
+        "嵌入式开发",
+        "arduino",
+        "esp32",
+        "树莓派"
+      ],
+      "also": [
+        "https://github.com/home-assistant/core",
+        "https://github.com/arendst/Tasmota",
+        "https://github.com/thingsboard/thingsboard",
+        "https://github.com/espressif/ESP-IDF",
+        "https://github.com/micropython/micropython",
+        "https://github.com/zephyrproject-rtos/zephyr"
+      ]
+    },
+    {
+      "label": "地图LBS",
+      "desc": "地图渲染、地理数据、定位标点",
+      "kw": [
+        "gis",
+        "geospatial",
+        "map library",
+        "mapbox",
+        "leaflet",
+        "openlayers",
+        "tile server",
+        "地理信息",
+        "地图",
+        "地理数据",
+        "定位服务"
+      ],
+      "alias": [
+        "地图",
+        "在地图上标点",
+        "标点",
+        "做地图",
+        "地理",
+        "定位",
+        "地图应用",
+        "热力地图"
+      ],
+      "also": [
+        "https://github.com/Leaflet/Leaflet",
+        "https://github.com/CesiumGS/cesium",
+        "https://github.com/openlayers/openlayers",
+        "https://github.com/Turfjs/turf",
+        "https://github.com/maplibre/maplibre-gl-js"
+      ]
+    },
+    {
+      "label": "游戏开发",
+      "desc": "游戏引擎、2D/3D 游戏框架",
+      "kw": [
+        "game engine",
+        "game framework",
+        "gamedev",
+        "game development",
+        "游戏引擎",
+        "游戏开发",
+        "做游戏",
+        "2d game",
+        "3d game"
+      ],
+      "alias": [
+        "做游戏",
+        "游戏引擎",
+        "游戏开发",
+        "小游戏",
+        "2d 游戏",
+        "3d 游戏",
+        "写游戏"
+      ],
+      "also": [
+        "https://github.com/godotengine/godot",
+        "https://github.com/bevyengine/bevy",
+        "https://github.com/phaserjs/phaser",
+        "https://github.com/raysan5/raylib",
+        "https://github.com/4ian/GDevelop",
+        "https://github.com/BabylonJS/Babylon.js"
       ]
     }
   ]

@@ -247,6 +247,46 @@
       {
         "q": "topic:design-tools",
         "label": "设计工具"
+      },
+      {
+        "q": "topic:payments",
+        "label": "变现计费"
+      },
+      {
+        "q": "topic:billing",
+        "label": "变现计费"
+      },
+      {
+        "q": "topic:mobile-development",
+        "label": "移动端"
+      },
+      {
+        "q": "topic:cross-platform",
+        "label": "移动端"
+      },
+      {
+        "q": "topic:iot",
+        "label": "硬件IoT"
+      },
+      {
+        "q": "topic:embedded",
+        "label": "硬件IoT"
+      },
+      {
+        "q": "topic:gis",
+        "label": "地图LBS"
+      },
+      {
+        "q": "topic:maps",
+        "label": "地图LBS"
+      },
+      {
+        "q": "topic:game-engine",
+        "label": "游戏开发"
+      },
+      {
+        "q": "topic:gamedev",
+        "label": "游戏开发"
       }
     ]
   },
@@ -401,7 +441,36 @@
       "blender/blender",
       "penpot/penpot",
       "comfyanonymous/ComfyUI",
-      "piskelapp/piskel"
+      "piskelapp/piskel",
+      "juspay/hyperswitch",
+      "getlago/lago",
+      "invoiceninja/invoiceninja",
+      "polarsource/polar",
+      "stripe/stripe-node",
+      "flutter/flutter",
+      "react/react-native",
+      "expo/expo",
+      "ionic-team/capacitor",
+      "NativeScript/nativescript",
+      "home-assistant/core",
+      "arendst/Tasmota",
+      "espressif/ESP-IDF",
+      "platformio/platformio-core",
+      "RT-Thread/rt-thread",
+      "arduino/Arduino",
+      "CesiumGS/cesium",
+      "Turfjs/turf",
+      "openlayers/openlayers",
+      "Leaflet/Leaflet",
+      "mapbox/mapbox-gl-js",
+      "maplibre/maplibre-gl-js",
+      "godotengine/godot",
+      "bevyengine/bevy",
+      "raysan5/raylib",
+      "4ian/GDevelop",
+      "libgdx/libgdx",
+      "phaserjs/phaser",
+      "cocos2d/cocos2d-x"
     ]
   },
   "cn": {
