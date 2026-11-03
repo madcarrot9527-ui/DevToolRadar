@@ -84,6 +84,23 @@ def _build_matchers(tag_rules: list[dict]):
 # 而滥打热门 topic（一个仪表盘也标 docker/kubernetes）。
 FIELD_W = {"name": 3.0, "category": 1.5, "topics": 1.35, "desc": 1.0}
 
+# 有些场景不该拿 category 当证据。category 是精选清单的章节标题
+# （"Machine Learning"、"Command Line Learning"、"React Tutorials"），说的是
+# 「这条被归在清单的哪一节」，不是「这个工具是干什么的」。对绝大多数场景这个
+# 区分无所谓，但「学习资源」的关键词是 learn / tutorial / guide 这类泛词，
+# 让章节标题参与投票就等于把整节机器学习库判成教程 —— pytorch（★10 万）当过一次，
+# Microsoft Mage 当过两次。
+#
+# 试过的替代方案，都不如这一条：
+#   A. 关键词 learn 改整词匹配 → 少 30 条，pytorch 自己掉标签（它靠的是 category）。
+#   B. A + 「高星无场景条目保留」→ 5426 条、学习资源 138，但产出 102 条无场景条目，
+#      得为它们另写一套显示逻辑，代价大于收益。
+#   C. 本方案 → 5425 条（只丢 1 条）、其余条目标签零改动。
+#
+# 剩下的一半仍是人工活：learn 这个词本身删不掉（实测删掉丢 30 条），
+# 教程仓库名/描述里恰好有 learning 的，还得靠 config/manual_tags.json 纠。
+NO_CATEGORY_LABELS = {"学习资源"}
+
 # 弱标签：几乎每个项目都说自己「支持 docker 部署」「可自托管」「有 pipeline」。
 # 这类标签要求分数接近最强标签才算数，否则按场景浏览会被灌满不相干的东西。
 WEAK_RATIO = 0.8
@@ -287,10 +304,14 @@ def _score_one(fields: dict[str, str],
         nhit = 0
         body = False
         dpos = 10 ** 6
+        skip_cat = label in NO_CATEGORY_LABELS
         for kind, k, k_name in kws:
             hit_any = False
             for fname, text in fields.items():
                 if not text:
+                    continue
+                # 见 NO_CATEGORY_LABELS：这类场景的章节标题不算用途证据。
+                if skip_cat and fname == "category":
                     continue
                 mat = k_name if fname == "name" else k
                 if kind == "in":
