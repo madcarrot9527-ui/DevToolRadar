@@ -15,7 +15,8 @@ import re
 from datetime import date
 from urllib.parse import urlparse
 
-from common import DATA_DIR, clip, github_headers, http_get, load_config, log
+from common import (DATA_DIR, clip, github_headers, http_get, load_config,
+                    load_json, log)
 
 CACHE_DIR = DATA_DIR / ".cache"
 CACHE_DIR.mkdir(parents=True, exist_ok=True)
@@ -376,6 +377,7 @@ def fetch(cfg: dict | None = None) -> list[dict]:
     max_items = acfg.get("max_items_per_repo", 400)
 
     all_rows: list[dict] = []
+    failed: list[str] = []
     for entry in acfg.get("repos", []):
         repo = entry["repo"]
         branch = entry.get("branch", "master")
@@ -387,6 +389,7 @@ def fetch(cfg: dict | None = None) -> list[dict]:
                 text = fetch_text(repo, branch, "README.md")
                 if not text:
                     log(f"awesome {repo}: README 不可用", "WARN")
+                    failed.append(repo)
                     continue
                 rows = _parse_readme(text, repo, label, max_items,
                                      entry.get("fixed_category"))
@@ -394,6 +397,25 @@ def fetch(cfg: dict | None = None) -> list[dict]:
             all_rows.extend(rows)
         except Exception as e:  # noqa: BLE001
             log(f"awesome {repo} 解析异常: {e}", "WARN")
+            failed.append(repo)
+
+    # 单个源抓不到，不能连累整个索引。update.py 的回退是「整个 awesome 源 0 条才用旧
+    # 文件」，而这里失败的是 12 个源里的 2、3 个——总数照样非零，回退不会触发，
+    # 于是那两三个列表的条目就被静默删掉了。2026-11-03 真发生过一次：
+    # viatsko/awesome-vscode（SSL 全断）、k4m4/terminals-are-sexy（403）、
+    # agarrharr/awesome-cli-apps 三个源失败，索引从 5417 掉到 5152，而自检全绿。
+    # 所以按「源」粒度回退：失败的那个源用它上次落盘的条目顶上。
+    if failed:
+        prev = load_json(DATA_DIR / "raw_awesome.json", []) or []
+        want = set(failed)
+        carried = [r for r in prev if (r.get("repo") or "") in want]
+        if carried:
+            log(f"awesome: {len(failed)} 个源本次失败（{', '.join(failed)}），"
+                f"沿用上次缓存 {len(carried)} 条", "WARN")
+            all_rows.extend(carried)
+        else:
+            log(f"awesome: {len(failed)} 个源本次失败且没有缓存可沿（{', '.join(failed)}）",
+                "WARN")
 
     dedup: dict[str, dict] = {}
     for r in all_rows:

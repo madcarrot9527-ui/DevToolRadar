@@ -88,6 +88,7 @@
     "https://github.com/NikeNano/kubeflow-github-action": "GitHub Action：编译、部署并运行 Kubeflow Pipeline",
     "https://github.com/machine-learning-apps/ml-template-azure": "GitHub Action：在 Azure Machine Learning 上跑训练任务",
 
+    "https://github.com/microsoft/Mage": "微软的 4B 轻量多模态模型家族：图像视频理解（Mage-VL）、文生图与指令改图（Mage-Flow）、GUI 与终端混合的电脑操作代理（Cowork），研究用",
     "https://github.com/microsoft/vscode": "微软的跨平台代码编辑器，插件生态最大，前端后端都能写，也是很多 AI 编码插件的宿主",
     "https://github.com/mongodb/mongo": "MongoDB 服务端源码：文档型数据库，用类 JSON 结构存数据，schema 灵活",
     "https://github.com/vercel/vercel": "Vercel 的部署 CLI 与构建工具，前端项目推上去自动构建、给预览链接、绑域名",

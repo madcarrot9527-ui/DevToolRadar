@@ -137,8 +137,10 @@ def check_index(tools: list[dict]) -> None:
     empty_desc = [t for t in tools if not (t.get("desc") or "").strip()]
     ratio = (len(tools) - len(empty_desc)) / len(tools)
     if empty_desc:
+        # 精度用两位：1 条缺说明时 99.98% 四舍五入成 100.0%，
+        # 会打出一句自相矛盾的「100.0%（1 条没有说明）」。
         rec("WARN" if ratio >= MIN_DESC_RATIO else "FAIL", "说明覆盖率",
-            f"{ratio*100:.1f}%（{len(empty_desc)} 条没有说明）")
+            f"{ratio*100:.2f}%（{len(empty_desc)} 条没有说明）")
     else:
         rec("PASS", "说明覆盖率", f"{ratio*100:.1f}%，全部有说明")
 

@@ -47,6 +47,12 @@
 "src": "ungh",
 "stars": 832
 },
+"2noise/ChatTTS": {
+"desc": "A generative speech model for daily dialogue.",
+"pushed_at": "2026-04-10",
+"src": "ungh",
+"stars": 39976
+},
 "567-labs/instructor": {
 "desc": "structured outputs for llms",
 "pushed_at": "2026-10-26",
@@ -61,6 +67,12 @@
 },
 "9001/copyparty": {
 "missing": true
+},
+"Achno/gowall": {
+"desc": "A tool to convert a Wallpaper's color scheme / palette, OCR with VLM's Traditional & Hybrid, Image Compression ,color palette extraction,  image upsacling with Adversarial Networks  and more image processing features.",
+"pushed_at": "2026-10-20",
+"src": "ungh",
+"stars": 2321
 },
 "AgentsKit-io/agentskit": {
 "desc": "The complete toolkit for building AI agents in JavaScript. Lightweight core, React & Terminal UIs, autonomous runtime, tools, skills, memory, RAG and observability. Plug-and-play from chat UI to full agents.",
@@ -128,6 +140,12 @@
 "src": "ungh",
 "stars": 1445
 },
+"AstrBotDevs/AstrBot": {
+"desc": "AI Agent Assistant & development framework that integrates lots of IM platforms, LLMs, plugins and AI feature, and can be your openclaw alternative. ✨",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 45563
+},
 "Attojs/vue-request": {
 "desc": "⚡️ This is a library that can easily help you manage request states, supporting common features such as SWR, polling, error retry, caching, and pagination, etc. ⚡️ 这是一个能够轻松帮助你管理请求状态的库，支持 SWR、轮询、错误重试、缓存、分页等常用功能。",
 "pushed_at": "2025-03-14",
@@ -145,6 +163,18 @@
 "pushed_at": "2026-10-21",
 "src": "ungh",
 "stars": 75
+},
+"Bash-it/bash-it": {
+"desc": "A community Bash framework.",
+"pushed_at": "2026-10-27",
+"src": "ungh",
+"stars": 15286
+},
+"BeanieODM/beanie": {
+"desc": "Asynchronous Python ODM for MongoDB",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 2709
 },
 "Borales/actions-yarn": {
 "missing": true
@@ -172,6 +202,12 @@
 "pushed_at": "2026-10-28",
 "src": "ungh",
 "stars": 4200
+},
+"C4illin/ConvertX": {
+"desc": "💾 Self-hosted online file converter. Supports 1000+ formats ⚙️",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 19359
 },
 "CLoaKY233/siltop": {
 "desc": "Terminal system monitor for Apple Silicon Macs: CPU, GPU, power, temperatures, processes.",
@@ -215,6 +251,12 @@
 "src": "ungh",
 "stars": 7693
 },
+"D4Vinci/Scrapling": {
+"desc": "🕷️ The BEST Web Scraping framework that handles everything from a single request to a full-scale crawl! Don't be shy, join here: https://discord.gg/EMgGbDceNQ and follow here for daily tips and tricks: https://x.com/Scrapling_dev",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 92437
+},
 "DLR-RM/stable-baselines3": {
 "desc": "PyTorch version of Stable Baselines, reliable implementations of reinforcement learning algorithms.",
 "pushed_at": "2026-10-26",
@@ -226,6 +268,12 @@
 "pushed_at": "2026-10-27",
 "src": "ungh",
 "stars": 86
+},
+"DavidHDev/react-bits": {
+"desc": "The largest open-source library of animated, interactive, and customizable React & Next.js components for building standout web products and experiences. Built for humans and AI agents.",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 51002
 },
 "DayuanJiang/PecoFence": {
 "desc": "A free, open-source Stardock Fences alternative for Windows 11. Glass fences, live folders, tabs, Peek. Rust, ten languages, portable.",
@@ -253,6 +301,12 @@
 "pushed_at": "2026-10-27",
 "src": "ungh",
 "stars": 100
+},
+"Delgan/loguru": {
+"desc": "Python logging made (stupidly) simple",
+"pushed_at": "2026-10-25",
+"src": "ungh",
+"stars": 24157
 },
 "DialmasterOrg/Youtarr": {
 "desc": "Self-hosted web app that automates downloading, organizing, and scheduling YouTube channel content with support for Plex, Kodi, Emby and Jellyfin",
@@ -344,6 +398,12 @@
 "src": "ungh",
 "stars": 2665
 },
+"FactoryBoy/factory_boy": {
+"desc": "A test fixtures replacement for Python",
+"pushed_at": "2026-01-01",
+"src": "ungh",
+"stars": 3811
+},
 "Farama-Foundation/Gymnasium": {
 "desc": "A standard API for single-agent reinforcement learning environments, with popular reference environments and related utilities (formerly Gym)",
 "pushed_at": "2026-10-29",
@@ -373,6 +433,12 @@
 "pushed_at": "2026-10-26",
 "src": "ungh",
 "stars": 2924
+},
+"FormidableLabs/victory": {
+"desc": "A collection of composable React components for building interactive data visualizations",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 11244
 },
 "FunAudioLLM/CosyVoice": {
 "desc": "Multi-lingual large voice generation model, providing inference, training and deployment full-stack ability.",
@@ -404,6 +470,13 @@
 "src": "ungh",
 "stars": 184
 },
+"Graphify-Labs/graphify": {
+"desc": "Turn any codebase, with its docs, SQL schemas, configs, and PDFs, into a queryable knowledge graph. A /graphify skill for Claude Code, Cursor, Codex, and Gemini CLI: local deterministic AST parsing, every edge explained, no vector store.",
+"lang": "Python",
+"pushed_at": "2026-11-02",
+"src": "api",
+"stars": 141449
+},
 "HaaLeo/publish-vscode-extension": {
 "desc": "GitHub action to publish your VS Code Extension to the Open VSX Registry or Visual Studio Marketplace.",
 "pushed_at": "2026-09-29",
@@ -427,6 +500,12 @@
 "pushed_at": "2026-05-24",
 "src": "ungh",
 "stars": 353
+},
+"HypothesisWorks/hypothesis": {
+"desc": "The property-based testing library for Python",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 9130
 },
 "Idnan/bash-guide": {
 "missing": true
@@ -455,6 +534,12 @@
 "src": "ungh",
 "stars": 281
 },
+"ItzCrazyKns/Vane": {
+"desc": "Vane is an AI-powered answering engine.",
+"pushed_at": "2026-09-01",
+"src": "ungh",
+"stars": 37962
+},
 "JMBeresford/retrom": {
 "desc": "A centralized game library/collection management service with a focus on emulation",
 "pushed_at": "2026-10-29",
@@ -466,6 +551,18 @@
 "pushed_at": "2026-10-30",
 "src": "ungh",
 "stars": 45
+},
+"JaidedAI/EasyOCR": {
+"desc": "Ready-to-use OCR with 80+ supported languages and all popular writing scripts including Latin, Chinese, Arabic, Devanagari, Cyrillic and etc.",
+"pushed_at": "2025-12-05",
+"src": "ungh",
+"stars": 30123
+},
+"Jamailar/Beav": {
+"desc": "小红书 AI 运营工作台｜小红书采集、评论区下载、素材库、选题、AI写作、小红书全域解决方案，开箱即用，一键安装，小红书AI工作台，自媒体素材库，AI写作+图片自动编排，小红书版OpenClaw、自媒体资产底座+AI工作台，支持小红书图文+小红书评论区下载、小红书AI创作工具、自媒体版WorkBuddy、抖音、小红书爬虫数据采集",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 2256
 },
 "JayeshLab/vue-crypto-dashboard": {
 "desc": "Cryptocurrency Dashboard made with Vue",
@@ -502,6 +599,12 @@
 "pushed_at": "2026-10-06",
 "src": "ungh",
 "stars": 36
+},
+"Julien-cpsn/ATAC": {
+"desc": "A simple API client (postman like) in your terminal",
+"pushed_at": "2026-10-19",
+"src": "ungh",
+"stars": 3748
 },
 "JulienKode/pull-request-name-linter-action": {
 "desc": "⚡️ Lint pull request name with commit lint. This is useful if you squash merge your pull requests ⚡️",
@@ -550,6 +653,12 @@
 "pushed_at": "2025-08-04",
 "src": "ungh",
 "stars": 24
+},
+"Kozea/WeasyPrint": {
+"desc": "The awesome document factory",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 9756
 },
 "Krucible/krucible-github-action": {
 "desc": "A Github action for creating Kubernetes clusters using Krucible",
@@ -653,6 +762,12 @@
 "src": "ungh",
 "stars": 66
 },
+"MongoEngine/mongoengine": {
+"desc": "A Python Object-Document-Mapper for working with MongoDB",
+"pushed_at": "2026-09-06",
+"src": "ungh",
+"stars": 4347
+},
 "Moresyl/metaclean": {
 "desc": "Offline metadata & privacy cleaner for images, Office, PDF and text · Rust + Tauri · 本地文件隐私净化器",
 "pushed_at": "2026-10-19",
@@ -734,6 +849,12 @@
 "src": "ungh",
 "stars": 1146
 },
+"PaddlePaddle/PaddleOCR": {
+"desc": "Turn any PDF or image document into structured data for your AI. A powerful, lightweight OCR toolkit that bridges the gap between images/PDFs and LLMs. Supports 100+ languages.",
+"pushed_at": "2026-09-16",
+"src": "ungh",
+"stars": 92165
+},
 "PaulLeCam/react-leaflet": {
 "desc": "React components for Leaflet maps",
 "pushed_at": "2025-12-31",
@@ -812,6 +933,12 @@
 "src": "ungh",
 "stars": 1
 },
+"Requarks/wiki": {
+"desc": "Wiki.js | Next Generation Open Source Wiki",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 29123
+},
 "RouHim/this-week-in-past": {
 "desc": "Aggregates images taken this week, from previous years and presents them on a web page with a simple slideshow.",
 "pushed_at": "2026-10-29",
@@ -883,6 +1010,18 @@
 "pushed_at": "2026-10-12",
 "src": "ungh",
 "stars": 613
+},
+"Stirling-Tools/Stirling-PDF": {
+"desc": "#1 PDF Application on GitHub that lets you edit PDFs on any device anywhere",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 95559
+},
+"Suor/django-cacheops": {
+"desc": "A slick ORM cache with automatic granular event-driven invalidation.",
+"pushed_at": "2026-04-15",
+"src": "ungh",
+"stars": 2272
 },
 "THUDM/ChatGLM3": {
 "desc": "ChatGLM3 series: Open Bilingual Chat LLMs | 开源双语对话语言模型",
@@ -965,6 +1104,18 @@
 "src": "ungh",
 "stars": 27453
 },
+"Textualize/rich": {
+"desc": "Rich is a Python library for rich text and beautiful formatting in the terminal.",
+"pushed_at": "2026-06-23",
+"src": "ungh",
+"stars": 57704
+},
+"Textualize/textual": {
+"desc": "The lean application framework for Python.  Build sophisticated user interfaces with a simple Python API. Run your apps in the terminal and a web browser.",
+"pushed_at": "2026-10-09",
+"src": "ungh",
+"stars": 37564
+},
 "TheAxelander/OpenBudgeteer": {
 "desc": "OpenBudgeteer is a budgeting app based on the Bucket Budgeting Principle",
 "pushed_at": "2026-10-27",
@@ -1025,6 +1176,12 @@
 "src": "ungh",
 "stars": 240
 },
+"TriliumNext/Trilium": {
+"desc": "Build your personal knowledge base with Trilium Notes",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 38666
+},
 "TryGhost/action-deploy-theme": {
 "desc": "GitHub Action that packages and deploys Ghost themes through the Ghost Admin API",
 "pushed_at": "2026-10-30",
@@ -1054,6 +1211,9 @@
 "pushed_at": "2026-07-22",
 "src": "ungh",
 "stars": 11
+},
+"WeBankFinTech/fes.js": {
+"missing": true
 },
 "WhyNotHugo/python-barcode": {
 "desc": "㊙️ Create standard barcodes with Python. No external dependencies. 100% Organic Python.",
@@ -1205,6 +1365,12 @@
 "src": "ungh",
 "stars": 1279
 },
+"adbar/trafilatura": {
+"desc": "Python & Command-line tool to gather text and metadata on the Web: Crawling, scraping, extraction, output as CSV, JSON, HTML, MD, TXT, XML",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 7061
+},
 "adra2n/otpbox": {
 "desc": "",
 "pushed_at": "2026-07-23",
@@ -1229,11 +1395,23 @@
 "src": "ungh",
 "stars": 2733
 },
+"aio-libs/aiohttp": {
+"desc": "Asynchronous HTTP client/server framework for asyncio and Python",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 16602
+},
 "aio-libs/yarl": {
 "desc": "Yet another URL library",
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 1502
+},
+"airbnb/visx": {
+"desc": "🐯 visx | visualization components",
+"pushed_at": "2026-06-22",
+"src": "ungh",
+"stars": 21093
 },
 "aixisstudio/Snitch": {
 "desc": "Real-time network monitor + outbound firewall — see & block every connection. Privacy-first, local-first, Rust fleet agent, SIEM exports, 8 languages. / Moniteur réseau temps réel + pare-feu sortant, agent de flotte Rust, exports SIEM. 100 % local.",
@@ -1289,6 +1467,12 @@
 "src": "ungh",
 "stars": 6395
 },
+"alexta69/metube": {
+"desc": "Self-hosted video downloader for YouTube and other sites (web UI for yt-dlp)",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 15170
+},
 "alexusmai/laravel-file-manager": {
 "desc": "File manager for Laravel",
 "pushed_at": "2026-05-12",
@@ -1306,6 +1490,12 @@
 "pushed_at": "2026-07-07",
 "src": "ungh",
 "stars": 17371
+},
+"alibaba/zvec": {
+"desc": "A lightweight, lightning-fast, in-process vector database",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 16176
 },
 "alichtman/stronghold": {
 "desc": "Easily configure macOS security settings from the terminal.",
@@ -1381,9 +1571,10 @@
 },
 "ant-design/ant-design": {
 "desc": "An enterprise-class UI design language and React UI library",
-"pushed_at": "2026-10-29",
-"src": "ungh",
-"stars": 99984
+"lang": "TypeScript",
+"pushed_at": "2026-11-03",
+"src": "api",
+"stars": 100055
 },
 "antfu/vue-i18n-ally": {
 "desc": "🌍 All in one i18n extension for VS Code",
@@ -1408,6 +1599,12 @@
 "pushed_at": "2026-09-10",
 "src": "ungh",
 "stars": 2084
+},
+"antoniomika/sish": {
+"desc": "HTTP(S)/WS(S)/TCP Tunnels to localhost using only SSH.",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 4806
 },
 "antoniorodr/Cronboard": {
 "desc": "A terminal-based dashboard for managing cron jobs locally and on servers.",
@@ -1450,6 +1647,9 @@
 "pushed_at": "2026-10-28",
 "src": "ungh",
 "stars": 1339
+},
+"appbaseio/reactivesearch": {
+"missing": true
 },
 "appleboy/docker-ecr-action": {
 "desc": "Publish Docker Images to the Amazon Elastic Container Registry (ECR)",
@@ -1522,6 +1722,15 @@
 "pushed_at": "2026-10-30",
 "src": "ungh",
 "stars": 140
+},
+"asciinema/asciinema": {
+"desc": "Terminal session recorder, streamer and player 📹",
+"pushed_at": "2026-10-27",
+"src": "ungh",
+"stars": 17931
+},
+"asdf-vm/asdf": {
+"missing": true
 },
 "asheshgoplani/agent-deck": {
 "desc": "Terminal session manager for AI coding agents. One TUI for Claude, Gemini, OpenCode, Codex, and more.",
@@ -1685,6 +1894,18 @@
 "src": "ungh",
 "stars": 1304
 },
+"bastienwirtz/homer": {
+"desc": "A very simple static homepage for your server.",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 11696
+},
+"bats-core/bats-core": {
+"desc": "Bash Automated Testing System",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 6337
+},
 "bcakmakoglu/vue-flow": {
 "desc": "A highly customizable Flowchart component for Vue 3. Features seamless zoom & pan 🔎, additional components like a Minimap 🗺 and utilities to interact with state and graph.",
 "pushed_at": "2026-07-14",
@@ -1703,6 +1924,12 @@
 "src": "ungh",
 "stars": 51
 },
+"bencherdev/bencher": {
+"desc": "🐰 Bencher - Continuous Benchmarking",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 926
+},
 "benfred/py-spy": {
 "desc": "Sampling profiler for Python programs",
 "pushed_at": "2026-10-28",
@@ -1720,6 +1947,12 @@
 "pushed_at": "2023-07-04",
 "src": "ungh",
 "stars": 23098
+},
+"betterleaks/betterleaks": {
+"desc": "Find leaked secrets everywhere.",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 2726
 },
 "bevacqua/hget": {
 "desc": ":clap: Render websites in plain text from your terminal",
@@ -1811,6 +2044,25 @@
 "src": "ungh",
 "stars": 646
 },
+"browser-use/browser-use": {
+"desc": "Open-source Python library for AI browser agents, plus Browser Use Cloud: stealth browsers and a hosted agent API.",
+"lang": "Python",
+"pushed_at": "2026-11-02",
+"src": "api",
+"stars": 119906
+},
+"browserbase/stagehand": {
+"desc": "The SDK to extract data and interact with any site on the web. Get started with Claude Code, Codex, Eve, Mastra, and more.",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 25917
+},
+"brufdev/many-notes": {
+"desc": "Markdown note-taking web application designed for simplicity",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 1092
+},
 "byrencheema/airstats": {
 "desc": "A menu bar system monitor for macOS. CPU, memory, GPU, network, disk, battery and thermals at 0.046% CPU.",
 "pushed_at": "2026-10-15",
@@ -1874,6 +2126,12 @@
 "src": "ungh",
 "stars": 131
 },
+"chakra-ui/chakra-ui": {
+"desc": "Chakra UI is a component system for building SaaS products with speed ⚡️",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 40710
+},
 "changs/slimzsh": {
 "desc": "Small, usable configuration for ZSH",
 "pushed_at": "2025-09-04",
@@ -1885,6 +2143,12 @@
 "pushed_at": "2026-09-16",
 "src": "ungh",
 "stars": 4900
+},
+"charmbracelet/glow": {
+"desc": "Render markdown on the CLI, with pizzazz! 💅🏻",
+"pushed_at": "2026-10-05",
+"src": "ungh",
+"stars": 27886
 },
 "chdb-io/chdb": {
 "desc": "chDB is an in-process OLAP SQL Engine 🚀 powered by ClickHouse",
@@ -1909,6 +2173,12 @@
 "pushed_at": "2024-06-10",
 "src": "ungh",
 "stars": 153
+},
+"chroma-core/chroma": {
+"desc": "Search infrastructure for AI",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 29623
 },
 "ckeditor/ckeditor5-vue": {
 "desc": "Official CKEditor 5 Vue.js component.",
@@ -2024,6 +2294,12 @@
 "src": "ungh",
 "stars": 1790
 },
+"crewAIInc/crewAI": {
+"desc": "Framework for orchestrating role-playing, autonomous AI agents. By fostering collaborative intelligence, CrewAI empowers agents to work together seamlessly, tackling complex tasks.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 60415
+},
 "crishellco/vue-hubble": {
 "desc": "Vue test selectors made easy",
 "pushed_at": "2026-09-16",
@@ -2041,6 +2317,12 @@
 "pushed_at": "2025-03-02",
 "src": "ungh",
 "stars": 314
+},
+"cshum/imagor": {
+"desc": "Fast, secure image processing server and Go library, using libvips",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 4056
 },
 "cycjimmy/semantic-release-action": {
 "desc": "GitHub Action for Semantic Release",
@@ -2087,6 +2369,12 @@
 "src": "ungh",
 "stars": 317
 },
+"danielgatis/rembg": {
+"desc": "Rembg is a tool to remove images background",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 25303
+},
 "darrikonn/td-cli": {
 "desc": "A todo command line todo manager ✔️",
 "pushed_at": "2026-04-14",
@@ -2105,6 +2393,18 @@
 "src": "ungh",
 "stars": 3319
 },
+"dbcli/mycli": {
+"desc": "Rich MySQL Terminal Client with AutoCompletion, Syntax Highlighting, and Dataframes",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 11988
+},
+"dbcli/pgcli": {
+"desc": "Postgres CLI with autocompletion and syntax highlighting",
+"pushed_at": "2026-10-24",
+"src": "ungh",
+"stars": 13427
+},
 "deepseek-ai/DeepInfer": {
 "missing": true
 },
@@ -2116,6 +2416,12 @@
 },
 "dematerializer/emoji-finder": {
 "missing": true
+},
+"denisidoro/navi": {
+"desc": "An interactive cheatsheet tool for the command-line",
+"pushed_at": "2026-10-16",
+"src": "ungh",
+"stars": 17820
 },
 "denolib/setup-deno": {
 "desc": "Set up your GitHub Actions workflow with a specific version of deno",
@@ -2141,6 +2447,15 @@
 "src": "ungh",
 "stars": 2828
 },
+"diced/zipline": {
+"desc": "A ShareX/file upload server that is easy to use, packed with features, and with an easy setup!",
+"pushed_at": "2026-10-28",
+"src": "ungh",
+"stars": 3482
+},
+"diegomura/react-pdf": {
+"missing": true
+},
 "django-cms/django-cms": {
 "desc": "The easy-to-use and developer-friendly enterprise CMS powered by Django",
 "pushed_at": "2026-10-28",
@@ -2164,6 +2479,12 @@
 "pushed_at": "2026-10-30",
 "src": "ungh",
 "stars": 3342
+},
+"django/django": {
+"desc": "The Web framework for perfectionists with deadlines.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 91490
 },
 "dkioroglou/fresfolio": {
 "desc": "Browser based note-taking app with Flask as backend and Vue3 as frontend.",
@@ -2195,6 +2516,12 @@
 "src": "ungh",
 "stars": 6583
 },
+"dnote/dnote": {
+"desc": "A simple command line notebook",
+"pushed_at": "2026-10-17",
+"src": "ungh",
+"stars": 3089
+},
 "docat-org/docat": {
 "desc": "Host your docs. Simple. Versioned. Fancy.",
 "pushed_at": "2026-10-28",
@@ -2225,6 +2552,9 @@
 "src": "ungh",
 "stars": 3
 },
+"dorny/paths-filter": {
+"missing": true
+},
 "dotphiles/dotzsh": {
 "desc": "A community driven framework for zsh",
 "pushed_at": "2018-05-20",
@@ -2237,8 +2567,26 @@
 "src": "ungh",
 "stars": 511
 },
+"duckdb/duckdb": {
+"desc": "DuckDB is a high-performance analytical database system",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 42736
+},
+"dullage/flatnotes": {
+"desc": "A self-hosted, database-less note taking web app that utilises a flat folder of markdown files for storage.",
+"pushed_at": "2026-08-29",
+"src": "ungh",
+"stars": 3272
+},
 "dumptyd/vue-css-donut-chart": {
 "missing": true
+},
+"dutchcoders/transfer.sh": {
+"desc": "Easy and fast file sharing from the command-line.",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 15906
 },
 "dvorka/hstr": {
 "desc": "Bash and Zsh shell history TUI suggest box - easily view, navigate, search and manage your command history.",
@@ -2384,6 +2732,9 @@
 "src": "ungh",
 "stars": 15
 },
+"epicmaxco/vuestic-admin": {
+"missing": true
+},
 "epoupon/lms": {
 "desc": "Lightweight Music Server. Access your self-hosted music using a web interface.",
 "pushed_at": "2026-09-23",
@@ -2470,9 +2821,10 @@
 },
 "fastapi/fastapi": {
 "desc": "FastAPI framework, high performance, easy to learn, fast to code, ready for production",
-"pushed_at": "2026-10-27",
-"src": "ungh",
-"stars": 104261
+"lang": "Python",
+"pushed_at": "2026-11-02",
+"src": "api",
+"stars": 104369
 },
 "fastapi/sqlmodel": {
 "desc": "SQL databases in Python, designed for simplicity, compatibility, and robustness.",
@@ -2588,6 +2940,12 @@
 "src": "ungh",
 "stars": 44
 },
+"gaogaotiantian/viztracer": {
+"desc": "A debugging and profiling tool that can trace and visualize python code execution",
+"pushed_at": "2026-09-26",
+"src": "ungh",
+"stars": 7773
+},
 "gaseous-project/gaseous-server": {
 "desc": "A game ROM manager, with a built in web based emulator using multiple sources to identify and provide metadata",
 "pushed_at": "2026-10-28",
@@ -2624,6 +2982,12 @@
 "src": "ungh",
 "stars": 1672
 },
+"gethomepage/homepage": {
+"desc": "A highly customizable homepage (or startpage / application dashboard) with Docker and service API integrations.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 33484
+},
 "getnikola/nikola": {
 "desc": "A static website and blog generator",
 "pushed_at": "2026-10-24",
@@ -2648,6 +3012,12 @@
 "src": "ungh",
 "stars": 67
 },
+"glanceapp/glance": {
+"desc": "A self-hosted dashboard that puts all your feeds in one place",
+"pushed_at": "2026-10-20",
+"src": "ungh",
+"stars": 37966
+},
 "gleitz/howdoi": {
 "desc": "instant coding answers via the command line",
 "pushed_at": "2026-09-30",
@@ -2666,11 +3036,20 @@
 "src": "ungh",
 "stars": 2694
 },
+"gokcehan/lf": {
+"desc": "Terminal file manager",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 9583
+},
 "google-research/timesfm": {
 "desc": "TimesFM (Time Series Foundation Model) is a pretrained time-series foundation model developed by Google Research for time-series forecasting.",
 "pushed_at": "2026-09-29",
 "src": "ungh",
 "stars": 34826
+},
+"google/adk-python": {
+"missing": true
 },
 "google/cadvisor": {
 "desc": "Analyzes resource usage and performance characteristics of running containers.",
@@ -2705,6 +3084,12 @@
 "src": "ungh",
 "stars": 1976
 },
+"gradio-app/gradio": {
+"desc": "Build and share delightful machine learning apps, all in Python. 🌟 Star to support our work!",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 43973
+},
 "grandnode/grandnode2": {
 "desc": "Open-source eCommerce platform for C# and ASP.NET Core 10 with MongoDB. Build multi-store shops and multi-vendor marketplaces with B2B/B2C, REST API, plugins, Vue 3 and Docker.",
 "pushed_at": "2026-10-30",
@@ -2712,6 +3097,9 @@
 "stars": 1338
 },
 "grantjenks/python-diskcache": {
+"missing": true
+},
+"graphieros/vue-data-ui": {
 "missing": true
 },
 "gruns/icecream": {
@@ -2768,6 +3156,12 @@
 "src": "ungh",
 "stars": 46732
 },
+"henrygd/beszel": {
+"desc": "Lightweight server monitoring with historical data, docker stats, and alerts.",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 26776
+},
 "hezhenghui7338/Lumina": {
 "desc": "Local AI Reading Companion",
 "pushed_at": "2026-10-30",
@@ -2786,6 +3180,12 @@
 "src": "ungh",
 "stars": 1045
 },
+"httpie/cli": {
+"desc": "🥧 HTTPie CLI  — modern, user-friendly command-line HTTP client for the API era. JSON support, colors, sessions, downloads, plugins & more.",
+"pushed_at": "2024-12-17",
+"src": "ungh",
+"stars": 38686
+},
 "httpie/httpie": {
 "desc": "🥧 HTTPie CLI  — modern, user-friendly command-line HTTP client for the API era. JSON support, colors, sessions, downloads, plugins & more.",
 "pushed_at": "2024-12-17",
@@ -2798,11 +3198,24 @@
 "src": "ungh",
 "stars": 21859
 },
+"huggingface/transformers": {
+"desc": "🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, for both inference and training.",
+"lang": "Python",
+"pushed_at": "2026-11-03",
+"src": "api",
+"stars": 168484
+},
 "hugh999999/nfc_tool_share_key": {
 "desc": "NFC key sharing, used to crack access cards",
 "pushed_at": "2026-07-15",
 "src": "ungh",
 "stars": 220
+},
+"huginn/huginn": {
+"desc": "Create agents that monitor and act on your behalf.  Your agents are standing by!",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 50259
 },
 "hunshcn/gh-proxy": {
 "desc": "github release、archive以及项目文件的加速项目",
@@ -2815,6 +3228,12 @@
 "pushed_at": "2026-06-04",
 "src": "ungh",
 "stars": 9
+},
+"hynek/structlog": {
+"desc": "Simple, powerful, and fast logging for Python.",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 4986
 },
 "hyperopt/hyperopt": {
 "desc": "Distributed Asynchronous Hyperparameter Optimization in Python",
@@ -2899,6 +3318,12 @@
 "pushed_at": "2026-08-13",
 "src": "ungh",
 "stars": 15596
+},
+"influxdata/telegraf": {
+"desc": "Agent for collecting, processing, aggregating, and writing metrics, logs, and other arbitrary data.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 17893
 },
 "inkline/inkline": {
 "desc": "Inkline is the intuitive UI Components library that gives you a developer-friendly foundation for building high-quality, accessible, and customizable Vue.js 3 Design Systems.",
@@ -2996,6 +3421,12 @@
 "src": "ungh",
 "stars": 6209
 },
+"jarun/nnn": {
+"desc": "n³ The unorthodox terminal file manager",
+"pushed_at": "2026-10-25",
+"src": "ungh",
+"stars": 22100
+},
 "jasonraimondi/url-to-png": {
 "desc": "Selfhosted. URL to PNG utility featuring parallel rendering using Playwright for screenshots and with storage caching via Local, S3, or CouchDB",
 "pushed_at": "2026-08-04",
@@ -3038,6 +3469,9 @@
 "src": "ungh",
 "stars": 3086
 },
+"jazzband/django-silk": {
+"missing": true
+},
 "jazzband/tablib": {
 "desc": "Python Module for Tabular Datasets in XLS, CSV, JSON, YAML, &c.",
 "pushed_at": "2026-10-29",
@@ -3055,6 +3489,12 @@
 "pushed_at": "2026-04-19",
 "src": "ungh",
 "stars": 53220
+},
+"jestjs/jest": {
+"desc": "Delightful JavaScript Testing.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 45471
 },
 "jhaals/yopass": {
 "desc": "Secure sharing of secrets, passwords and files",
@@ -3079,6 +3519,12 @@
 "pushed_at": "2026-10-12",
 "src": "ungh",
 "stars": 8022
+},
+"joke2k/faker": {
+"desc": "Faker is a Python package that generates fake data for you.",
+"pushed_at": "2026-10-28",
+"src": "ungh",
+"stars": 19477
 },
 "jonashellmann/everydocs-core": {
 "desc": "A simple Document Management System for private use with basic functionality to organize your documents digitally",
@@ -3350,6 +3796,25 @@
 "src": "ungh",
 "stars": 2762
 },
+"lancedb/lancedb": {
+"desc": "Developer-friendly OSS embedded retrieval library for multimodal AI. Search More; Manage Less.",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 11833
+},
+"langchain-ai/langchain": {
+"desc": "The agent engineering platform.",
+"lang": "Python",
+"pushed_at": "2026-11-03",
+"src": "api",
+"stars": 148931
+},
+"langchain-ai/langgraph": {
+"desc": "Build resilient agents.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 44334
+},
 "lannonbr/vsce-action": {
 "desc": "A GitHub Action to automate deploying VS Code extensions",
 "pushed_at": "2024-08-21",
@@ -3373,6 +3838,12 @@
 "pushed_at": "2026-10-28",
 "src": "ungh",
 "stars": 1302
+},
+"leemysw/yovoice": {
+"desc": "Open-source local AI audio & music studio for macOS & Windows. TTS, voice cloning, songs with lyrics, and multi-track scores — 100% offline, zero API fees.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 2021
 },
 "leepeuker/movary": {
 "desc": "A self-hosted web app for tracking, rating, and exploring your movie watch history.",
@@ -3428,6 +3899,18 @@
 "src": "ungh",
 "stars": 861
 },
+"lirantal/dockly": {
+"desc": "Immersive terminal interface for managing docker containers and services",
+"pushed_at": "2026-10-27",
+"src": "ungh",
+"stars": 4035
+},
+"lissy93/dashy": {
+"desc": "🚀 A self-hostable personal dashboard built for you. Includes status-checking, widgets, themes, icon packs, a UI editor and tons more!",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 26893
+},
 "litestar-org/litestar": {
 "desc": "Light, flexible and extensible ASGI framework | Built to scale",
 "pushed_at": "2026-10-30",
@@ -3458,6 +3941,18 @@
 "src": "ungh",
 "stars": 562
 },
+"lldap/lldap": {
+"desc": "Light LDAP implementation",
+"pushed_at": "2026-09-26",
+"src": "ungh",
+"stars": 6605
+},
+"logdyhq/logdy-core": {
+"desc": "Realtime log viewer with web UI, tail -f for logs with a web interface browser.",
+"pushed_at": "2025-08-25",
+"src": "ungh",
+"stars": 2315
+},
 "lordgiotto/google-font-installer": {
 "missing": true
 },
@@ -3479,6 +3974,12 @@
 "src": "ungh",
 "stars": 53
 },
+"lucide-icons/lucide": {
+"desc": "Beautiful & consistent icon toolkit made by the community. Lucide is an open-source icon library that provides 2000+ vector (svg) files for displaying icons and symbols in digital and non-digital projects.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 25475
+},
 "lukasbach/react-complex-tree": {
 "desc": "Unopinionated Accessible Tree Component with Multi-Select and Drag-And-Drop",
 "pushed_at": "2026-08-24",
@@ -3490,6 +3991,12 @@
 "pushed_at": "2019-11-11",
 "src": "ungh",
 "stars": 192
+},
+"lundberg/respx": {
+"desc": "Mock HTTPX with awesome request patterns and response side effects 🦋",
+"pushed_at": "2026-07-21",
+"src": "ungh",
+"stars": 844
 },
 "lvv/git-prompt": {
 "desc": "bash prompt with GIT, SVN and HG modules",
@@ -3569,11 +4076,23 @@
 "src": "ungh",
 "stars": 13075
 },
+"manticoresoftware/manticoresearch": {
+"desc": "Open-source search database for full-text, vector, and hybrid search with real-time indexing and SQL.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 12075
+},
 "mantinedev/mantine": {
 "desc": "A fully featured React components library",
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 31889
+},
+"marimo-team/marimo": {
+"desc": "A reactive notebook for Python — run reproducible experiments, query with SQL, execute as a script, deploy as an app, and version with git. Stored as pure Python. All in a modern, AI-native editor.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 23406
 },
 "marionebl/share-cli": {
 "desc": "🌍  Quickly share files from your command line",
@@ -3610,6 +4129,12 @@
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 5236
+},
+"matplotlib/matplotlib": {
+"desc": "matplotlib: plotting with Python",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 23410
 },
 "matthewwithanm/python-markdownify": {
 "desc": "Convert HTML to Markdown",
@@ -3659,6 +4184,12 @@
 "src": "ungh",
 "stars": 327
 },
+"mem0ai/mem0": {
+"desc": "The Memory Layer for AI Agents - Drop-in memory infrastructure for AI agents and apps. Context that persists. Built for production.",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 68310
+},
 "mensfeld/code-on-incus": {
 "desc": "Give the agent a machine. Just not yours. Each AI coding agent gets its own isolated machine with root, Docker, and systemd - active defense detects and stops threats automatically.",
 "pushed_at": "2026-10-30",
@@ -3689,6 +4220,12 @@
 "src": "ungh",
 "stars": 2227
 },
+"mher/flower": {
+"desc": "Real-time monitor and web admin for Celery distributed task queue",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 7239
+},
 "michael-lazar/rtv": {
 "desc": "Browse Reddit from your terminal",
 "pushed_at": "2023-02-20",
@@ -3701,6 +4238,12 @@
 "src": "ungh",
 "stars": 37
 },
+"microsoft/edit": {
+"desc": "We all edit.",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 14746
+},
 "microsoft/fluentui": {
 "desc": "Fluent UI web represents a collection of utilities, React components, and web components for building web applications.",
 "pushed_at": "2026-10-29",
@@ -3712,6 +4255,12 @@
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 481
+},
+"microsoft/playwright": {
+"desc": "Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 99138
 },
 "microsoft/playwright-python": {
 "desc": "Python version of the Playwright testing and automation library.",
@@ -3760,6 +4309,18 @@
 "pushed_at": "2026-08-20",
 "src": "ungh",
 "stars": 370
+},
+"mitmproxy/mitmproxy": {
+"desc": "An interactive TLS-capable intercepting HTTP proxy for penetration testers and software developers.",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 46557
+},
+"mitmproxy/pdoc": {
+"desc": "API Documentation for Python Projects",
+"pushed_at": "2026-07-01",
+"src": "ungh",
+"stars": 2522
 },
 "mjswensen/themer": {
 "desc": "🎨 themer takes a set of colors and outputs themes for your apps (editors, terminals, wallpapers, and more).",
@@ -3880,15 +4441,22 @@
 },
 "mui/material-ui": {
 "desc": "Material UI: Comprehensive React component library that implements Google's Material Design. Free forever.",
-"pushed_at": "2026-10-29",
-"src": "ungh",
-"stars": 99284
+"lang": "JavaScript",
+"pushed_at": "2026-11-03",
+"src": "api",
+"stars": 99297
 },
 "mustafacagri/mevn-boilerplate": {
 "desc": "⭐️  the most comprehensive mevn stack boilerplate. ⭐️ mongodb - express - vue 3 (admin dashboard) - nodejs - nuxt 3 (client) boilerplate (pinia, tiptap, slug, vuetify and vuexy and more...)  🎉",
 "pushed_at": "2024-09-17",
 "src": "ungh",
 "stars": 246
+},
+"mwaskom/seaborn": {
+"desc": "Statistical data visualization in Python",
+"pushed_at": "2026-10-08",
+"src": "ungh",
+"stars": 14096
 },
 "mymarilyn/clickhouse-driver": {
 "desc": "ClickHouse Python Driver with native interface support",
@@ -3949,6 +4517,9 @@
 "pushed_at": "2023-02-25",
 "src": "ungh",
 "stars": 292
+},
+"nektos/act": {
+"missing": true
 },
 "nelson820125/jordium-gantt-vue3": {
 "desc": "Vue3 Gantt chart with powerful Resource View for task scheduling and resource planning.",
@@ -4088,11 +4659,23 @@
 "src": "ungh",
 "stars": 1256
 },
+"oauthlib/oauthlib": {
+"desc": "A generic, spec-compliant, thorough implementation of the OAuth request-signing logic",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 2986
+},
 "oblador/react-native-vector-icons": {
 "desc": "Customizable Icons for React Native with support for image source and full styling.",
 "pushed_at": "2026-10-19",
 "src": "ungh",
 "stars": 17921
+},
+"octodns/octodns": {
+"desc": "Tools for managing DNS across multiple providers",
+"pushed_at": "2026-10-26",
+"src": "ungh",
+"stars": 3773
 },
 "odoo/odoo": {
 "desc": "Odoo. Open Source Apps To Grow Your Business.",
@@ -4130,6 +4713,12 @@
 "src": "ungh",
 "stars": 4033
 },
+"openai/openai-agents-python": {
+"desc": "A lightweight, powerful framework for multi-agent workflows",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 30449
+},
 "openai/whisper": {
 "desc": "Robust Speech Recognition via Large-Scale Weak Supervision",
 "lang": "Python",
@@ -4160,6 +4749,9 @@
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 51
+},
+"oruga-ui/oruga": {
+"missing": true
 },
 "ota-run/ota": {
 "desc": "The execution contract for AI agents. Execution governance for software repositories, shared with humans and CI.",
@@ -4239,6 +4831,12 @@
 "src": "ungh",
 "stars": 1843
 },
+"passteque/gluetun": {
+"desc": "VPN client in a thin Docker container for multiple VPN providers, written in Go, and using OpenVPN or Wireguard, DNS over TLS, with a few proxy servers built-in.",
+"pushed_at": "2026-10-29",
+"src": "ungh",
+"stars": 15960
+},
 "patrickcate/vue-uswds": {
 "desc": "A Vue 3 implementation of the USWDS.",
 "pushed_at": "2026-10-28",
@@ -4253,6 +4851,12 @@
 },
 "pchuri/confluence-cli": {
 "missing": true
+},
+"pdfminer/pdfminer.six": {
+"desc": "Community maintained fork of pdfminer - we fathom PDF",
+"pushed_at": "2026-03-13",
+"src": "ungh",
+"stars": 7048
 },
 "peaceiris/actions-gh-pages": {
 "desc": "GitHub Actions for GitHub Pages 🚀 Deploy static files and publish your site easily. Static-Site-Generators-friendly.",
@@ -4278,11 +4882,20 @@
 "src": "ungh",
 "stars": 11
 },
+"pennersr/django-allauth": {
+"desc": "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication. 🔁 Mirror of https://codeberg.org/allauth/django-allauth/",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 10383
+},
 "peter-evans/autopep8": {
 "desc": "A GitHub action for autopep8, a tool that automatically formats Python code to conform to the PEP 8 style guide.",
 "pushed_at": "2024-07-04",
 "src": "ungh",
 "stars": 91
+},
+"peter-evans/create-pull-request": {
+"missing": true
 },
 "peter-evans/dockerhub-description": {
 "desc": "A GitHub action to update a Docker Hub repository description from README.md",
@@ -4362,6 +4975,12 @@
 "src": "ungh",
 "stars": 13536
 },
+"plotly/dash": {
+"desc": "Data Apps & Dashboards for Python. No JavaScript Required.",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 24475
+},
 "plotly/plotly.py": {
 "desc": "The interactive graphing library for Python :sparkles:",
 "pushed_at": "2026-10-28",
@@ -4373,6 +4992,12 @@
 "pushed_at": "2026-07-21",
 "src": "ungh",
 "stars": 14127
+},
+"pndurette/gTTS": {
+"desc": "Python library and CLI tool to interface with Google Translate's text-to-speech API",
+"pushed_at": "2026-04-06",
+"src": "ungh",
+"stars": 2637
 },
 "pola-rs/polars": {
 "desc": "Extremely fast Query Engine for DataFrames, written in Rust",
@@ -4416,6 +5041,12 @@
 "src": "ungh",
 "stars": 123
 },
+"pubkey/rxdb": {
+"desc": "The local-first database that runs on every JS runtime and replicates with your existing backend - no vendor, no lock-in - https://rxdb.info/",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 23424
+},
 "puckeditor/puck": {
 "desc": "The visual editor for React.",
 "pushed_at": "2026-10-29",
@@ -4428,17 +5059,35 @@
 "src": "ungh",
 "stars": 292
 },
+"py-pdf/pypdf": {
+"desc": "A pure-python PDF library capable of splitting, merging, cropping, and transforming the pages of PDF files",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 10282
+},
 "pydantic/httpx2": {
 "desc": "A next generation HTTP client for Python. 🦋",
 "pushed_at": "2026-10-23",
 "src": "ungh",
 "stars": 1599
 },
+"pydantic/logfire": {
+"desc": "AI observability platform for production LLM and agent systems.",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 4529
+},
 "pydantic/pydantic-ai": {
 "desc": "How Python does AI. Agents, realtime voice, image generation, embeddings. Every model, every interface, typed end to end.",
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 20947
+},
+"pydoit/doit": {
+"desc": "CLI task management & automation tool",
+"pushed_at": "2026-09-21",
+"src": "ungh",
+"stars": 2096
 },
 "pyenv-win/pyenv-win": {
 "desc": "pyenv for Windows. pyenv is a simple python version management tool. It lets you easily switch between multiple versions of Python. It's simple, unobtrusive, and follows the UNIX tradition of single-purpose tools that do one thing well.",
@@ -4457,6 +5106,12 @@
 "pushed_at": "2026-04-07",
 "src": "ungh",
 "stars": 4781
+},
+"pymupdf/PyMuPDF": {
+"desc": "PyMuPDF is a high performance Python library for data extraction, analysis, conversion & manipulation of PDF (and other) documents.",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 11042
 },
 "pynamodb/PynamoDB": {
 "desc": "A pythonic interface to Amazon's DynamoDB",
@@ -4488,11 +5143,23 @@
 "src": "ungh",
 "stars": 3
 },
+"pytest-dev/pytest": {
+"desc": "The pytest framework makes it easy to write small tests, yet scales to support complex functional testing",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 14661
+},
 "python-openxml/python-docx": {
 "desc": "Create and modify Word documents with Python",
 "pushed_at": "2026-08-01",
 "src": "ungh",
 "stars": 5752
+},
+"python-pillow/Pillow": {
+"desc": "Python Imaging Library (fork)",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 13963
 },
 "pytorch/pytorch": {
 "desc": "Tensors and Dynamic neural networks in Python with strong GPU acceleration",
@@ -4573,6 +5240,12 @@
 "src": "ungh",
 "stars": 22611
 },
+"react-cosmos/react-cosmos": {
+"desc": "Sandbox for developing and testing UI components in isolation",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 8693
+},
 "react-figma/react-figma": {
 "desc": "⚛️ A React renderer for Figma",
 "pushed_at": "2026-10-26",
@@ -4614,6 +5287,12 @@
 "pushed_at": "2026-10-20",
 "src": "ungh",
 "stars": 61440
+},
+"reflex-dev/reflex": {
+"desc": "🕸️ Web apps in pure Python 🐍",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 28987
 },
 "reinerBa/Vue-Responsive": {
 "desc": "A plugin for responsive handling with vue.js",
@@ -4712,6 +5391,12 @@
 "src": "ungh",
 "stars": 32
 },
+"robotframework/robotframework": {
+"desc": "Generic automation framework for acceptance testing and RPA",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 11974
+},
 "rocky/zshdb": {
 "desc": "gdb-like \"trepan\" debugger for zsh",
 "pushed_at": "2025-10-05",
@@ -4745,6 +5430,12 @@
 "rootasjey/tronche": {
 "missing": true
 },
+"rs/curlie": {
+"desc": "The power of curl, the ease of use of httpie.",
+"pushed_at": "2025-12-07",
+"src": "ungh",
+"stars": 3729
+},
 "rtomayko/git-sh": {
 "desc": "A customized bash environment suitable for git work.",
 "pushed_at": "2023-05-31",
@@ -4756,6 +5447,12 @@
 "pushed_at": "2026-09-12",
 "src": "ungh",
 "stars": 212
+},
+"run-llama/llama_index": {
+"desc": "LlamaIndex is the document processing platform for AI",
+"pushed_at": "2026-10-26",
+"src": "ungh",
+"stars": 52777
 },
 "rustmailer/bichon": {
 "desc": "Bichon – A lightweight, high-performance Rust email archiver with WebUI",
@@ -4835,11 +5532,23 @@
 "src": "ungh",
 "stars": 247
 },
+"schemathesis/schemathesis": {
+"desc": "Catch API bugs before your users do",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 3736
+},
 "schollz/croc": {
 "desc": "Easily and securely send things from one computer to another :crocodile: :package:",
 "pushed_at": "2026-10-27",
 "src": "ungh",
 "stars": 40810
+},
+"scikit-image/scikit-image": {
+"desc": "Image processing in Python",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 6630
 },
 "scikit-learn-contrib/imbalanced-learn": {
 "desc": "A Python Package to Tackle the Curse of Imbalanced Datasets in Machine Learning",
@@ -4853,17 +5562,35 @@
 "src": "ungh",
 "stars": 67913
 },
+"scrapy/scrapy": {
+"desc": "Scrapy, a fast high-level web crawling & scraping framework for Python.",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 65167
+},
 "scribble-rs/scribble.rs": {
 "desc": "The free and privacy respecting pictionary game - Play at https://scribblers.bios-marcel.link",
 "pushed_at": "2026-09-06",
 "src": "ungh",
 "stars": 666
 },
+"seaweedfs/seaweedfs": {
+"desc": "SeaweedFS is a distributed storage system for object storage (S3), file systems, and Iceberg tables, designed to handle billions of files with O(1) disk access and effortless horizontal scaling.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 35860
+},
 "sebglazebrook/aliases": {
 "desc": "Contextual, dynamic aliases for the bash shell",
 "pushed_at": "2026-09-18",
 "src": "ungh",
 "stars": 631
+},
+"secdev/scapy": {
+"desc": "Scapy: the Python-based interactive packet manipulation program & library.",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 12669
 },
 "secrethub/actions": {
 "desc": "Load secrets into GitHub Actions",
@@ -4882,6 +5609,18 @@
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 13065
+},
+"seleniumbase/SeleniumBase": {
+"desc": "📊 APIs for Web Scraping, Browser Automation, and E2E Testing. CDP Mode bypasses bot-detection and handles CAPTCHAs. Adds stealth to Playwright. Includes an MCP server.",
+"pushed_at": "2026-10-29",
+"src": "ungh",
+"stars": 13222
+},
+"semantica-agi/semantica": {
+"desc": "Graph-Native Infrastructure for Context and Accountable AI Systems",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 14378
 },
 "sentriz/gonic": {
 "desc": "music streaming server / free-software subsonic server API implementation",
@@ -4907,6 +5646,12 @@
 "src": "ungh",
 "stars": 6394
 },
+"sgl-project/sglang": {
+"desc": "SGLang is a high-performance serving framework for large language models and multimodal models.",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 38395
+},
 "shadcn-ui/ui": {
 "desc": "Composable, accessible components with thoughtful defaults. Build your own component library with code you can customize, extend, and make your own.",
 "lang": "TypeScript",
@@ -4926,11 +5671,23 @@
 "src": "ungh",
 "stars": 1780
 },
+"shellspec/shellspec": {
+"desc": "A full-featured BDD unit testing framework for bash, ksh, zsh, dash and all POSIX shells",
+"pushed_at": "2025-11-24",
+"src": "ungh",
+"stars": 1403
+},
 "shep-ai/cli": {
 "desc": "Ship features 10x faster. Built In Auto: Memory, K8S Agent & Security (SDD+SDLC) . 😇",
 "pushed_at": "2026-10-30",
 "src": "ungh",
 "stars": 269
+},
+"sherlock-project/sherlock": {
+"desc": "Hunt down social media accounts by username across social networks",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 95409
 },
 "shieldproject/shield": {
 "desc": "A standalone system that can perform backup and restore functions for a wide variety of pluggable data systems",
@@ -4992,6 +5749,12 @@
 "src": "ungh",
 "stars": 2180
 },
+"simplex-chat/simplex-chat": {
+"desc": "SimpleX - the first messaging network operating without user identifiers of any kind - 100% private by design! iOS, Android and desktop apps 📱!",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 19625
+},
 "sindresorhus/emoj": {
 "desc": "Find relevant emoji from text on the command-line :open_mouth: :sparkles: :raised_hands: :horse: :boom: :see_no_evil:",
 "pushed_at": "2026-02-13",
@@ -5015,6 +5778,9 @@
 "pushed_at": "2025-09-09",
 "src": "ungh",
 "stars": 1746
+},
+"sindresorhus/pure": {
+"missing": true
 },
 "sktime/sktime": {
 "desc": "A unified framework for machine learning with time series",
@@ -5051,6 +5817,9 @@
 "pushed_at": "2026-09-27",
 "src": "ungh",
 "stars": 285
+},
+"slidevjs/slidev": {
+"missing": true
 },
 "slskd/slskd": {
 "desc": "A modern client-server application for the Soulseek file sharing network.",
@@ -5094,11 +5863,26 @@
 "src": "ungh",
 "stars": 387
 },
+"songquanpeng/one-api": {
+"desc": "LLM API 管理 & 分发系统，支持 OpenAI、Azure、Anthropic Claude、Google Gemini、DeepSeek、字节豆包、ChatGLM、文心一言、讯飞星火、通义千问、360 智脑、腾讯混元等主流模型，统一 API 适配，可用于 key 管理与二次分发。单可执行文件，提供 Docker 镜像，一键部署，开箱即用。LLM API management & key redistribution system, unifying multiple providers under a single API. Single binary, Docker-ready, with an English UI.",
+"pushed_at": "2026-01-09",
+"src": "ungh",
+"stars": 37316
+},
+"sorin-ionescu/prezto": {
+"missing": true
+},
 "spec-first/connexion": {
 "desc": "Connexion is a modern Python web framework that makes spec-first and api-first development easy.",
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 4612
+},
+"sphinx-doc/sphinx": {
+"desc": "The Sphinx documentation generator",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 8086
 },
 "spolu/warp": {
 "desc": "Secure and simple terminal sharing",
@@ -5117,6 +5901,18 @@
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 12272
+},
+"sqlmapproject/sqlmap": {
+"desc": "Automatic SQL injection and database takeover tool",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 38830
+},
+"squidfunk/mkdocs-material": {
+"desc": "Documentation that simply works",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 27593
 },
 "ssowonny/diff-pages-action": {
 "desc": "The Github action takes screenshots of static web pages and finds changed screenshots.",
@@ -5160,6 +5956,18 @@
 "src": "ungh",
 "stars": 1872
 },
+"storybookjs/storybook": {
+"desc": "Storybook is the industry standard workshop for building, documenting, and testing UI components in isolation",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 91428
+},
+"streamlit/streamlit": {
+"desc": "Streamlit — A faster way to build and share data apps.",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 46197
+},
 "stringer-rss/stringer": {
 "desc": "A self-hosted, anti-social RSS reader.",
 "pushed_at": "2026-10-29",
@@ -5196,11 +6004,23 @@
 "src": "ungh",
 "stars": 8034
 },
+"svg/svgo": {
+"desc": "SVG Optimizer for Node.js and CLI. ⚙️",
+"pushed_at": "2026-10-26",
+"src": "ungh",
+"stars": 22788
+},
 "swinton/SpotHub": {
 "desc": ":headphones: :relaxed: Collaborate on Spotify playlists using Pull Requests, powered by GitHub Actions",
 "pushed_at": "2020-08-20",
 "src": "ungh",
 "stars": 115
+},
+"sxyazi/yazi": {
+"desc": "💥 Blazing fast terminal file manager written in Rust, based on async I/O.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 43185
 },
 "tailwindlabs/headlessui": {
 "desc": "Completely unstyled, fully accessible UI components, designed to integrate beautifully with Tailwind CSS.",
@@ -5244,6 +6064,12 @@
 "pushed_at": "2026-10-30",
 "src": "api",
 "stars": 201214
+},
+"testing-library/react-testing-library": {
+"desc": "🐐 Simple and complete React DOM testing utilities that encourage good testing practices.",
+"pushed_at": "2026-08-27",
+"src": "ungh",
+"stars": 19677
 },
 "the-djmaze/snappymail": {
 "desc": "Simple, modern & fast web-based email client",
@@ -5365,11 +6191,23 @@
 "src": "ungh",
 "stars": 320
 },
+"tomnomnom/gron": {
+"desc": "Make JSON greppable!",
+"pushed_at": "2025-05-31",
+"src": "ungh",
+"stars": 14536
+},
 "tornadoweb/tornado": {
 "desc": "Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed.",
 "pushed_at": "2026-10-26",
 "src": "ungh",
 "stars": 22165
+},
+"tox-dev/tox": {
+"desc": "Command line driven CI frontend and development task automation tool.",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 3979
 },
 "trailofbits/skills": {
 "desc": "Trail of Bits skills for security research, vulnerability detection, and audit workflows",
@@ -5388,6 +6226,12 @@
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 3775
+},
+"tt-a1i/archify": {
+"desc": "Turn any idea, plan, or codebase into a beautiful interactive diagram. An agent skill for Claude Code, Codex, and more.",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 92926
 },
 "tupilabs/vue-lumino": {
 "desc": "A component to use Vue.js with Jupyter Lumino (PhosphorJS), integrating DOM & VDOM through event listeners and Vue reactivity system.",
@@ -5434,6 +6278,9 @@
 "src": "ungh",
 "stars": 514
 },
+"unclecode/crawl4ai": {
+"missing": true
+},
 "unfoldadmin/django-unfold": {
 "desc": "Modern Django Admin",
 "pushed_at": "2026-10-24",
@@ -5446,6 +6293,12 @@
 "src": "ungh",
 "stars": 45
 },
+"unionai-oss/pandera": {
+"desc": "A light-weight, flexible, and expressive statistical data testing library",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 4507
+},
 "unixorn/zsh-quickstart-kit": {
 "desc": "A simple ZSH quickstart for using ZSH, zgenom, oh-my-zsh and a curated list of extra plugins. It is designed to be easy to customize without requiring you to maintain your own fork.",
 "pushed_at": "2026-10-26",
@@ -5457,6 +6310,9 @@
 "pushed_at": "2022-06-25",
 "src": "ungh",
 "stars": 16
+},
+"unovue/reka-ui": {
+"missing": true
 },
 "unovue/shadcn-vue": {
 "desc": "Vue port of shadcn-ui",
@@ -5476,11 +6332,23 @@
 "src": "ungh",
 "stars": 4960
 },
+"unslothai/unsloth": {
+"desc": "Local UI to run and train LLMs and diffusion models. Supports GGUF, MLX, Qwen3.8, DeepSeek-V4.1, MiniMax-H3, Gemma 4, FLUX and more.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 78955
+},
 "uqfoundation/dill": {
 "desc": "serialize all of Python",
 "pushed_at": "2026-10-26",
 "src": "ungh",
 "stars": 2449
+},
+"urllib3/urllib3": {
+"desc": "urllib3 is a user-friendly HTTP client library for Python",
+"pushed_at": "2026-10-29",
+"src": "ungh",
+"stars": 4081
 },
 "urwid/urwid": {
 "desc": "Console user interface library for Python (official repo)",
@@ -5536,6 +6404,12 @@
 "src": "ungh",
 "stars": 166
 },
+"visgl/react-map-gl": {
+"desc": "React friendly API wrapper around MapboxGL JS",
+"pushed_at": "2026-10-24",
+"src": "ungh",
+"stars": 8514
+},
 "vitaly-zdanevich/geeknote": {
 "desc": "Console client for Evernote. This is the current alive working fork (in 2026)",
 "pushed_at": "2026-07-16",
@@ -5560,6 +6434,18 @@
 "src": "ungh",
 "stars": 22
 },
+"volcengine/OpenViking": {
+"desc": "Self-evolving Context Database for AI Agents. Unify Agent Memory, Knowledge RAG and Skills.",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 41406
+},
+"voxel51/fiftyone": {
+"desc": "Refine high-quality datasets and visual AI models",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 11258
+},
 "vue-styleguidist/vue-styleguidist": {
 "desc": "Created from react styleguidist for Vue Components with a living style guide",
 "pushed_at": "2026-07-31",
@@ -5581,6 +6467,9 @@
 "vuejs/eslint-plugin-vue": {
 "missing": true
 },
+"vuejs/vitepress": {
+"missing": true
+},
 "vuejs/vue-loader": {
 "desc": "📦 Webpack loader for Vue.js components",
 "pushed_at": "2024-08-07",
@@ -5593,11 +6482,32 @@
 "src": "ungh",
 "stars": 22710
 },
+"vuesion/vuesion": {
+"missing": true
+},
+"wabarc/wayback": {
+"desc": "An archiving tool with an IM-style interface that prioritizes privacy and accessibility, integrated with various archival services including Internet Archive, archive.today, Ghostarchive, IPFS, Telegraph, and file systems.",
+"pushed_at": "2026-10-23",
+"src": "ungh",
+"stars": 2249
+},
 "wagtail/wagtail": {
 "desc": "A Django content management system focused on flexibility and user experience",
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 20593
+},
+"warp-tech/warpgate": {
+"desc": "Fully transparent SSH, HTTPS, Kubernetes, database and RDP/VNC bastion/PAM that doesn't need additional client-side software",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 8192
+},
+"wavetermdev/waveterm": {
+"desc": "An open-source, AI-integrated, cross-platform terminal for seamless workflows",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 22638
 },
 "we-promise/sure": {
 "desc": "The personal finance app for everyone (by everyone)",
@@ -5665,6 +6575,12 @@
 "src": "ungh",
 "stars": 27
 },
+"wshobson/agents": {
+"desc": "Multi-harness agentic plugin marketplace for Claude Code, Codex, Cursor, OpenCode, GitHub Copilot, Google Antigravity, and Pi",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 42131
+},
 "wting/autojump": {
 "desc": "A cd command that learns - easily navigate directories from the command line",
 "pushed_at": "2025-02-27",
@@ -5713,11 +6629,23 @@
 "src": "ungh",
 "stars": 10161
 },
+"xonsh/xonsh": {
+"desc": "🐚 Python-powered shell. Full-featured, cross-platform and AI-friendly.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 9683
+},
 "xu-cheng/latex-action": {
 "desc": ":octocat: GitHub Action to compile LaTeX documents",
 "pushed_at": "2026-07-30",
 "src": "ungh",
 "stars": 1423
+},
+"xwmx/nb": {
+"desc": "CLI and local web plain text note‑taking, bookmarking, and archiving with linking, tagging, filtering, search, Git versioning & syncing, Pandoc conversion, + more, in a single portable script.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 8462
 },
 "xxczaki/oji": {
 "desc": "(◕‿◕) Text Emoticons Maker",
@@ -5736,6 +6664,18 @@
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 16
+},
+"xxh/xxh": {
+"desc": "🚀 Bring your favorite shell wherever you go through the ssh. Xonsh shell, fish, zsh, osquery and so on.",
+"pushed_at": "2026-06-02",
+"src": "ungh",
+"stars": 6126
+},
+"xyflow/xyflow": {
+"desc": "React Flow | Svelte Flow - Powerful open source libraries for building node-based UIs with React (https://reactflow.dev) or Svelte (https://svelteflow.dev). Ready out-of-the-box and infinitely customizable.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 38863
 },
 "xyproto/o": {
 "desc": "Snappy and configuration-free text editor/IDE for the terminal. Suitable for writing git commit messages, editing Markdown, config files, source code, man pages and for quick edit-format-compile cycles when programming. Has syntax highlighting, jump-to-error, rainbow parentheses, macros, copy/paste portals, gdb, dlv and LSP support.",
@@ -5821,6 +6761,13 @@
 "src": "ungh",
 "stars": 980
 },
+"yt-dlp/yt-dlp": {
+"desc": "A feature-rich command-line audio/video downloader",
+"lang": "Python",
+"pushed_at": "2026-10-29",
+"src": "api",
+"stars": 204870
+},
 "yudai/gotty": {
 "desc": "Share your terminal as a web application",
 "pushed_at": "2024-08-01",
@@ -5862,6 +6809,12 @@
 "pushed_at": "2026-08-21",
 "src": "ungh",
 "stars": 44762
+},
+"zensical/zensical": {
+"desc": "A modern static site generator by the Material for MkDocs team",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 6056
 },
 "zer0tonin/Mikochi": {
 "desc": "A minimalist file-manager with streaming capabilities",
@@ -5940,6 +6893,9 @@
 "pushed_at": "2025-06-24",
 "src": "ungh",
 "stars": 36167
+},
+"zsh-users/zsh-syntax-highlighting": {
+"missing": true
 },
 "zsuroy/ctty": {
 "desc": "A lightweight, all-in-one connection manager — SSH, Serial, SFTP, Telnet, FTP, WebDAV and S3 in a single TUI 🔥",

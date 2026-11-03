@@ -101,6 +101,19 @@ def main() -> int:
 
     import normalize
     tools = normalize.normalize(rows)
+
+    # 数量骤降等于静默丢数据。正常的日间波动在 1% 以内（新收录、去重搬家互相抵消），
+    # 超过 10% 只可能是某个源大面积抓取失败。这时候写盘就是把故障固化成「新数据」，
+    # 而且下一次刷新会拿这个更小的基数当基准，一路滑下去都没人拦。
+    # 2026-11-03 真发生过：3 个 awesome 源失败（SSL 断 + 403），5417 掉到 5152。
+    old_tools = load_json(DATA_DIR / "tools.json", []) or []
+    if old_tools and len(tools) < len(old_tools) * 0.9:
+        log(f"索引骤降 {len(old_tools)} → {len(tools)}（跌了 "
+            f"{(1 - len(tools) / len(old_tools)) * 100:.1f}%，超过 10%），"
+            f"判定为抓取故障，拒绝写盘，保留上一版索引。", "ERROR")
+        log("去 logs/refresh.log 查哪个源出问题；确认是真实下架再手动放行。", "ERROR")
+        return 3
+
     save_json(DATA_DIR / "tools.json", tools)
 
     stats = {
