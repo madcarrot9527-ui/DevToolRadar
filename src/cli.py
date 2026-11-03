@@ -137,7 +137,8 @@ def cmd_compose(args) -> int:
                 bits.append("国内")
             if t.get("pushed_at"):
                 bits.append(t["pushed_at"])
-            print(f"  · {t.get('name','')}  {' '.join(bits)}")
+            slug = f" {t['slug']}" if t.get("slug") else ""
+            print(f"  · {t.get('name','')}{slug}  {' '.join(bits)}")
             if t.get("desc"):
                 d = t["desc"]
                 print(f"    {d[:88]}{'…' if len(d) > 88 else ''}")
@@ -154,8 +155,15 @@ def cmd_compose(args) -> int:
 def cmd_find(args) -> int:
     _maybe_refresh(args.no_color)
     _health_note(args.no_color)
-    rows = s.search(args.query, tag=args.tag, src=args.src, zh=args.zh, limit=args.num)
+    meta: dict = {}
+    rows = s.search(args.query, tag=args.tag, src=args.src, zh=args.zh,
+                    limit=args.num, meta=meta)
     color = sys.stdout.isatty() and not args.no_color
+    if meta.get("rescued") and rows:
+        # 兜底结果不是答案。原来这里照样说「共 N 条」，读起来和真答案一个语气。
+        print(_c("33", "！没有对症的。下面是按字面最接近的，仅供参考 —— "
+                       "换个短一点的说法（比如只说「抠图」「抓包」）更准。", color))
+        print()
 
     if not rows:
         if not s.load_index():

@@ -19,6 +19,36 @@
    "rembg",
    "bg remove"
   ],
+  "去背景": [
+   "background removal",
+   "remove background",
+   "remove image background",
+   "background remover",
+   "matting",
+   "cutout",
+   "rembg",
+   "bg remove"
+  ],
+  "去底": [
+   "background removal",
+   "remove background",
+   "remove image background",
+   "background remover",
+   "matting",
+   "cutout",
+   "rembg",
+   "bg remove"
+  ],
+  "透明底": [
+   "background removal",
+   "remove background",
+   "remove image background",
+   "background remover",
+   "matting",
+   "cutout",
+   "rembg",
+   "bg remove"
+  ],
   "水印": [
    "watermark",
    "watermarking"

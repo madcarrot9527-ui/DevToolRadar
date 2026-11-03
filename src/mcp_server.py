@@ -169,7 +169,8 @@ def tool_find_tool(args: dict) -> str:
         return ("需要提供 query（你想做什么，例如「造测试数据」「内网穿透」）"
                 "或 tag（场景标签，可先用 list_scenarios 查看）。")
 
-    rows = S.search(query, tag=tag, src=source, zh=chinese_only, limit=limit)
+    meta: dict = {}
+    rows = S.search(query, tag=tag, src=source, zh=chinese_only, limit=limit, meta=meta)
     if not rows:
         hint = S.query_tags(query) if query else []
         msg = f"索引里没有匹配「{query or tag}」的工具。"
@@ -183,6 +184,10 @@ def tool_find_tool(args: dict) -> str:
     # 分层呈现：前 3 条给全貌，其余只给一行。
     # 平铺 8 条同样详略时，模型的注意力会被摊薄，反而不容易挑出最佳答案。
     head = []
+    if meta.get("rescued"):
+        # 不对症时凑出来的结果，必须说清楚，否则「共 N 条」会被当成答案。
+        head.append("⚠ 没有对症的工具。下面是按字面最接近的，仅供参考；"
+                    "换个更短的说法（「抠图」「抓包」这种关键词）命中率更高。")
     if query:
         tags_hit = S.query_tags(query)
         if tags_hit:
@@ -244,7 +249,7 @@ def tool_compose_stack(args: dict) -> str:
     items = S.compose(slots, per_slot=per)
     gaps = [x["slot"] for x in items if not x["label"]]
     blocks = [f"按 {len(items)} 个能力位各取 {per} 条"
-              f"（每格按 star 排，清单/教程已排除，跨能力位不重复）："]
+              f"（每格按对症程度排、同分看 star，清单/教程已排除，跨能力位不重复）："]
     for item in items:
         if not item["label"]:
             continue
@@ -260,7 +265,10 @@ def tool_compose_stack(args: dict) -> str:
                 bits.append(t["lang"])
             if t.get("pushed_at"):
                 bits.append(t["pushed_at"])
-            blocks.append(f"{i}. {t.get('name','')}  {' · '.join(bits)}")
+            nm = t.get("name", "")
+            if t.get("slug"):
+                nm += f" ({t['slug']})"
+            blocks.append(f"{i}. {nm}  {' · '.join(bits)}")
             if t.get("desc"):
                 d = t["desc"]
                 blocks.append(f"   {d[:90]}{'…' if len(d) > 90 else ''}")

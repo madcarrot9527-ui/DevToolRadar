@@ -480,7 +480,6 @@ def compose(slots: list[str], per_slot: int = 2,
     返回每项：{slot(原话), label(解析到的场景), total, tools[]}，label 为 None 表示
     这个说法在 68 个场景里没有对应能力位。
     """
-    rows = load_index()
     out: list[dict] = []
     used: set[str] = set()
     for raw in slots:
@@ -488,15 +487,18 @@ def compose(slots: list[str], per_slot: int = 2,
         if not label:
             out.append({"slot": raw, "label": None, "total": 0, "tools": []})
             continue
-        cand = [t for t in rows if label in (t.get("tags") or [])]
-        total = len(cand)
-        if exclude_lists:
-            # 清单/教程只是「提到过这件事」，拼方案时不能当零件用
-            cand = [t for t in cand if not is_list(t)]
+        total = sum(1 for t in load_index() if label in (t.get("tags") or []))
+        # 每格用 search() 自己排，而不是在这里另写一套排序。
+        # 曾经按 star 排：图像处理 148 条里能去背景的 rembg 排第 8，每格取 2 时永远
+        # 取不到它，抠图那格给的是 OCR 工具。也曾按 score(t, 原话) 直排：数据库那格
+        # 第一名叫作 sqlmap（注入扫描器，描述里全是「数据库」）。两种都是「只用了一个
+        # 信号」。search() 本来就是「相关性 + 场景 + 热度 + 清单沉底」的合成判定，
+        # 直接用它，网页、命令行、组合三处口径也就一致了。
+        got = search(raw, tag=label, limit=max(per_slot * 3, per_slot + len(used) + 6))
+        cand = [t for t in got if not (exclude_lists and is_list(t))]
         # 跨能力位去重：一个脚手架同时挂着「低代码」和「认证鉴权」，两格都列它
         # 只会让人以为要装两遍。已经在前面出现过的，这一格往下顺延。
         cand = [t for t in cand if (t.get("url") or t.get("name")) not in used]
-        cand.sort(key=lambda t: (-(t.get("stars") or 0), -(t.get("quality") or 0)))
         picked = cand[:max(1, per_slot)]
         for t in picked:
             used.add(t.get("url") or t.get("name"))
@@ -505,7 +507,7 @@ def compose(slots: list[str], per_slot: int = 2,
 
 
 def search(query: str = "", *, tag: str = "", src: str = "", zh: bool = False,
-           limit: int = 12) -> list[dict]:
+           limit: int = 12, meta: dict | None = None) -> list[dict]:
     rows = load_index()
     if tag:
         rows = [t for t in rows if tag in (t.get("tags") or [])]
@@ -548,7 +550,14 @@ def search(query: str = "", *, tag: str = "", src: str = "", zh: bool = False,
     scored.sort(key=_key)
     if scored:
         return [t for _, t in scored[:limit]]
-    return rescue(query, rows, limit)
+    # 兜底结果不是「答案」，是不对症时按字面凑出来的。把这件事写进 meta，
+    # 让 CLI 和 MCP 有能力如实标注 —— 原来这里什么都只说「共 N 条」，
+    # 查「做一个桌面宠物」返回几个不相干项目，读起来和正确答案一个语气。
+    got = rescue(query, rows, limit)
+    if meta is not None:
+        meta["rescued"] = bool(got)
+        meta["rescue_query"] = query
+    return got
 
 
 # 曾尝试过一条更粗的不变量：「每个场景前 3 条必须有一条代表作」，
