@@ -314,6 +314,13 @@
         "编译",
         "打包提速",
         "构建工具"
+      ],
+      "also": [
+        "https://github.com/electron-userland/electron-builder",
+        "https://github.com/electron/forge",
+        "https://github.com/pyinstaller/pyinstaller",
+        "https://github.com/Nuitka/Nuitka",
+        "https://github.com/brentvollebregt/auto-py-to-exe"
       ]
     },
     {
@@ -774,7 +781,6 @@
         "file manager",
         "system utility",
         "windows utility",
-        "桌面应用",
         "文件管理器",
         "系统工具",
         "系统增强"
@@ -1764,11 +1770,13 @@
       ],
       "alias": [
         "桌面应用开发",
+        "桌面应用",
         "桌面程序",
         "写桌面程序",
         "开发桌面应用",
         "桌面应用框架",
         "桌面客户端",
+        "打包成exe",
         "打包成 exe",
         "打包 exe",
         "exe 打包",

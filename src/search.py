@@ -69,8 +69,36 @@ def expand_en(qn: str) -> list[tuple[str, list[str]]]:
     return [(zh, ens) for zh, ens in terms.items() if zh and zh in qn and len(zh) == best]
 
 
+def _apply_also(rows: list[dict]) -> None:
+    """把场景标签里声明的「跨格成员」补进条目的 tags。
+
+    打标签天生是单归属的：manual_tags.json 一个 url 只能存一个标签，规则也只算出
+    最像的那一个。但有些工具本身就是两个能力位的东西——electron-builder 既是
+    「桌面应用开发」的零件，也是「构建打包」的手段。少了这条，问「打包成 exe」
+    时它进不了打包那一格，只能给前端打包器。
+
+    写在 scenarios.json 的 tag.also 里，而不是给工具加第二张表：归属是场景的
+    属性，不是工具的属性，改场景时能一眼看到它借了谁。
+    """
+    rules = load_config("scenarios.json").get("tags", []) or []
+    url2tags: dict[str, list[str]] = {}
+    for rule in rules:
+        for u in (rule.get("also") or []):
+            url2tags.setdefault(str(u).rstrip("/").lower(), []).append(rule["label"])
+    if not url2tags:
+        return
+    for t in rows:
+        u = (t.get("url") or "").rstrip("/").lower()
+        for g in url2tags.get(u, ()):
+            tags = t.setdefault("tags", [])
+            if g not in tags:
+                tags.append(g)
+
+
 def load_index() -> list[dict]:
-    return load_json(DATA_DIR / "tools.json", []) or []
+    rows = load_json(DATA_DIR / "tools.json", []) or []
+    _apply_also(rows)
+    return rows
 
 
 def norm(s: str) -> str:
@@ -172,6 +200,39 @@ def _hit(needle: str, text: str) -> bool:
     return needle in text
 
 
+_AMBIGUOUS: set[str] | None = None
+
+
+def _ambiguous_names() -> set[str]:
+    """名字标识不了「是谁」的那些词，不该拿「点名」这一档最高证据。
+
+    两个条件同时成立才算：
+      1. 库里不止一条同名——prisma/orm 与 cycle/orm 都叫 orm，光看名字分不出
+      2. 这个词在其他条目的描述里也频繁出现（出现在 ≥8 条 desc 里）
+
+    只满足第 1 条不能降权。goose 有 3 个仓库（AI agent / 数据库迁移 / 压测），
+    但 "goose" 在别人描述里出现 **0 次**——它是专名。用户打「goose 数据库迁移」
+    就是在点名 pressly/goose，降权会把正确答案打掉（这是实测踩过的坑）。
+
+    第 2 条才构成「通用技术词」的证据：专名不会在几十条别人的描述里被反复提及。
+    orm 是 42 条，cli 是 105 条，goose 是 0 条。
+    """
+    global _AMBIGUOUS
+    if _AMBIGUOUS is None:
+        import re as _re
+        from collections import Counter
+        rows = load_index()
+        own = Counter((t.get("name") or "").lower() for t in rows)
+        cand = {k for k, v in own.items() if k and v >= 2}
+        # 一次遍历统计「每个词出现在多少条 desc 里」，比按候选逐个正则扫全库快得多
+        df: Counter = Counter()
+        for t in rows:
+            for w in set(_re.findall(r"[a-z0-9]{2,}", (t.get("desc") or "").lower())):
+                df[w] += 1
+        _AMBIGUOUS = {n for n in cand if df.get(n, 0) >= 8}
+    return _AMBIGUOUS
+
+
 def score(t: dict, raw: str) -> int:
     ql = norm(raw)
     if not ql:
@@ -191,7 +252,7 @@ def score(t: dict, raw: str) -> int:
     ds = 0
 
     s = 0
-    if n == ql:
+    if n == ql and n not in _ambiguous_names():
         s += 900
     is_cjk = bool(CJK.search(ql))
     name_hit = _hit(ql, n)
@@ -226,7 +287,7 @@ def score(t: dict, raw: str) -> int:
         # 用户经常「点名 + 说任务」：goose 数据库迁移、frp 内网穿透。
         # 这时名字精确等于某个词，就该按近似精确命中算，不能只给 110 分
         # —— 否则会被一堆 star 更高的泛化工具盖掉，用户点名的那个根本不出现。
-        if tk == n:
+        if tk == n and n not in _ambiguous_names():
             s += 300
         elif _hit(tk, n) and not (is_cjk and name_hit):
             s += 110
