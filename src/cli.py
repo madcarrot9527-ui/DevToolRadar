@@ -186,8 +186,17 @@ def cmd_stats(args) -> int:
     print(f"最后刷新      {st.get('updated_at', '未知')}")
     srcs = st.get("sources", {})
     if srcs:
+        # 「跳过」说的是这次运行的动作，不是数据的新旧。只报动作会让人以为数据没抓过
+        # （新 clone 下来跑 --fast 重建时，三个源全是 skipped）。带上实际落盘时间才说得清。
         note = {"fresh": "本次已更新", "cached": "沿用缓存", "skipped": "已跳过", "failed": "抓取失败"}
-        print("数据源        " + "，".join(f"{k}:{note.get(v, v)}" for k, v in srcs.items()))
+        asof = st.get("as_of") or {}
+        parts = []
+        for k, v in srcs.items():
+            s2 = note.get(v, v)
+            if v in ("skipped", "cached") and asof.get(k):
+                s2 += f"，数据截至 {asof[k]}"
+            parts.append(f"{k}:{s2}")
+        print("数据源        " + "，".join(parts))
     bo = st.get("by_origin", {})
     if bo:
         print("来源分布      " + "，".join(f"{SRC_LABEL.get(k, k)} {v}" for k, v in bo.items()))
