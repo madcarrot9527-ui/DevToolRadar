@@ -1290,8 +1290,10 @@
       "desc": "IM、聊天、消息推送",
       "kw": [
         "instant messaging",
+        "messaging app",
+        "messaging network",
+        "whatsapp",
         "chat sdk",
-        "messaging",
         "即时通讯",
         "聊天",
         "消息推送",
@@ -1618,7 +1620,11 @@
         "消息队列",
         "事件流",
         "消息中间件",
-        "rocketmq"
+        "rocketmq",
+        "messaging platform",
+        "messaging system",
+        "messaging library",
+        "message broker"
       ],
       "alias": [
         "消息队列",

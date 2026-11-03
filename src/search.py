@@ -431,6 +431,79 @@ def rescue(query: str, rows: list[dict], limit: int = 12) -> list[dict]:
 
 
 
+def tag_desc() -> dict[str, str]:
+    """场景标签 → 一句话说明。给模型挑能力位用。"""
+    return {t["label"]: (t.get("desc") or "")
+            for t in load_config("scenarios.json").get("tags", [])}
+
+
+def resolve_tag(name: str) -> str | None:
+    """把模型给的说法解析成场景标签。
+
+    模型不一定记得住 68 个标签的准确写法，会写「登录」「权限」「后台」这种。所以：
+    先精确匹配标签，再走别名/中文关键词，最后退到双向子串。解析不出来就返回 None，
+    让上层如实告诉模型「这个能力位索引里没有」，而不是硬套一个错的场景。
+    """
+    q = norm(name)
+    if not q:
+        return None
+    labels = [t["label"] for t in load_config("scenarios.json").get("tags", [])]
+    for lab in labels:
+        if q == lab.lower():
+            return lab
+    # 别名整词相等优先：「部署」既是「部署托管」的别名、又出现在「容器与 K8s」的
+    # 「部署容器」里，靠长度分不出来，靠相等就能。
+    for lab, terms in _tag_terms().items():
+        if q in terms:
+            return lab
+    best_ln, best = 0, None
+    for lab, terms in _tag_terms().items():
+        for t in terms:
+            if not t:
+                continue
+            if t in q or q in t:
+                ln = min(len(t), len(q))
+                if ln > best_ln:
+                    best_ln, best = ln, lab
+    return best
+
+
+def compose(slots: list[str], per_slot: int = 2,
+            exclude_lists: bool = True) -> list[dict]:
+    """一次查多个能力位。给「做一件事，需要几样东西配合」的场景用。
+
+    为什么不自己拆需求：拆解靠的是对需求的理解，那是模型该做的；这份索引能提供的是
+    「每个能力位上目前有什么、有多强」。硬写一套「后台管理系统 → 4 个场景」的模板，
+    换个需求就失效，而且模板本身也没有依据。所以这里只做一件事：模型点名要哪几个位，
+    就一次把每个位的头几名取回来，顺带报出取不到的位（缺口）。
+
+    返回每项：{slot(原话), label(解析到的场景), total, tools[]}，label 为 None 表示
+    这个说法在 68 个场景里没有对应能力位。
+    """
+    rows = load_index()
+    out: list[dict] = []
+    used: set[str] = set()
+    for raw in slots:
+        label = resolve_tag(raw)
+        if not label:
+            out.append({"slot": raw, "label": None, "total": 0, "tools": []})
+            continue
+        cand = [t for t in rows if label in (t.get("tags") or [])]
+        total = len(cand)
+        if exclude_lists:
+            # 清单/教程只是「提到过这件事」，拼方案时不能当零件用
+            cand = [t for t in cand if not is_list(t)]
+        # 跨能力位去重：一个脚手架同时挂着「低代码」和「认证鉴权」，两格都列它
+        # 只会让人以为要装两遍。已经在前面出现过的，这一格往下顺延。
+        cand = [t for t in cand if (t.get("url") or t.get("name")) not in used]
+        cand.sort(key=lambda t: (-(t.get("stars") or 0), -(t.get("quality") or 0)))
+        picked = cand[:max(1, per_slot)]
+        for t in picked:
+            used.add(t.get("url") or t.get("name"))
+        out.append({"slot": raw, "label": label, "total": total, "tools": picked})
+    return out
+
+
 def search(query: str = "", *, tag: str = "", src: str = "", zh: bool = False,
            limit: int = 12) -> list[dict]:
     rows = load_index()

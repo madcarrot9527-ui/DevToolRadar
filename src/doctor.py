@@ -184,6 +184,9 @@ def check_mcp() -> None:
         {"jsonrpc": "2.0", "id": 2, "method": "tools/list"},
         {"jsonrpc": "2.0", "id": 3, "method": "tools/call",
          "params": {"name": "find_tool", "arguments": {"query": "抓包"}}},
+        {"jsonrpc": "2.0", "id": 4, "method": "tools/call",
+         "params": {"name": "compose_stack",
+                    "arguments": {"slots": ["低代码", "认证鉴权", "部署"]}}},
     ]
     payload = "\n".join(json.dumps(r, ensure_ascii=False) for r in reqs) + "\n"
     try:
@@ -225,6 +228,17 @@ def check_mcp() -> None:
             rec("WARN", "冒烟查询", f"结果异常：{txt[:60]}")
     else:
         rec("FAIL", "冒烟查询", "find_tool 没有响应")
+
+    if 4 in rep:
+        txt = rep[4]["result"]["content"][0]["text"]
+        # 三个能力位里至少要认出两个，否则说明拆解/别名解析退化
+        got = sum(1 for k in ("低代码", "认证鉴权", "部署托管") if k in txt)
+        if got >= 2:
+            rec("PASS", "组合查询", f"compose_stack 认出 {got}/3 个能力位")
+        else:
+            rec("WARN", "组合查询", f"只认出 {got}/3 个能力位：{txt[:60]}")
+    else:
+        rec("FAIL", "组合查询", "compose_stack 没有响应")
 
 
 # ---------- 4. 客户端配置 ----------

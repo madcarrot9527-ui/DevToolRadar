@@ -15,6 +15,7 @@ from __future__ import annotations
 import io
 import json
 import os
+import re
 import sys
 import time
 import traceback
@@ -202,12 +203,81 @@ def tool_list_scenarios(args: dict) -> str:
     tags = S.all_tags()
     if not tags:
         return f"索引为空或尚未生成。请在 {ROOT} 下运行 python src/update.py"
-    lines = [f"共 {len(tags)} 个场景标签（括号内是该场景的工具数）：", ""]
+    descs = S.tag_desc()
+    by: dict[str, list[dict]] = {}
+    for t in S.load_index():
+        if S.is_list(t):
+            continue
+        for g in t.get("tags") or []:
+            by.setdefault(g, []).append(t)
+    lines = [f"共 {len(tags)} 个能力位（场景标签），括号内是该场景的工具数。",
+             "「例」是这一格目前最硬的几条，先看有没有中意的再决定要不要细看：", ""]
     for name, n in tags:
-        lines.append(f"- {name} ({n})")
+        row = f"- {name} ({n})"
+        d = descs.get(name) or ""
+        if d:
+            row += f"：{d}"
+        ex = sorted(by.get(name, []), key=lambda t: -(t.get("stars") or 0))[:2]
+        if ex:
+            row += " —— 例：" + "、".join(t.get("name", "") for t in ex)
+        lines.append(row)
     lines.append("")
-    lines.append("用 find_tool 的 tag 参数可以列出某个场景下的全部工具。")
+    lines.append("要一次看几个能力位，用 compose_stack(slots=[...])；"
+                 "只看一个用 find_tool(tag=...)。")
     return "\n".join(lines)
+
+
+def tool_compose_stack(args: dict) -> str:
+    raw = args.get("slots") or []
+    if isinstance(raw, str):
+        raw = [x for x in re.split(r"[,，、;；\s]+", raw) if x]
+    slots = [str(x).strip() for x in raw if str(x).strip()][:6]
+    if len(slots) < 2:
+        return ("compose_stack 至少给两个能力位，例如 slots=[\"低代码\",\"认证鉴权\",\"ORM\",\"部署\"]。"
+                "只有一格就够的话用 find_tool。")
+    try:
+        per = int(args.get("per_slot") or 2)
+    except (TypeError, ValueError):
+        per = 2
+    per = max(1, min(per, 4))
+
+    items = S.compose(slots, per_slot=per)
+    gaps = [x["slot"] for x in items if not x["label"]]
+    blocks = [f"按 {len(items)} 个能力位各取 {per} 条"
+              f"（每格按 star 排，清单/教程已排除，跨能力位不重复）："]
+    for item in items:
+        if not item["label"]:
+            continue
+        blocks.append(f"\n【{item['label']}】说「{item['slot']}」，"
+                      f"该场景共 {item['total']} 条，取 {len(item['tools'])}：")
+        for i, t in enumerate(item["tools"], 1):
+            bits = []
+            if t.get("stars"):
+                bits.append(f"★{t['stars']}")
+            if t.get("origin") == "cn":
+                bits.append("国内")
+            if t.get("lang"):
+                bits.append(t["lang"])
+            if t.get("pushed_at"):
+                bits.append(t["pushed_at"])
+            blocks.append(f"{i}. {t.get('name','')}  {' · '.join(bits)}")
+            if t.get("desc"):
+                d = t["desc"]
+                blocks.append(f"   {d[:90]}{'…' if len(d) > 90 else ''}")
+            if t.get("url"):
+                blocks.append(f"   {t['url']}")
+        if not item["tools"]:
+            blocks.append("   （这一格筛完没有剩余，都已在别的能力位里出现过）")
+    if gaps:
+        blocks.append("\n缺口：" + "、".join(f"「{g}」" for g in gaps)
+                      + " 在 68 个能力位里没有对应场景。这块要么自己写，"
+                        "要么换个说法再 find_tool 试一次。")
+    blocks.append("\n拼装注意：以上只有元数据（star / 语言 / 维护状态 / 场景标签），"
+                  "不含许可协议、部署方式、性能数据，装之前先看项目文档。"
+                  "组合时要判断三件事：同一格只能选一个（两个 ORM 不能一起上）、"
+                  "生态要对得上（Vue 脚手架配 React 组件库等于白干）、"
+                  "先后顺序（先定数据库和框架，再定 UI 库）。")
+    return "\n".join(blocks)
 
 
 def tool_get_stats(args: dict) -> str:
@@ -409,6 +479,38 @@ TOOLS = [
         },
     },
     {
+        "name": "compose_stack",
+        "description": (
+            "一次查多个能力位，用来「把一件事拆成几样东西配合完成」。\n\n"
+            "何时使用：用户要完成的是一个需要多种组件配合的目标，而不是「找一个工具」。"
+            "例如「做个后台管理系统」= 脚手架 + 认证鉴权 + ORM/数据库 + 部署；"
+            "「做个 AI 客服」= 模型服务 + 大模型应用 + 即时通讯；"
+            "「搭个知识库」= 笔记知识库 + 搜索 + 文档协作。\n\n"
+            "怎么用：你自己把需求拆成 2-6 个能力位（中文词即可，会自动解析成场景标签），"
+            "一次传进来，它按位返回候选 + 报出哪一格在索引里没有（缺口）。"
+            "然后你在结果之上做组合取舍，不要只挑一个工具交差。\n\n"
+            "拆解要由你判断，这份索引只提供「每个能力位上有什么、有多强」。"
+            "不知道有哪些能力位时先调 list_scenarios。\n\n"
+            "返回内容是元数据（名称/star/语言/维护状态/场景/链接），"
+            "不含许可、费用、部署方式、性能数据——这些要看项目文档，不要编。"
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "slots": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "能力位，2-6 个。用中文说即可，如 [\"低代码\",\"登录鉴权\",\"数据库\",\"部署\"]",
+                },
+                "per_slot": {
+                    "type": "integer",
+                    "description": "每格取几条，默认 2，最多 4",
+                },
+            },
+            "required": ["slots"],
+        },
+    },
+    {
         "name": "compare_tools",
         "description": (
             "并排对比 2-6 个具体工具，给出各自的 star、语言、维护状态、场景归属，"
@@ -453,6 +555,7 @@ TOOLS = [
 
 HANDLERS = {
     "find_tool": tool_find_tool,
+    "compose_stack": tool_compose_stack,
     "compare_tools": tool_compare_tools,
     "list_scenarios": tool_list_scenarios,
     "get_stats": tool_get_stats,

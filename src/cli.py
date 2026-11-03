@@ -113,6 +113,44 @@ def _health_note(no_color: bool) -> None:
     print()
 
 
+def cmd_compose(args) -> int:
+    """一次查几个能力位，给「一件事要几样东西配合」用。"""
+    _maybe_refresh(args.no_color)
+    color = sys.stdout.isatty() and not args.no_color
+    items = s.compose(args.slots, per_slot=args.num)
+    if not items:
+        print("至少要给一个能力位，例如：tool compose 低代码 认证鉴权 ORM 部署")
+        return 1
+
+    gaps = [x for x in items if not x["label"]]
+    for item in items:
+        if not item["label"]:
+            print(f"\n[{_c('31', '缺口', color)}] 「{item['slot']}」— 68 个场景里没有对应能力位")
+            continue
+        print(f"\n[{_c('1;36', item['label'], color)}] "
+              f"（说「{item['slot']}」，该场景共 {item['total']} 条，这里取前 {len(item['tools'])}）")
+        for t in item["tools"]:
+            bits = []
+            if t.get("stars"):
+                bits.append(_c("33", fmt_stars(t["stars"]), color))
+            if t.get("origin") == "cn":
+                bits.append("国内")
+            if t.get("pushed_at"):
+                bits.append(t["pushed_at"])
+            print(f"  · {t.get('name','')}  {' '.join(bits)}")
+            if t.get("desc"):
+                d = t["desc"]
+                print(f"    {d[:88]}{'…' if len(d) > 88 else ''}")
+            if t.get("url"):
+                print(f"    {_c('4;34', t['url'], color)}")
+    print()
+    if gaps:
+        print(f"有 {len(gaps)} 个能力位没有对应场景，这部分要么靠自己写，要么换个说法再 find。")
+    print(f"以上是 {len(items)} 个能力位的候选，只含元数据（star / 维护状态 / 场景），"
+          f"不含许可、部署方式、性能数据。")
+    return 0
+
+
 def cmd_find(args) -> int:
     _maybe_refresh(args.no_color)
     _health_note(args.no_color)
@@ -247,6 +285,12 @@ def main() -> int:
     f.add_argument("-z", "--zh", action="store_true", help="只看中文工具")
     f.add_argument("-n", "--num", type=int, default=12, help="返回条数")
     f.add_argument("--no-color", action="store_true", help="关闭颜色")
+
+    cp = sub.add_parser("compose", help="一次查多个能力位，拼一套方案")
+    cp.add_argument("slots", nargs="+", help="能力位，可给多个：低代码 认证鉴权 ORM 部署")
+    cp.add_argument("-n", "--num", type=int, default=2, help="每个能力位取几条，默认 2")
+    cp.add_argument("--no-color", action="store_true", help="关闭颜色")
+    cp.set_defaults(func=cmd_compose)
     f.set_defaults(func=cmd_find)
 
     tg = sub.add_parser("tags", help="列出所有场景标签")

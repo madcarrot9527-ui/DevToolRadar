@@ -119,14 +119,18 @@ Windows 上是 `C:/Users/<you>/AppData/Local/Programs/Python/Python311/python.ex
 
 > VSCode 的格式略有不同：用 `"servers"` 而不是 `"mcpServers"`，且每项要加 `"type": "stdio"`。
 
-MCP server 提供四个工具：
-- `find_tool` — 自然语言查工具（支持 query / tag / source / chinese_only / limit）
+MCP server 提供五个工具：
+- `find_tool` — 自然语言查**一个**工具（支持 query / tag / source / chinese_only / limit）
+- `compose_stack` — 一次查**多个能力位**：你自己把需求拆成 2-6 格（脚手架 / 登录鉴权 /
+  数据库 / 部署），它按格给候选、报缺口、跨格去重。用户说「我要做个 X」时用这个，
+  而不是只挑一个工具交差
 - `compare_tools` — 并排比两三个候选
-- `list_scenarios` — 列出 68 个场景标签
+- `list_scenarios` — 68 个能力位，每个带一句话说明和当前最强的两条
 - `get_stats` — 数据总量与新鲜度
 
-**验证是否生效**：重启客户端后问一句「用什么工具能压缩图片」。
-模型如果调了 `find_tool` 并给出带 star 数和链接的列表，就是通了。
+**验证是否生效**：重启客户端后问两句——
+「用什么工具能压缩图片」应该调 `find_tool`；「我想做个后台管理系统」应该调
+`compose_stack` 并分格给出脚手架/鉴权/存储/部署。两条都通，才算真的接上了。
 
 配好之后跑一次 `python src/cli.py doctor`，第 4 项会去读这三个配置文件、检查里面写的
 python 路径和 `mcp_server.py` 路径**是不是真的存在**——换解释器、挪目录这类会让客户端
@@ -153,6 +157,9 @@ python src/update.py --only-site   # 重新生成后打开
 tool find "造测试数据"          # 自然语言提问即可
 tool find -t "内网穿透"         # 按场景列全量
 tool find "截图" -s cn -n 20    # 只看国内，返回 20 条
+
+tool compose 脚手架 登录鉴权 数据库 部署   # 一件事要几样东西配合时用这个
+tool compose 笔记 搜索 文档协作 -n 3      # 每格取 3 条
 tool tags                       # 看有哪些场景
 tool stats                      # 看数据总量和刷新状态
 tool open                       # 打开网页
