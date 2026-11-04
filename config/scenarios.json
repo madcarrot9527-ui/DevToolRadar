@@ -2175,6 +2175,42 @@
         "https://github.com/ClearFlask/ClearFlask",
         "https://clearflask.com"
       ]
+    },
+    {
+      "label": "合规审计",
+      "desc": "对照标准查配置、出合规报告（CIS / 等保 / PCI DSS）",
+      "kw": [
+        "security audit",
+        "compliance",
+        "cis benchmark",
+        "hardening",
+        "misconfiguration",
+        "policy as code",
+        "合规",
+        "等保",
+        "基线",
+        "加固"
+      ],
+      "alias": [
+        "做合规",
+        "合规检查",
+        "合规审计",
+        "等保",
+        "基线检查",
+        "安全加固",
+        "出审计报告",
+        "过等保",
+        "cis 基线",
+        "合规报告"
+      ],
+      "also": [
+        "https://github.com/wazuh/wazuh",
+        "https://github.com/CISOfy/lynis",
+        "https://github.com/prowler-cloud/prowler",
+        "https://github.com/kubescape/kubescape",
+        "https://github.com/bridgecrewio/checkov",
+        "https://github.com/aquasecurity/tfsec"
+      ]
     }
   ]
 }
