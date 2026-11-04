@@ -281,6 +281,28 @@ def _manual_tag(r: dict) -> tuple[bool, str | None]:
     return True, (str(lab) if lab else None)
 
 
+_FALLBACK: dict[str, list[str]] | None = None
+
+
+def _fallback_tag(r: dict) -> list[str]:
+    """topics 抓取失败期间的兜底归属，见 config/tags_fallback.json 的 _note。
+
+    存在的理由只有一个：2026-11-04 那次刷新，api.github.com 整批 SSL 断连，
+    raw_github.json 从 3888 条掉到 2032 条。恢复时只能从 tools.json 反推，
+    而 tools.json 不存 topics —— 打标末尾那两条兜底（topic_map、topic_only）
+    全部失效，347 条有据可查的归属跟着丢光，AutoGPT、opencv、airflow、ray 都在里面。
+
+    这批条目的正解不是「重新猜」，是「记住上次算对的结果」。所以单列一张表，
+    网络恢复、真实 topics 抓回来之后整份删掉即可，不碰任何规则。
+    """
+    global _FALLBACK
+    if _FALLBACK is None:
+        raw = (load_config("tags_fallback.json").get("by_url") or {})
+        _FALLBACK = {norm_url(k).lower(): [str(x) for x in (v or [])]
+                     for k, v in raw.items()}
+    return _FALLBACK.get(norm_url(r.get("url")).lower()) or []
+
+
 def _score_one(fields: dict[str, str],
                matchers) -> list[tuple[str, tuple[float, float, int, bool, int]]]:
     """返回 [(标签, (总分, 最强字段权重, 命中词数, 是否在正文命中, 描述里最早命中位置))]。
@@ -861,6 +883,10 @@ def normalize(rows: list[dict], cfg: dict | None = None) -> list[dict]:
                     # 最后一档：正文没证据，但多个 topic 同时指向同一场景。
                     # 排在 topic_map 之后，因为那张表是逐条核过的，这条是规则推断。
                     auto = _topic_only_tag(hit_all, weak_labels)
+                if not auto:
+                    # 以上全是靠 topics 的路径。topics 抓不到时（见 _fallback_tag），
+                    # 退回上次算对的结果；表空了这一行就等于不存在。
+                    auto = _fallback_tag(r)
             tags = list(dict.fromkeys(auto))
 
         r["tags"] = tags
