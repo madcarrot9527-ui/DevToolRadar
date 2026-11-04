@@ -447,6 +447,25 @@ def check_search() -> None:
     else:
         rec("PASS", "需求句拆分", "4 条模糊需求分别拆出 2-5 个能力位")
 
+    # 意图筛选：同一格给不给原话，选出来的东西应该不一样。
+    # 这是「让 AI 从选择里挑」而不是「用排名第一的」那个改动的守门员：
+    # 不带 intent 时「桌面与系统工具」格第一条是 Pake ★62.8k（把网站打包成桌面应用，
+    # 跟桌宠无关）；带了 intent 必须是 BongoCat ★24.5k（真桌宠）。
+    try:
+        no_i = search.compose(["桌面与系统工具"], per_slot=2)
+        wi_i = search.compose(["桌面与系统工具"], per_slot=2,
+                              intent="我想做一个吉伊的桌面宠物")
+        got1 = (no_i[0]["tools"] or [{}])[0].get("name", "")
+        got2 = (wi_i[0]["tools"] or [{}])[0].get("name", "")
+        if got2.lower() != "bongocat":
+            rec("FAIL", "意图筛选", f"带原话时第一条是 {got2}，应该是 BongoCat")
+        elif got1 == got2:
+            rec("FAIL", "意图筛选", "带不带原话结果一样，等于没筛")
+        else:
+            rec("PASS", "意图筛选", f"不带原话→{got1}，带原话→{got2}")
+    except Exception as e:  # noqa: BLE001
+        rec("FAIL", "意图筛选", f"调用失败：{e}")
+
 
 def _write_health(fails: list, warns: list) -> None:
     """把结论落成 health.json。

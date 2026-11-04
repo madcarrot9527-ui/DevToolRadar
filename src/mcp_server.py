@@ -266,11 +266,17 @@ def tool_compose_stack(args: dict) -> str:
         per = 2
     per = max(1, min(per, 4))
 
-    items = S.compose(slots, per_slot=per)
+    intent = str(args.get("intent") or "").strip()
+    items = S.compose(slots, per_slot=per, intent=intent)
     gaps = [x["slot"] for x in items if not x["label"]]
     expanded: list[str] = []
-    blocks = [f"按 {len(items)} 个能力位各取 {per} 条"
-              f"（每格按对症程度排、同分看 star，清单/教程已排除，跨能力位不重复）："]
+    head = (f"按 {len(items)} 个能力位各取 {per} 条（清单/教程已排除，跨能力位不重复）。"
+            if not intent else
+            f"按 {len(items)} 个能力位各取 {per} 条。每格分两部分："
+            f"「跟「{intent}」对得上的」（可能是现成同类）和「这格主力」"
+            f"（做这件事通常用的工具）。说「怎么做」的格子本来就不会出现你说的"
+            f"「做成什么样」，所以前者为空很正常，不是这一格没用：")
+    blocks = [head]
     for item in items:
         if not item["label"]:
             continue
@@ -281,8 +287,18 @@ def tool_compose_stack(args: dict) -> str:
                 if v not in expanded:
                     expanded.append(v)
         said = f"由「{via}」展开" if via else f"说「{item['slot']}」"
-        blocks.append(f"\n【{item['label']}】{said}，"
-                      f"该场景共 {item['total']} 条，取 {len(item['tools'])}：")
+        hit_words = item.get("hit_words") or {}
+        others = item.get("others") or []
+        if hit_words:
+            blocks.append(f"\n【{item['label']}】{said}，该场景共 {item['total']} 条。"
+                          f"第一部分跟你的话直接对得上（可能是现成同类，可直接用或参考）：")
+        elif item.get("no_match"):
+            blocks.append(f"\n【{item['label']}】{said}，该场景共 {item['total']} 条。"
+                          f"你的话里没有能直接匹配这一格的词（正常 —— 这一格讲的是"
+                          f"「怎么做」，你的话讲的是「做成什么样」）。以下是这格的主力：")
+        else:
+            blocks.append(f"\n【{item['label']}】{said}，"
+                          f"该场景共 {item['total']} 条，取 {len(item['tools'])}：")
         for i, t in enumerate(item["tools"], 1):
             bits = []
             if t.get("stars"):
@@ -298,9 +314,23 @@ def tool_compose_stack(args: dict) -> str:
             if t.get("desc"):
                 d = t["desc"]
                 blocks.append(f"   {d[:90]}{'…' if len(d) > 90 else ''}")
+            w = hit_words.get(t.get("url") or t.get("name") or "")
+            if w:
+                blocks.append(f"   命中：{'、'.join(w)}")
             if t.get("url"):
                 blocks.append(f"   {t['url']}")
-        if not item["tools"]:
+        if intent and not item["tools"]:
+            blocks.append(f"   （这一格筛完没有剩余，都已在别的能力位里出现过）")
+        if others:
+            # 只补一条。补两条的时候，像「桌面与系统工具」这种格子会同时塞进
+            # Pake 和 Win11Debloat 两条噪声，把真正该看的 BongoCat 挤得没地方。
+            blocks.append("   这格其他高星（不一定跟你的需求相关，仅供参考）：")
+            for t in others:
+                nm = t.get("name", "") + S.slug_suffix(t)
+                st = f"★{t['stars']}" if t.get("stars") else ""
+                d = (t.get("desc") or "")[:52]
+                blocks.append(f"   · {nm} {st} — {d}{'…' if len(t.get('desc') or '') > 52 else ''}")
+        if not item["tools"] and not others:
             blocks.append("   （这一格筛完没有剩余，都已在别的能力位里出现过）")
     if gaps:
         blocks.append("\n缺口：" + "、".join(f"「{g}」" for g in gaps)
@@ -553,6 +583,14 @@ TOOLS = [
                 "per_slot": {
                     "type": "integer",
                     "description": "每格取几条，默认 2，最多 4",
+                },
+                "intent": {
+                    "type": "string",
+                    "description": ("用户的原话，例如「我想做一个吉伊的桌面宠物」。"
+                                    "传了它，每格会分成「跟你的话对得上的」和"
+                                    "「这格热门但对不上的」两段，你只需要从前一段挑。"
+                                    "不传就只按该格热度给，容易出现「这格第一名跟需求无关」。"
+                                    "强烈建议传。"),
                 },
             },
             "required": ["slots"],

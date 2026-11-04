@@ -736,8 +736,43 @@ def resolve_concept(name: str, kind: str = "concepts") -> tuple[str, list[str]] 
     return best if best_ln >= 2 else None
 
 
+def _intent_terms(intent: str) -> list[str]:
+    """从意图句里抽出能用来筛条目的词。
+
+    只从 terms.json 里取（最长匹配那组），展开成「中文键 + 英文词」。
+    不切中文滑窗：一句「做一个吉伊的桌面宠物」切出「伊的桌」这种垃圾词，
+    拿去匹配描述只会随机命中，比不筛更糟。
+
+    实测为什么这样够：「桌宠」在 terms 里展开成 desktop pet / pixel pet /
+    virtual pet，BongoCat 的描述写的是 "A cross-platform interactive desktop pet"
+    ——命中；而 AI Zombie（描述里有「宠物」两个字）不命中任何英文词，
+    不会被「宠物」这个中文巧合顶上来。
+    """
+    words: list[str] = []
+    for zh, ens in expand_en(intent):
+        words.append(zh)
+        words.extend(ens)
+    return [w for w in dict.fromkeys(words) if w and len(w) >= 2]
+
+
+def _match_words(t: dict, words: list[str]) -> list[str]:
+    """这条工具的 名字/描述 里命中了哪几个意图词。"""
+    if not words:
+        return []
+    name = (t.get("name") or "").lower()
+    desc = (t.get("desc") or "").lower()
+    hits = []
+    for w in words:
+        wl = w.lower()
+        # 名字是标识符（BongoCat、pixelit），子串判；描述是自然语言，按词边界判，
+        # 否则 pet 会命中 competition、petition。
+        if _hit(wl, name) or _hit_strict(wl, desc):
+            hits.append(w)
+    return hits
+
+
 def compose(slots: list[str], per_slot: int = 2,
-            exclude_lists: bool = True) -> list[dict]:
+            exclude_lists: bool = True, intent: str = "") -> list[dict]:
     """一次查多个能力位。给「做一件事，需要几样东西配合」的场景用。
 
     为什么不自己拆需求：拆解靠的是对需求的理解，那是模型该做的；这份索引能提供的是
@@ -745,13 +780,21 @@ def compose(slots: list[str], per_slot: int = 2,
     换个需求就失效，而且模板本身也没有依据。所以这里只做一件事：模型点名要哪几个位，
     就一次把每个位的头几名取回来，顺带报出取不到的位（缺口）。
 
-    返回每项：{slot(原话), label(解析到的场景), total, tools[]}，label 为 None 表示
-    这个说法在现有能力位里没有对应场景。由上位概念展开来的项多带一个 via 字段
-    （原话），上层据此标明「这几格是从一个说法展开的」，不假装用户逐格点过名。
+    intent 是用户的原话。它不参与拆解，只用来给每格内部做一次筛选，回答的是
+    「这一格里哪几条跟你说的东西有关」，而不是「这一格谁最出名」。
+    两者差别很实际：做桌宠时「桌面与系统工具」格按热度给的是 Pake ★62.8k（把网站
+    打包成桌面应用）和 Win11Debloat ★61.6k（Windows 精简脚本），跟桌宠毫无关系；
+    按 intent 筛则是 BongoCat ★24.5k（真桌宠）浮上来。
+
+    返回每项：{slot, label, total, tools[], hit_words{}, others[]}，label 为 None
+    表示这个说法在现有能力位里没有对应场景。tools 是「跟意图对得上的」，
+    others 是「这格热门但对不上的」，分开摆，让调用方一眼看出该选哪个、以及
+    这一格到底有没有货（tools 为空基本等于这一格拆错了）。
     """
     out: list[dict] = []
     used: set[str] = set()
     known = {t["label"] for t in load_config("scenarios.json").get("tags", [])}
+    words = _intent_terms(intent) if intent else []
 
     def _expand(raw: str, labels: list[str], via: str) -> None:
         """把一格里展开出来的几格各取一条。
@@ -811,21 +854,60 @@ def compose(slots: list[str], per_slot: int = 2,
             out.append({"slot": raw, "label": None, "total": 0, "tools": []})
             continue
         total = sum(1 for t in load_index() if label in (t.get("tags") or []))
-        # 每格用 search() 自己排，而不是在这里另写一套排序。
-        # 曾经按 star 排：图像处理 148 条里能去背景的 rembg 排第 8，每格取 2 时永远
-        # 取不到它，抠图那格给的是 OCR 工具。也曾按 score(t, 原话) 直排：数据库那格
-        # 第一名叫作 sqlmap（注入扫描器，描述里全是「数据库」）。两种都是「只用了一个
-        # 信号」。search() 本来就是「相关性 + 场景 + 热度 + 清单沉底」的合成判定，
-        # 直接用它，网页、命令行、组合三处口径也就一致了。
-        got = search(raw, tag=label, limit=max(per_slot * 3, per_slot + len(used) + 6))
-        cand = [t for t in got if not (exclude_lists and is_list(t))]
-        # 跨能力位去重：一个脚手架同时挂着「低代码」和「认证鉴权」，两格都列它
-        # 只会让人以为要装两遍。已经在前面出现过的，这一格往下顺延。
-        cand = [t for t in cand if (t.get("url") or t.get("name")) not in used]
-        picked = cand[:max(1, per_slot)]
+        rows = [t for t in load_index()
+                if label in (t.get("tags") or []) and not (exclude_lists and is_list(t))]
+        rows = [t for t in rows if (t.get("url") or t.get("name")) not in used]
+
+        picked: list[dict] = []
+        others: list[dict] = []
+        hit_words: dict[str, list[str]] = {}
+        no_match = False
+
+        if words:
+            # 有意图词：先挑「字面/词表上跟你的话对得上」的，再补这格的主力。
+            #
+            # 两段都要给，不能只给命中的那段。实测「做桌宠」这句在
+            # 「桌面应用开发」格里一条都命中不了 —— 那句话描述的是成品，
+            # 而这一格的工具描述讲的是「怎么写窗口」，本来就不会出现「桌宠」。
+            # 只给命中段的话，electron / tauri 会被判成「对不上」，等于告诉调用方
+            # 这一格没用。所以命中段为空时退回该格主力，并标明「没有直接匹配」。
+            matched = []
+            for t in rows:
+                h = _match_words(t, words)
+                if h:
+                    matched.append((t, h))
+            matched.sort(key=lambda x: -(x[0].get("stars") or 0))
+            rest = [t for t in rows if t not in [x[0] for x in matched]]
+            rest.sort(key=lambda t: -(t.get("stars") or 0))
+            if matched:
+                picked = [t for t, _ in matched[:max(1, per_slot)]]
+                for t, h in matched[:max(1, per_slot)]:
+                    hit_words[t.get("url") or t.get("name")] = h
+                # 对照只补一条。补多了「桌面与系统工具」那种格子会同时塞进
+                # Pake 和 Win11Debloat 两条噪声，把对口的挤没了。
+                others = rest[:1]
+            else:
+                picked = rest[:max(1, per_slot)]
+                no_match = True
+        else:
+            # 没抽到意图词（用户说「做个后台管理系统」这种，terms 里没有对应词）：
+            # 退回原来的做法，按 search() 的合成判定排，并明说这一格是按热度给的。
+            got = search(intent or raw, tag=label,
+                         limit=max(per_slot * 3, per_slot + len(used) + 6))
+            cand = [t for t in got if not (exclude_lists and is_list(t))]
+            cand = [t for t in cand if (t.get("url") or t.get("name")) not in used]
+            picked = cand[:max(1, per_slot)]
+
         for t in picked:
             used.add(t.get("url") or t.get("name"))
-        out.append({"slot": raw, "label": label, "total": total, "tools": picked})
+        item = {"slot": raw, "label": label, "total": total, "tools": picked}
+        if others:
+            item["others"] = others
+        if hit_words:
+            item["hit_words"] = hit_words
+        if no_match:
+            item["no_match"] = True
+        out.append(item)
     return out
 
 

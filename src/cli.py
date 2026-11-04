@@ -117,7 +117,7 @@ def cmd_compose(args) -> int:
     """一次查几个能力位，给「一件事要几样东西配合」用。"""
     _maybe_refresh(args.no_color)
     color = sys.stdout.isatty() and not args.no_color
-    items = s.compose(args.slots, per_slot=args.num)
+    items = s.compose(args.slots, per_slot=args.num, intent=getattr(args, "intent", ""))
     if not items:
         print("至少要给一个能力位，例如：tool compose 低代码 认证鉴权 ORM 部署")
         return 1
@@ -134,10 +134,17 @@ def cmd_compose(args) -> int:
             for v in via.split(" / "):
                 if v not in expanded:
                     expanded.append(v)
+        hit_words = item.get("hit_words") or {}
+        others = item.get("others") or []
         head = f"（说「{item['slot']}」，该场景共 {item['total']} 条，这里取前 {len(item['tools'])}）"
         if via:
             head = f"（由「{via}」展开，该场景共 {item['total']} 条，这里取前 {len(item['tools'])}）"
         print(f"\n[{_c('1;36', item['label'], color)}] {head}")
+        if hit_words:
+            print(_c("32", "  跟你的话直接对得上（可能是现成同类）：", color))
+        elif item.get("no_match"):
+            print(_c("90", "  你的话里没有能直接匹配这一格的词（正常，这格讲「怎么做」）；"
+                           "以下是这格主力：", color))
         for t in item["tools"]:
             bits = []
             if t.get("stars"):
@@ -147,12 +154,22 @@ def cmd_compose(args) -> int:
             if t.get("pushed_at"):
                 bits.append(t["pushed_at"])
             nm = t.get('name', '') + s.slug_suffix(t)
-            print(f"  · {nm}  {' '.join(bits)}")
+            hit = hit_words.get(t.get("url") or t.get("name") or "")
+            mark = _c("32", f"  命中 {'、'.join(hit)}", color) if hit else ""
+            print(f"  · {nm}  {' '.join(bits)}{mark}")
             if t.get("desc"):
                 d = t["desc"]
                 print(f"    {d[:88]}{'…' if len(d) > 88 else ''}")
             if t.get("url"):
                 print(f"    {_c('4;34', t['url'], color)}")
+        if others:
+            print(_c("90", "  这格其他高星（不一定跟你的需求相关）：", color))
+            for t in others:
+                nm = t.get('name', '') + s.slug_suffix(t)
+                st = fmt_stars(t["stars"]) if t.get("stars") else ""
+                d = (t.get("desc") or "")[:60]
+                print(_c("90", f"  · {nm} {st} — {d}{'…' if len(t.get('desc') or '') > 60 else ''}",
+                         color))
     print()
     if gaps:
         print(f"有 {len(gaps)} 个能力位没有对应场景，这部分要么靠自己写，要么换个说法再 find。")
@@ -321,6 +338,9 @@ def main() -> int:
     cp = sub.add_parser("compose", help="一次查多个能力位，拼一套方案")
     cp.add_argument("slots", nargs="+", help="能力位，可给多个：低代码 认证鉴权 ORM 部署")
     cp.add_argument("-n", "--num", type=int, default=2, help="每个能力位取几条，默认 2")
+    cp.add_argument("-i", "--intent", default="",
+                    help="用户原话，例如「做个吉伊桌面宠物」。给了就把每格分成"
+                         "「跟你的话对得上的」和「这格其他高星」两段")
     cp.add_argument("--no-color", action="store_true", help="关闭颜色")
     cp.set_defaults(func=cmd_compose)
     f.set_defaults(func=cmd_find)
