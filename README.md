@@ -120,17 +120,27 @@ Windows 上是 `C:/Users/<you>/AppData/Local/Programs/Python/Python311/python.ex
 > VSCode 的格式略有不同：用 `"servers"` 而不是 `"mcpServers"`，且每项要加 `"type": "stdio"`。
 
 MCP server 提供五个工具：
-- `find_tool` — 自然语言查**一个**工具（支持 query / tag / source / chinese_only / limit）
+- `find_tool` — 自然语言查**一个**工具（支持 query / tag / source / chinese_only / limit）。
+  一句话命中多个能力位时，它会在结果末尾直接给出 `compose_stack(slots=[...])` 的建议
 - `compose_stack` — 一次查**多个能力位**：你自己把需求拆成 2-6 格（脚手架 / 登录鉴权 /
   数据库 / 部署），它按格给候选、报缺口、跨格去重。用户说「我要做个 X」时用这个，
-  而不是只挑一个工具交差
+  而不是只挑一个工具交差。slots 里也可以直接写用户原话，「美术设计」会自动展开成六格
 - `compare_tools` — 并排比两三个候选
-- `list_scenarios` — 69 个能力位，每个带一句话说明和当前最强的两条
+- `list_scenarios` — 全部能力位（当前 82 个，以输出为准），每个带一句话说明和当前最强的两条
 - `get_stats` — 数据总量与新鲜度
 
 **验证是否生效**：重启客户端后问两句——
 「用什么工具能压缩图片」应该调 `find_tool`；「我想做个后台管理系统」应该调
 `compose_stack` 并分格给出脚手架/鉴权/存储/部署。两条都通，才算真的接上了。
+
+**之后改代码不用重启。** 服务每次处理请求前会比对 `src/*.py` 和 `config/*.json` 的
+mtime，变了就地重载（改配置、改检索逻辑、改工具实现都算）。只有装依赖或改启动方式
+才需要重启。要验证这条能力还在，跑 `python tools/test_mcp_hotreload.py`——
+它用两个探针做「改 → 变 → 改回 → 变回」，任何一步不动就 FAIL。
+
+> 热重载有三条静默失败路径，都实测踩过：`reload(__main__)` 抛 spec not found（reload
+> 内部会用 `_find_spec` 覆盖 `__spec__`）、`exec` 重进模块后监控基线被重置导致第二次
+> 改动被吃成新基线、没有启动闸时 `exec` 会重进 `main()` 抛 SystemExit。脚本就是守这个的。
 
 配好之后跑一次 `python src/cli.py doctor`，第 4 项会去读这三个配置文件、检查里面写的
 python 路径和 `mcp_server.py` 路径**是不是真的存在**——换解释器、挪目录这类会让客户端

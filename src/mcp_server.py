@@ -24,11 +24,14 @@ import traceback
 # 1. 抢占真正的 stdout 用于协议通信，把 sys.stdout 重定向到 stderr
 #    这样即使某个模块内部 print 了东西，也不会污染协议流
 # ---------------------------------------------------------------------------
-_PROTO = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", newline="\n",
-                          line_buffering=False)
-sys.stdout = sys.stderr
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
+# 只在这一模块「第一次」执行时做。热重载会重新执行顶层代码，若不加判断，
+# _PROTO 会被重新包装一遍 —— 同一个底层 buffer 上挂两个 TextIOWrapper，
+# 各自的缓冲互不知情，协议响应会错位。_PROTO 在 globals 里就说明已经接管过。
+if "_PROTO" not in globals():
+    _PROTO = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", newline="\n",
+                              line_buffering=False)
+    sys.stdout = sys.stderr
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import search as S  # noqa: E402
 from common import DATA_DIR, ROOT, load_json  # noqa: E402
 
@@ -251,8 +254,12 @@ def tool_compose_stack(args: dict) -> str:
         raw = [x for x in re.split(r"[,，、;；\s]+", raw) if x]
     slots = [str(x).strip() for x in raw if str(x).strip()][:6]
     if len(slots) < 2:
-        return ("compose_stack 至少给两个能力位，例如 slots=[\"低代码\",\"认证鉴权\",\"ORM\",\"部署\"]。"
-                "只有一格就够的话用 find_tool。")
+        return (f"收到的是 {len(slots)} 个说法：{slots}。这一步要你自己拆 —— "
+                "把用户那句话拆成 2-6 个能力位再传进来，例如「做个桌宠」拆成 "
+                "[\"桌面应用开发\",\"像素与精灵\",\"AI 绘图\"]，"
+                "「带登录的后台」拆成 [\"Web 框架\",\"认证鉴权\",\"数据库\"]。"
+                "不确定有哪些格子就先调 list_scenarios。"
+                "如果确实只缺一格，用 find_tool。")
     try:
         per = int(args.get("per_slot") or 2)
     except (TypeError, ValueError):
@@ -526,7 +533,12 @@ TOOLS = [
             "一次传进来，它按位返回候选 + 报出哪一格在索引里没有（缺口）。"
             "然后你在结果之上做组合取舍，不要只挑一个工具交差。\n\n"
             "拆解要由你判断，这份索引只提供「每个能力位上有什么、有多强」。"
-            "不知道有哪些能力位时先调 list_scenarios。\n\n"
+            "拆的时候别照抄用户的话：用户说「做个桌宠」，「桌宠」不是一个能力位，要拆成"
+            "桌面应用开发 + 像素与精灵 + AI 绘图（画素材）；说「带登录的后台」要拆成"
+            "Web 框架 + 认证鉴权 + 数据库。不知道有哪些能力位时先调 list_scenarios，"
+            "它带 82 个格子的名字和各自的代表作。\n\n"
+            "slots 里也可以直接写用户原话，索引会尝试解析（「美术设计」会自动展开成六格），"
+            "但那是兜底，不是让你省事——你拆得比它准。\n\n"
             "返回内容是元数据（名称/star/语言/维护状态/场景/链接），"
             "不含许可、费用、部署方式、性能数据——这些要看项目文档，不要编。"
         ),
@@ -678,6 +690,85 @@ def handle(req: dict):
     _error(mid, -32601, f"未支持的方法: {method}")
 
 
+# 热重载状态不能只放在模块全局里：exec 重进模块会把普通全局重置成初值，
+# 于是「还原改动」那一次会被当成新基线吃掉，改动就静默不生效（实测踩到）。
+# 存在模块字典里但用 setdefault —— 重进时拿到的是同一个对象，状态才留得住。
+_HSTATE = sys.modules[__name__].__dict__.setdefault("_HSTATE", {"snap": {}, "at": 0.0})
+
+
+def _watch_snapshot() -> dict[str, float]:
+    """src/*.py + config/*.json 的 mtime 快照。
+
+    只盯这两处：data/ 不进来是有意的 —— 索引数据每次调用都重新读盘
+    （search.load_index 不缓存），刷新数据本来就不需要重启。要重启的从来只有代码。
+    """
+    snap: dict[str, float] = {}
+    for d, pat in ((os.path.join(ROOT, "src"), ".py"),
+                   (os.path.join(ROOT, "config"), ".json")):
+        try:
+            names = os.listdir(d)
+        except OSError:
+            continue
+        for n in names:
+            if not n.endswith(pat):
+                continue
+            p = os.path.join(d, n)
+            try:
+                snap[p] = os.path.getmtime(p)
+            except OSError:
+                pass
+    return snap
+
+
+def _maybe_reload() -> None:
+    """代码改了就地重载，不用重启客户端。
+
+    为什么需要：MCP 是常驻 stdio 进程，改一行代码就得重启客户端才生效 —— 而改完
+    立刻验证正是最需要连续重启的时候。与其让用户反复重启，不如让进程自己看文件
+    时间戳：变了就 reload 模块，函数名不变，正在跑的 main() 循环照常。
+
+    顺序有讲究：先 reload 依赖（common / normalize / search），最后 reload 自己。
+    reload 自己会把顶层的 `import search as S` 重新绑一遍，拿到的是刚 reload 过的
+    新模块；反过来先 reload 自己的话，S 会指回旧对象。
+
+    失败不清场：reload 抛异常就记日志、继续用旧代码 —— 半截重载比重启更糟，
+    但比直接崩掉好。
+    """
+    now = time.time()
+    if now - _HSTATE["at"] < 0.3:      # 每个请求都 stat 三十个文件太浪费
+        return
+    _HSTATE["at"] = now
+    snap = _watch_snapshot()
+    if not _HSTATE["snap"]:
+        _HSTATE["snap"] = snap
+        return
+    changed = [p for p, m in snap.items() if _HSTATE["snap"].get(p) != m]
+    if not changed:
+        return
+    _HSTATE["snap"] = snap
+    import importlib
+    for name in ("common", "normalize", "search", __name__):
+        mod = sys.modules.get(name)
+        if mod is None:
+            continue
+        try:
+            if name == "__main__":
+                # 直接 `python src/mcp_server.py` 跑起来的模块叫 __main__，
+                # importlib.reload 对它无效：reload 内部会用 _find_spec("__main__")
+                # 重新查找 spec，而这个查找永远返回 None（试过补 __spec__，没用，
+                # reload 第 126 行会把它覆盖掉）。所以这里手工做 reload 真正做的事：
+                # 编译源码，在自己的 __dict__ 里执行一遍。
+                # 顶层那两处有闸（_PROTO 已接管 / _STARTED 已启动），重进不会出事。
+                with open(os.path.abspath(__file__), encoding="utf-8") as f:
+                    code = compile(f.read(), os.path.abspath(__file__), "exec")
+                exec(code, mod.__dict__)  # noqa: S102
+            else:
+                importlib.reload(mod)
+        except Exception:  # noqa: BLE001
+            _log(f"热重载 {name} 失败，继续用旧代码：\n{traceback.format_exc()}")
+    _log("热重载完成：" + "、".join(os.path.basename(p) for p in changed))
+
+
 def main() -> int:
     _log(f"server started, index={len(S.load_index())} tools")
     stdin = io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8", errors="replace")
@@ -696,6 +787,7 @@ def main() -> int:
         except json.JSONDecodeError as e:
             _log(f"JSON 解析失败: {e}")
             continue
+        _maybe_reload()
         try:
             if isinstance(msg, list):          # batch
                 for one in msg:
@@ -708,5 +800,9 @@ def main() -> int:
     return 0
 
 
-if __name__ == "__main__":
+if __name__ == "__main__" and not globals().get("_STARTED"):
+    # _STARTED 这道闸是给热重载留的：reload 会重新执行整个模块顶层，包括这一行。
+    # 没有它，reload 会再进一次 main()，然后抛 SystemExit 把重载搞挂
+    # （实测就是这样：每次热重载都报「reload __main__ 失败」）。
+    _STARTED = True
     raise SystemExit(main())
