@@ -669,6 +669,45 @@
    "beautify json",
    "json beautifier",
    "json viewer"
+  ],
+  "桌宠": [
+   "desktop pet",
+   "desktop pet app",
+   "pixel pet",
+   "virtual pet",
+   "pet companion"
+  ],
+  "桌面宠物": [
+   "desktop pet",
+   "desktop pet app",
+   "pixel pet",
+   "virtual pet",
+   "pet companion"
+  ],
+  "http 客户端": [
+   "http client",
+   "http request",
+   "rest client",
+   "http library"
+  ],
+  "发请求": [
+   "http request",
+   "http client",
+   "rest client"
+  ],
+  "调接口": [
+   "http client",
+   "rest client",
+   "api client",
+   "http request"
+  ],
+  "语音转文字": [
+   "speech to text",
+   "speech recognition",
+   "transcribe",
+   "transcription",
+   "stt",
+   "asr"
   ]
  }
 }

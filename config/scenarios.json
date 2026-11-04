@@ -290,6 +290,12 @@
         "样式",
         "界面框架",
         "前端组件"
+      ],
+      "also": [
+        "https://github.com/tachyons-css/tachyons",
+        "https://github.com/pmndrs/valtio",
+        "https://github.com/statelyai/xstate",
+        "https://github.com/dexie/Dexie.js"
       ]
     },
     {
@@ -425,6 +431,11 @@
         "lint",
         "代码规范",
         "代码审查"
+      ],
+      "also": [
+        "https://github.com/github-changelog-generator/github-changelog-generator",
+        "https://github.com/olivierlacan/keep-a-changelog",
+        "https://github.com/RichardLitt/standard-readme"
       ]
     },
     {
@@ -586,6 +597,12 @@
         "后端框架",
         "web 框架",
         "服务端"
+      ],
+      "also": [
+        "https://github.com/uNetworking/uWebSockets",
+        "https://github.com/aio-libs/aiohttp",
+        "https://github.com/Tencent/mars",
+        "https://github.com/joewalnes/websocketd"
       ]
     },
     {
@@ -755,6 +772,9 @@
         "解释器",
         "虚拟机",
         "把代码编译"
+      ],
+      "also": [
+        "https://github.com/rhaiscript/rhai"
       ]
     },
     {
@@ -788,12 +808,28 @@
         "windows utility",
         "文件管理器",
         "系统工具",
-        "系统增强"
+        "系统增强",
+        "desktop pet",
+        "桌宠",
+        "桌面宠物"
       ],
       "alias": [
         "桌面软件",
         "系统工具",
         "文件管理"
+      ],
+      "also": [
+        "https://github.com/hluk/CopyQ",
+        "https://github.com/bleachbit/bleachbit",
+        "https://github.com/jtroo/kanata",
+        "https://github.com/hrvach/deskhop",
+        "https://github.com/ActivityWatch/activitywatch",
+        "https://github.com/balena-io/etcher",
+        "https://github.com/StevenBlack/hosts",
+        "https://github.com/spacedriveapp/spacedrive",
+        "https://github.com/kando-menu/kando",
+        "https://github.com/ayangweb/BongoCat",
+        "https://github.com/ringhyacinth/Star-Office-UI"
       ]
     },
     {
@@ -1023,7 +1059,10 @@
         "知识库问答",
         "检索增强",
         "agent framework",
-        "workflow llm"
+        "workflow llm",
+        "multi-agent",
+        "autonomous agent",
+        "ai assistant"
       ],
       "alias": [
         "接大模型",
@@ -1062,6 +1101,12 @@
         "出图",
         "ai 绘图",
         "生成配图"
+      ],
+      "also": [
+        "https://github.com/vladmandic/sdnext",
+        "https://github.com/civitai/civitai",
+        "https://github.com/Acly/krita-ai-diffusion",
+        "https://github.com/Akegarasu/lora-scripts"
       ]
     },
     {
@@ -1099,7 +1144,14 @@
         "配音",
         "转写",
         "whisper",
-        "音色克隆"
+        "音色克隆",
+        "speech",
+        "speech-to-text",
+        "audio processing",
+        "voice ai",
+        "voice cloning",
+        "voice conversion",
+        "speech processing"
       ],
       "alias": [
         "文字转语音",
@@ -1109,6 +1161,10 @@
         "转写",
         "语音合成",
         "识别语音"
+      ],
+      "also": [
+        "https://github.com/audacity/audacity",
+        "https://github.com/thewh1teagle/vibe"
       ]
     },
     {
@@ -1140,6 +1196,9 @@
         "本地部署模型",
         "跑本地模型",
         "开源模型本地"
+      ],
+      "also": [
+        "https://github.com/pytorch/executorch"
       ]
     },
     {
@@ -1203,7 +1262,10 @@
         "双链笔记",
         "mind map",
         "mindmap",
-        "思维导图"
+        "思维导图",
+        "personal knowledge management",
+        "pkm",
+        "note"
       ],
       "alias": [
         "记笔记",
@@ -1258,6 +1320,9 @@
         "写文档",
         "在线文档",
         "技术文档"
+      ],
+      "also": [
+        "https://github.com/Automattic/harper"
       ]
     },
     {
@@ -1329,6 +1394,12 @@
         "消息推送",
         "客服",
         "即时通讯"
+      ],
+      "also": [
+        "https://github.com/tdlib/td",
+        "https://github.com/LC044/WeChatMsg",
+        "https://github.com/hicccc77/WeFlow",
+        "https://github.com/signalwire/freeswitch"
       ]
     },
     {
@@ -1376,6 +1447,10 @@
         "渗透",
         "安全检查",
         "漏洞扫描"
+      ],
+      "also": [
+        "https://github.com/cure53/DOMPurify",
+        "https://github.com/helmetjs/helmet"
       ]
     },
     {
@@ -1465,7 +1540,11 @@
         "抠图",
         "水印",
         "resize",
-        "图像识别"
+        "图像识别",
+        "computer vision",
+        "image manipulation",
+        "image conversion",
+        "opencv"
       ],
       "alias": [
         "压缩图片",
@@ -1505,6 +1584,9 @@
         "转码",
         "处理视频",
         "视频压缩"
+      ],
+      "also": [
+        "https://github.com/mltframework/shotcut"
       ]
     },
     {
@@ -1582,7 +1664,11 @@
         "入门",
         "速查表"
       ],
-      "weak": true
+      "weak": true,
+      "also": [
+        "https://github.com/insidegui/WWDC",
+        "https://github.com/web-platform-tests/wpt"
+      ]
     },
     {
       "label": "低代码",
@@ -1799,6 +1885,13 @@
         "electron",
         "tauri",
         "pyinstaller"
+      ],
+      "also": [
+        "https://github.com/fyne-io/fyne",
+        "https://github.com/hoffstadt/DearPyGui",
+        "https://github.com/wxWidgets/wxWidgets",
+        "https://github.com/unoplatform/uno",
+        "https://github.com/webview/webview"
       ]
     },
     {
@@ -1986,7 +2079,16 @@
         "https://github.com/react/react-native",
         "https://github.com/expo/expo",
         "https://github.com/ionic-team/capacitor",
-        "https://github.com/NativeScript/nativescript"
+        "https://github.com/NativeScript/nativescript",
+        "https://github.com/dcloudio/uni-app",
+        "https://github.com/necolas/react-native-web",
+        "https://github.com/uber/RIBs",
+        "https://github.com/Tencent/Hippy",
+        "https://github.com/Snapchat/Valdi",
+        "https://github.com/lynx-family/lynx",
+        "https://github.com/firebase/firebase-ios-sdk",
+        "https://github.com/invertase/react-native-firebase",
+        "https://github.com/amitshekhariitbhu/Fast-Android-Networking"
       ]
     },
     {
@@ -2027,7 +2129,14 @@
         "https://github.com/thingsboard/thingsboard",
         "https://github.com/espressif/ESP-IDF",
         "https://github.com/micropython/micropython",
-        "https://github.com/zephyrproject-rtos/zephyr"
+        "https://github.com/zephyrproject-rtos/zephyr",
+        "https://github.com/embassy-rs/embassy",
+        "https://github.com/project-chip/connectedhomeip",
+        "https://github.com/stlink-org/stlink",
+        "https://github.com/nanopb/nanopb",
+        "https://github.com/serialport/node-serialport",
+        "https://github.com/PetoiCamp/OpenCat-Quadruped-Robot",
+        "https://github.com/rust-embedded/awesome-embedded-rust"
       ]
     },
     {
@@ -2061,7 +2170,11 @@
         "https://github.com/CesiumGS/cesium",
         "https://github.com/openlayers/openlayers",
         "https://github.com/Turfjs/turf",
-        "https://github.com/maplibre/maplibre-gl-js"
+        "https://github.com/maplibre/maplibre-gl-js",
+        "https://github.com/mapbox/mapbox-gl-js",
+        "https://github.com/marceloprates/prettymaps",
+        "https://github.com/originalankur/maptoposter",
+        "https://github.com/organicmaps/organicmaps"
       ]
     },
     {
@@ -2093,7 +2206,16 @@
         "https://github.com/phaserjs/phaser",
         "https://github.com/raysan5/raylib",
         "https://github.com/4ian/GDevelop",
-        "https://github.com/BabylonJS/Babylon.js"
+        "https://github.com/BabylonJS/Babylon.js",
+        "https://github.com/cocos/cocos-engine",
+        "https://github.com/turanszkij/WickedEngine",
+        "https://github.com/bkaradzic/bgfx",
+        "https://github.com/SFML/SFML",
+        "https://github.com/nesbox/TIC-80",
+        "https://github.com/egametang/ET",
+        "https://github.com/boardgameio/boardgame.io",
+        "https://github.com/EsotericSoftware/spine-runtimes",
+        "https://github.com/game1024/OpenSpeedy"
       ]
     },
     {
@@ -2208,6 +2330,58 @@
         "https://github.com/OpenSCAP/openscap",
         "https://github.com/inspec/inspec",
         "https://github.com/cloud-custodian/cloud-custodian"
+      ]
+    },
+    {
+      "label": "HTTP 客户端",
+      "desc": "发请求、调接口用的客户端库与工具",
+      "kw": [
+        "http client",
+        "http request",
+        "rest client",
+        "http library",
+        "http 客户端",
+        "http 请求",
+        "接口调用",
+        "发请求"
+      ],
+      "alias": [
+        "调接口",
+        "发 http",
+        "请求库",
+        "调用 api",
+        "api 客户端"
+      ],
+      "also": [
+        "https://github.com/axios/axios",
+        "https://github.com/guzzle/guzzle",
+        "https://github.com/sindresorhus/ky",
+        "https://github.com/sindresorhus/got",
+        "https://github.com/seanmonstar/reqwest",
+        "https://github.com/go-resty/resty",
+        "https://github.com/OpenFeign/feign",
+        "https://github.com/node-fetch/node-fetch",
+        "https://github.com/lexiforest/curl_cffi",
+        "https://github.com/AsyncHttpClient/async-http-client",
+        "https://github.com/elbywan/wretch",
+        "https://github.com/httprb/http",
+        "https://github.com/edgurgel/httpoison",
+        "https://github.com/php-http/httplug",
+        "https://github.com/elixir-mint/mint",
+        "https://github.com/sneako/finch",
+        "https://github.com/softwaremill/sttp",
+        "https://github.com/http-kit/http-kit",
+        "https://github.com/zio/zio-http",
+        "https://github.com/pycurl/pycurl",
+        "https://github.com/urllib3/urllib3",
+        "https://github.com/imroc/req",
+        "https://github.com/guonaihong/gout",
+        "https://github.com/prkumar/uplink",
+        "https://github.com/dromara/forest",
+        "https://github.com/proyecto26/RestClient",
+        "https://github.com/posva/mande",
+        "https://github.com/LucasPickering/slumber",
+        "https://github.com/Orange-OpenSource/hurl"
       ]
     }
   ]
