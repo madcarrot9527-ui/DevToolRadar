@@ -146,6 +146,9 @@ code{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg);
 const D = __DATA__;
 const TAGS = __TAGS__;
 const TAGMAP = __TAGMAP__;
+// 上位说法 → 一组能力位（「美术设计」= AI 绘图 + 像素画 + 矢量化 + 图标 + 修图 + 原型）。
+// 与 Python 端 resolve_concept 同一张表、同一条顺序：格子优先，展开只做兜底。
+const CONCEPTS = __CONCEPTS__;
 const TERMS = __TERMS__;
 const q = document.getElementById('q');
 const res = document.getElementById('results');
@@ -183,7 +186,19 @@ function queryTags(qn){
     }
     if(best) hits.push([best, label]);
   }
-  if(!hits.length) return [];
+  if(!hits.length){
+    // 一格都没命中，再看是不是「美术设计」这种横跨几格的上位说法。
+    let bestK = '', bestLn = 0;
+    for(const k in CONCEPTS){
+      const kn = norm(k);
+      if(!kn) continue;
+      if(kn === qn) return CONCEPTS[k].slice();
+      if((qn.includes(kn) || kn.includes(qn)) && Math.min(kn.length, qn.length) > bestLn){
+        bestK = k; bestLn = Math.min(kn.length, qn.length);
+      }
+    }
+    return bestLn >= 2 ? CONCEPTS[bestK].slice() : [];
+  }
   const mx = Math.max(...hits.map(h=>h[0]));
   return hits.filter(h=>h[0]>=mx).map(h=>h[1]);
 }
@@ -613,11 +628,13 @@ def build(tools: list[dict] | None = None) -> str:
             tagmap[rule["label"]] = list(dict.fromkeys(terms))
 
     terms_map = load_config("terms.json").get("terms", {})
+    concepts = load_config("concepts.json").get("concepts", {})
 
     html = (TEMPLATE
             .replace("__DATA__", json.dumps(packed, ensure_ascii=False, separators=(",", ":")))
             .replace("__TAGS__", json.dumps(tags, ensure_ascii=False, separators=(",", ":")))
             .replace("__TAGMAP__", json.dumps(tagmap, ensure_ascii=False, separators=(",", ":")))
+            .replace("__CONCEPTS__", json.dumps(concepts, ensure_ascii=False, separators=(",", ":")))
             .replace("__TERMS__", json.dumps(terms_map, ensure_ascii=False, separators=(",", ":")))
             .replace("__STATS__", stats))
 

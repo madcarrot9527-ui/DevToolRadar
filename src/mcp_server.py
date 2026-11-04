@@ -244,12 +244,17 @@ def tool_compose_stack(args: dict) -> str:
 
     items = S.compose(slots, per_slot=per)
     gaps = [x["slot"] for x in items if not x["label"]]
+    expanded: dict[str, int] = {}
     blocks = [f"按 {len(items)} 个能力位各取 {per} 条"
               f"（每格按对症程度排、同分看 star，清单/教程已排除，跨能力位不重复）："]
     for item in items:
         if not item["label"]:
             continue
-        blocks.append(f"\n【{item['label']}】说「{item['slot']}」，"
+        via = item.get("via")
+        if via:
+            expanded[via] = expanded.get(via, 0) + 1
+        said = f"由「{via}」展开" if via else f"说「{item['slot']}」"
+        blocks.append(f"\n【{item['label']}】{said}，"
                       f"该场景共 {item['total']} 条，取 {len(item['tools'])}：")
         for i, t in enumerate(item["tools"], 1):
             bits = []
@@ -274,6 +279,10 @@ def tool_compose_stack(args: dict) -> str:
         blocks.append("\n缺口：" + "、".join(f"「{g}」" for g in gaps)
                       + f" 在 {S.tag_count()} 个能力位里没有对应场景。这块要么自己写，"
                         "要么换个说法再 find_tool 试一次。")
+    for via, cnt in expanded.items():
+        blocks.append(f"\n「{via}」不是一个能力位，是横跨 {cnt} 格的上位说法，已按每格一条展开"
+                      f"（每格只给 1 条，因为没点名要哪一格）。要更多就在 slots 里直接点"
+                      f"具体格子名。")
     blocks.append("\n拼装注意：以上只有元数据（star / 语言 / 维护状态 / 场景标签），"
                   "不含许可协议、部署方式、性能数据，装之前先看项目文档。"
                   "组合时要判断三件事：同一格只能选一个（两个 ORM 不能一起上）、"

@@ -358,6 +358,10 @@ DevToolRadar/
 │   ├── sources.json           抓哪些 GitHub topic、解析哪些 awesome 仓库、必收录白名单
 │   ├── scenarios.json         场景标签：kw 打标用、alias 翻译口语、weak 严判
 │   ├── terms.json             中英术语映射
+│   ├── why_map.json           清单栏目名 → 场景标签（栏目标是维护者分的，比作者自述可靠）
+│   ├── concepts.json          上位说法 → 一组能力位（「美术设计」横跨六格，不是一格）
+│   ├── ambiguous_kw.json      多义词：只认名字/topics，描述里出现只算「提到了」
+│   ├── tags_fallback.json     第四档兜底归属，规则全部沉默时才查
 │   ├── eval_queries.json      检索评测集：查询 → 该出现的工具
 │   ├── manual_tags.json       人工判读表：每条 URL 该归哪个场景（写 null = 确认无场景）
 │   ├── manual_desc.json       人工说明表：作者没写简介的条目，人补一句话

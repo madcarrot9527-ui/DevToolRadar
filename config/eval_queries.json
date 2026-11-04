@@ -1,41 +1,202 @@
 {
   "_comment": "检索评测集。每个查询给 1-4 个「应该出现在前 3」的工具名。名字写成库里实际存在的写法（大小写不敏感）。如果期望的工具库里根本没有，评测脚本会单独报「库里没有」，不算失败。加新查询前先跑一遍 tool find 确认期望值合理，否则等于用错的答案当标准。",
   "queries": {
-    "接口 Mock": ["json-server", "mockoon", "msw", "wiremock"],
-    "内网穿透": ["frp", "gost", "chisel", "cloudflared"],
-    "抓包": ["mitmproxy", "wireshark", "whistle", "bettercap"],
-    "密码管理": ["vaultwarden", "keepassxc", "vault", "bitwarden"],
-    "截图": ["ShareX", "Flameshot"],
-    "录屏": ["obs-studio", "Cap"],
-    "抠图": ["rembg", "pymatting"],
-    "压缩图片": ["squoosh", "ImageMagick", "imgproxy", "ImageOptim"],
-    "文本对比": ["diff"],
-    "uuid": ["it-tools", "DevToys"],
-    "正则": ["it-tools", "DevToys", "免费在线工具箱"],
-    "base64": ["it-tools", "DevToys"],
-    "md5": ["it-tools", "Formatho"],
-    "去广告": ["AdGuard Home", "Pi-hole", "blocky"],
-    "查我的 IP": ["MyIP", "Public IP"],
-    "日志": ["spdlog", "logrus", "loguru", "zerolog"],
-    "监控告警": ["prometheus", "grafana", "uptime-kuma", "netdata"],
-    "定时任务": ["Cronicle", "gocron", "Airflow", "Cronmaster"],
-    "消息队列": ["kafka", "rabbitmq-server", "nats-server", "EMQX"],
-    "全文搜索": ["meilisearch", "elasticsearch", "manticoresearch", "typesense"],
-    "向量检索": ["Milvus", "chroma", "qdrant", "weaviate"],
-    "终端": ["alacritty", "kitty", "wezterm", "tabby"],
-    "shell 美化": ["ohmyzsh", "starship", "powerlevel10k"],
-    "代码格式化": ["prettier", "black", "ruff"],
-    "静态检查": ["eslint", "ruff", "shellcheck", "golangci-lint"],
-    "单元测试": ["jest", "pytest", "vitest", "testify"],
-    "端到端测试": ["playwright", "cypress"],
-    "压测": ["k6", "wrk", "jmeter", "vegeta"],
-    "容器": ["podman", "docker", "containerd"],
-    "k8s 管理": ["k9s", "kuboard", "rancher", "lens"],
-    "AI 绘图": ["stable-diffusion-webui", "ComfyUI", "Fooocus"],
-    "数据库客户端": ["dbeaver", "beekeeper-studio", "pgadmin4", "tableplus"],
-    "文件同步": ["syncthing", "rclone", "seaweedfs"],
-    "笔记": ["obsidian", "logseq", "joplin", "siyuan"],
-    "桌面程序": ["electron", "tauri", "pyinstaller", "wails"],
-    "打包成 exe": ["electron-builder", "auto-py-to-exe", "pyinstaller", "nuitka"]
+    "接口 Mock": [
+      "json-server",
+      "mockoon",
+      "msw",
+      "wiremock"
+    ],
+    "内网穿透": [
+      "frp",
+      "gost",
+      "chisel",
+      "cloudflared"
+    ],
+    "抓包": [
+      "mitmproxy",
+      "wireshark",
+      "whistle",
+      "bettercap"
+    ],
+    "密码管理": [
+      "vaultwarden",
+      "keepassxc",
+      "vault",
+      "bitwarden"
+    ],
+    "截图": [
+      "ShareX",
+      "Flameshot"
+    ],
+    "录屏": [
+      "obs-studio",
+      "Cap"
+    ],
+    "抠图": [
+      "rembg",
+      "pymatting"
+    ],
+    "压缩图片": [
+      "squoosh",
+      "ImageMagick",
+      "imgproxy",
+      "ImageOptim"
+    ],
+    "文本对比": [
+      "diff"
+    ],
+    "uuid": [
+      "it-tools",
+      "DevToys"
+    ],
+    "正则": [
+      "it-tools",
+      "DevToys",
+      "免费在线工具箱"
+    ],
+    "base64": [
+      "it-tools",
+      "DevToys"
+    ],
+    "md5": [
+      "it-tools",
+      "Formatho"
+    ],
+    "去广告": [
+      "AdGuard Home",
+      "Pi-hole",
+      "blocky"
+    ],
+    "查我的 IP": [
+      "MyIP",
+      "Public IP"
+    ],
+    "日志": [
+      "spdlog",
+      "logrus",
+      "loguru",
+      "zerolog"
+    ],
+    "监控告警": [
+      "prometheus",
+      "grafana",
+      "uptime-kuma",
+      "netdata"
+    ],
+    "定时任务": [
+      "Cronicle",
+      "gocron",
+      "Airflow",
+      "Cronmaster"
+    ],
+    "消息队列": [
+      "kafka",
+      "rabbitmq-server",
+      "nats-server",
+      "EMQX"
+    ],
+    "全文搜索": [
+      "meilisearch",
+      "elasticsearch",
+      "manticoresearch",
+      "typesense"
+    ],
+    "向量检索": [
+      "Milvus",
+      "chroma",
+      "qdrant",
+      "weaviate"
+    ],
+    "终端": [
+      "alacritty",
+      "kitty",
+      "wezterm",
+      "tabby"
+    ],
+    "shell 美化": [
+      "ohmyzsh",
+      "starship",
+      "powerlevel10k"
+    ],
+    "代码格式化": [
+      "prettier",
+      "black",
+      "ruff"
+    ],
+    "静态检查": [
+      "eslint",
+      "ruff",
+      "shellcheck",
+      "golangci-lint"
+    ],
+    "单元测试": [
+      "jest",
+      "pytest",
+      "vitest",
+      "testify"
+    ],
+    "端到端测试": [
+      "playwright",
+      "cypress"
+    ],
+    "压测": [
+      "k6",
+      "wrk",
+      "jmeter",
+      "vegeta"
+    ],
+    "容器": [
+      "podman",
+      "docker",
+      "containerd"
+    ],
+    "k8s 管理": [
+      "k9s",
+      "kuboard",
+      "rancher",
+      "lens"
+    ],
+    "AI 绘图": [
+      "stable-diffusion-webui",
+      "ComfyUI",
+      "Fooocus"
+    ],
+    "数据库客户端": [
+      "dbeaver",
+      "beekeeper-studio",
+      "pgadmin4",
+      "tableplus"
+    ],
+    "文件同步": [
+      "syncthing",
+      "rclone",
+      "seaweedfs"
+    ],
+    "笔记": [
+      "obsidian",
+      "logseq",
+      "joplin",
+      "siyuan"
+    ],
+    "桌面程序": [
+      "electron",
+      "tauri",
+      "pyinstaller",
+      "wails"
+    ],
+    "打包成 exe": [
+      "electron-builder",
+      "auto-py-to-exe",
+      "pyinstaller",
+      "nuitka"
+    ],
+    "美术设计": [
+      "stable-diffusion-webui",
+      "ComfyUI",
+      "excalidraw",
+      "penpot",
+      "aseprite"
+    ]
   }
 }

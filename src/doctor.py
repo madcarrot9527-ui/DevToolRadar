@@ -164,6 +164,36 @@ def check_index(tools: list[dict]) -> None:
     else:
         rec("PASS", "标签一致性", f"{len(known)} 个标签全部有定义")
 
+    # 上位概念表（concepts.json）。这张表把「美术设计」展开成一组格子，
+    # 里面写错一个字不会报错，只会静默少展开一格 —— 用户看到的是「怎么少了矢量化」，
+    # 而不是错误。所以逐条对着 scenarios.json 验。
+    cc = _load(ROOT / "config" / "concepts.json", {}) or {}
+    concepts = cc.get("concepts") or {}
+    bad_concept = [(k, x) for k, v in concepts.items()
+                   for x in v if x not in known]
+    thin = [k for k, v in concepts.items() if len(v) < 2]
+    # key 会被 norm() 规范化（剥「我要」「做」这类前缀）后再比对，所以
+    # 「做美术」和「美术」是两个 key、一个身份 —— 查「美术」会先撞上前者。
+    # 只差前缀/空格的 key 一律算重复。
+    from search import norm as _norm
+    seen_k: dict[str, str] = {}
+    dup_k = []
+    for k in concepts:
+        nk = _norm(k)
+        if nk in seen_k:
+            dup_k.append((seen_k[nk], k))
+        else:
+            seen_k[nk] = k
+    if bad_concept:
+        rec("FAIL", "概念表", f"指向了不存在的标签：{bad_concept[:3]}")
+    elif dup_k:
+        rec("FAIL", "概念表", f"两个 key 规范化后相同（剥前缀后撞车）：{dup_k[:3]}")
+    elif thin:
+        rec("FAIL", "概念表", f"只展开一格的应写成该格子的 alias，不必占概念表：{thin[:3]}")
+    else:
+        rec("PASS", "概念表",
+            f"{len(concepts)} 条上位说法，展开的标签全部存在")
+
     # 说明完整性。原来只看「有没有」——只要 desc 非空就算过，于是一条
     # 写着 "ORM"、一条写着 "NOW MANAGED ON CODEBERG" 都算满分。
     # 现在分开看：空说明是硬伤，重复说明说明抓取把同一段文本套在了多个条目上。

@@ -123,13 +123,19 @@ def cmd_compose(args) -> int:
         return 1
 
     gaps = [x for x in items if not x["label"]]
+    expanded: dict[str, int] = {}
     for item in items:
         if not item["label"]:
             print(f"\n[{_c('31', '缺口', color)}] 「{item['slot']}」— "
                   f"{s.tag_count()} 个能力位里没有对应场景")
             continue
-        print(f"\n[{_c('1;36', item['label'], color)}] "
-              f"（说「{item['slot']}」，该场景共 {item['total']} 条，这里取前 {len(item['tools'])}）")
+        via = item.get("via")
+        if via:
+            expanded[via] = expanded.get(via, 0) + 1
+        head = f"（说「{item['slot']}」，该场景共 {item['total']} 条，这里取前 {len(item['tools'])}）"
+        if via:
+            head = f"（由「{via}」展开，该场景共 {item['total']} 条，这里取前 {len(item['tools'])}）"
+        print(f"\n[{_c('1;36', item['label'], color)}] {head}")
         for t in item["tools"]:
             bits = []
             if t.get("stars"):
@@ -148,6 +154,9 @@ def cmd_compose(args) -> int:
     print()
     if gaps:
         print(f"有 {len(gaps)} 个能力位没有对应场景，这部分要么靠自己写，要么换个说法再 find。")
+    for via, cnt in expanded.items():
+        print(f"「{via}」不是一个能力位，是横跨 {cnt} 格的上位说法，已按每格一条展开；"
+              f"想多看某一格就直接点它的名字。")
     print(f"以上是 {len(items)} 个能力位的候选，只含元数据（star / 维护状态 / 场景），"
           f"不含许可、部署方式、性能数据。")
     return 0

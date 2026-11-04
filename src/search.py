@@ -191,6 +191,14 @@ def query_tags(query: str) -> list[str]:
         if best:
             hits.append((best, label))
     if not hits:
+        # 一格都没命中，再看是不是「美术设计」这种横跨几格的上位说法。
+        # 和 compose 同一条顺序：精确的格子优先，展开只做兜底 ——
+        # 用户说「美术设计」时不该只给矢量化工具，但说「矢量绘图」时也不该把
+        # 六个格子的东西都倒出来。
+        hit = resolve_concept(query)
+        if hit:
+            known = set(_tag_terms())
+            return [x for x in hit[1] if x in known]
         return []
     mx = max(h[0] for h in hits)
     return [label for ln, label in hits if ln >= mx]
@@ -627,6 +635,45 @@ def resolve_tag(name: str) -> str | None:
     return None
 
 
+_CONCEPTS: dict[str, list[str]] | None = None
+
+
+def load_concepts() -> dict[str, list[str]]:
+    global _CONCEPTS
+    if _CONCEPTS is None:
+        raw = load_config("concepts.json").get("concepts", {}) or {}
+        _CONCEPTS = {str(k).strip(): [str(x) for x in v if str(x).strip()]
+                     for k, v in raw.items()}
+    return _CONCEPTS
+
+
+def resolve_concept(name: str) -> tuple[str, list[str]] | None:
+    """把上位说法（「美术设计」）展开成一组能力位，取最长匹配。
+
+    存在的理由：scenarios.json 有一条硬纪律 —— 一个词只能归属一个格子，否则两格
+    互相抢结果。但「美术设计」不属于任何单一格子，它是矢量化、像素画、图标素材、
+    图像编辑、AI 出图、原型设计的合集。塞进哪一格都错，报「没有这一格」也不对
+    （用户的原话：怎么会在这个美术设计上没有工具呢）。
+
+    所以单开一层：格子的 alias 管「等于哪一格」，这里管「横跨哪几格」。
+    上层先试 resolve_tag，失败才落到这里 —— 精确的格子永远优先于展开。
+    """
+    q = norm(name)
+    if not q:
+        return None
+    best, best_ln = None, 0
+    for k, labels in load_concepts().items():
+        kn = norm(k)
+        if not kn:
+            continue
+        if kn == q:
+            return k, labels
+        if (kn in q or q in kn) and min(len(kn), len(q)) > best_ln:
+            best, best_ln = (k, labels), min(len(kn), len(q))
+    # 至少要两个字，否则「图」这种单字会把整张表兜住
+    return best if best_ln >= 2 else None
+
+
 def compose(slots: list[str], per_slot: int = 2,
             exclude_lists: bool = True) -> list[dict]:
     """一次查多个能力位。给「做一件事，需要几样东西配合」的场景用。
@@ -637,13 +684,36 @@ def compose(slots: list[str], per_slot: int = 2,
     就一次把每个位的头几名取回来，顺带报出取不到的位（缺口）。
 
     返回每项：{slot(原话), label(解析到的场景), total, tools[]}，label 为 None 表示
-    这个说法在现有能力位里没有对应场景。
+    这个说法在现有能力位里没有对应场景。由上位概念展开来的项多带一个 via 字段
+    （原话），上层据此标明「这几格是从一个说法展开的」，不假装用户逐格点过名。
     """
     out: list[dict] = []
     used: set[str] = set()
+    known = {t["label"] for t in load_config("scenarios.json").get("tags", [])}
     for raw in slots:
         label = resolve_tag(raw)
         if not label:
+            # 格子解析不出来，再看是不是「美术设计」这种横跨几格的上位说法。
+            # 顺序不能反：精确的格子永远优先，展开只是兜底。
+            hit = resolve_concept(raw)
+            if hit:
+                cname, labels = hit
+                # concepts.json 里写错一个字就静默少一格，所以这里按现有标签过滤一次，
+                # 漏掉的由 doctor 的「概念表」那一项报出来。
+                labels = [x for x in labels if x in known][:6]
+                for lab in labels:
+                    total = sum(1 for t in load_index() if lab in (t.get("tags") or []))
+                    # 展开的格子每格只取一条：用户没点名要哪一格，给多了就是替他做决定。
+                    got = search(raw, tag=lab, limit=per_slot + 4)
+                    cand = [t for t in got if not (exclude_lists and is_list(t))]
+                    cand = [t for t in cand if (t.get("url") or t.get("name")) not in used]
+                    picked = cand[:1]
+                    for t in picked:
+                        used.add(t.get("url") or t.get("name"))
+                    out.append({"slot": raw, "label": lab, "total": total,
+                                "tools": picked, "via": cname})
+                if labels:
+                    continue
             out.append({"slot": raw, "label": None, "total": 0, "tools": []})
             continue
         total = sum(1 for t in load_index() if label in (t.get("tags") or []))
