@@ -307,6 +307,25 @@ def _manual_tag(r: dict) -> tuple[bool, str | None]:
 
 
 _FALLBACK: dict[str, list[str]] | None = None
+_WHY_TAG: dict[str, str] | None = None
+
+
+def _why_tag(r: dict) -> str | None:
+    """精选清单的栏目名 → 场景标签（config/why_map.json）。
+
+    why 记的是「这条从哪份清单的哪个栏目来」，是维护者按主题分好的，比作者自己
+    写的 description 可靠。awesome-selfhosted 的 598 条全都标着 why=自托管替代方案，
+    之前完全没用上：其中 209 条因为描述末尾的 `Docker` 徽标被算进「容器与 K8s」，
+    真正打上「自托管」的只有 2 条。
+
+    只作为「追加」用，不顶替规则算出来的标签：清单栏目说的是「它属于某个主题」，
+    而规则算出来的是「它自己声称做什么」，两者并不冲突，多的那一个不该被抹掉。
+    """
+    global _WHY_TAG
+    if _WHY_TAG is None:
+        raw = load_config("why_map.json").get("map") or {}
+        _WHY_TAG = {str(k).strip(): str(v) for k, v in raw.items()}
+    return _WHY_TAG.get(str(r.get("why") or "").strip())
 
 
 def _fallback_tag(r: dict) -> list[str]:
@@ -326,6 +345,30 @@ def _fallback_tag(r: dict) -> list[str]:
         _FALLBACK = {norm_url(k).lower(): [str(x) for x in (v or [])]
                      for k, v in raw.items()}
     return _FALLBACK.get(norm_url(r.get("url")).lower()) or []
+
+
+_META_TAIL = re.compile(
+    r"\s*\((?=[^()]*?(?:Demo|Source Code|Clients|Website))[^()]*\)[^()]*$", re.I)
+
+
+def _strip_meta(desc: str) -> str:
+    """剥掉精选清单拼在描述末尾的元数据尾巴：`(Demo, Source Code) MIT Docker/K8S`。
+
+    从 awesome 清单解析出来的条目，描述后面会粘一段清单自己的元数据 ——
+    括号里是入口类型（有没有 Demo、源码、客户端、官网），括号后是许可证和
+    语言/平台徽标。它不是作者写的定位，是清单维护者填的表格。
+
+    为什么必须剥：`Docker` 在尾巴里出现，等于给 684 条（10.9%）统统打了
+    「容器与 Kubernetes」的证据。LocalAI 的自述是「本地跑 AI 模型」，
+    thingsboard 是「IoT 平台」，两条都因为尾巴里的 `Docker/K8S` 进了容器格子，
+    搜「k8s 管理」时它们排在 k9s、rancher 前面。
+
+    只在匹配时剥，落库的描述保持原样 —— 许可证和语言虽然冗余，但对读者无害，
+    而 `license`/`lang` 本来就是独立字段。
+    """
+    if not desc:
+        return ""
+    return _META_TAIL.sub("", desc).strip()
 
 
 def _score_one(fields: dict[str, str],
@@ -810,11 +853,12 @@ def normalize(rows: list[dict], cfg: dict | None = None) -> list[dict]:
     for r in merged.values():
         name = (r.get("name") or "").lower()
         topics = [str(t).replace("-", " ") for t in (r.get("topics") or [])]
+        clean_desc = _strip_meta((r.get("desc") or ""))
         fields = {
             "name": name,
             "topics": " ".join(topics).lower(),
             "category": (r.get("category") or "").lower(),
-            "desc": (r.get("desc") or "").lower(),
+            "desc": clean_desc.lower(),
         }
 
         hit = _score_one(fields, matchers)
@@ -831,7 +875,7 @@ def normalize(rows: list[dict], cfg: dict | None = None) -> list[dict]:
         # 变成「数据库」，都是 database/testing 这类泛 topic 把正确标签挤掉。
         # 主判定一放松就重演「补词」那类连锁改判，所以这行维持原样。
         # 这类证据改在下方「只补空」的兜底里用（见 _topic_only_tag）。
-        desc_len = len((r.get("desc") or "").strip())
+        desc_len = len(clean_desc.strip())
         hit_all = hit
         hit = [(l, v) for l, v in hit if v[3] or desc_len < 20]
         strong: list[str] = []
@@ -917,6 +961,11 @@ def normalize(rows: list[dict], cfg: dict | None = None) -> list[dict]:
                     # 退回上次算对的结果；表空了这一行就等于不存在。
                     auto = _fallback_tag(r)
             tags = list(dict.fromkeys(auto))
+
+        # 清单栏目给的主题（见 _why_tag）：只追加，不顶替。
+        why_lab = _why_tag(r)
+        if why_lab and why_lab not in tags:
+            tags.append(why_lab)
 
         r["tags"] = tags
         r["zh"] = 1 if CJK.search((r.get("name") or "") + (r.get("desc") or "")) else 0

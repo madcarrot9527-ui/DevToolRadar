@@ -708,6 +708,10 @@
    "transcription",
    "stt",
    "asr"
+  ],
+  "k8s": [
+   "kubernetes",
+   "kube"
   ]
  }
 }
