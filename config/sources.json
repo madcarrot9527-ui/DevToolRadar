@@ -287,6 +287,22 @@
       {
         "q": "topic:gamedev",
         "label": "游戏开发"
+      },
+      {
+        "q": "topic:marketing",
+        "label": "营销增长"
+      },
+      {
+        "q": "topic:email-marketing",
+        "label": "营销增长"
+      },
+      {
+        "q": "topic:survey",
+        "label": "调研需求"
+      },
+      {
+        "q": "topic:user-feedback",
+        "label": "调研需求"
       }
     ]
   },
@@ -470,7 +486,13 @@
       "4ian/GDevelop",
       "libgdx/libgdx",
       "phaserjs/phaser",
-      "cocos2d/cocos2d-x"
+      "cocos2d/cocos2d-x",
+      "mautic/mautic",
+      "plausible/analytics",
+      "PostHog/posthog",
+      "formbricks/formbricks",
+      "getfider/fider",
+      "ClearFlask/ClearFlask"
     ]
   },
   "cn": {

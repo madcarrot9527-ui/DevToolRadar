@@ -2099,6 +2099,82 @@
         "https://github.com/4ian/GDevelop",
         "https://github.com/BabylonJS/Babylon.js"
       ]
+    },
+    {
+      "label": "营销增长",
+      "desc": "邮件营销、网站分析、用户增长、投放转化",
+      "kw": [
+        "email marketing",
+        "marketing automation",
+        "newsletter platform",
+        "campaign management",
+        "web analytics",
+        "product analytics",
+        "audience segmentation",
+        "营销",
+        "获客",
+        "用户增长",
+        "邮件列表",
+        "网站分析",
+        "营销自动化"
+      ],
+      "alias": [
+        "做营销",
+        "邮件营销",
+        "发营销邮件",
+        "做用户增长",
+        "做增长",
+        "获客",
+        "做落地页",
+        "网站分析",
+        "用户行为分析",
+        "做 newsletter"
+      ],
+      "also": [
+        "https://github.com/knadh/listmonk",
+        "https://github.com/matomo-org/matomo",
+        "https://github.com/umami-software/umami",
+        "https://umami.is",
+        "https://github.com/twentyhq/twenty",
+        "https://twenty.com",
+        "https://github.com/mautic/mautic",
+        "https://github.com/plausible/analytics",
+        "https://github.com/PostHog/posthog"
+      ]
+    },
+    {
+      "label": "调研需求",
+      "desc": "发问卷、收用户反馈、功能投票",
+      "kw": [
+        "survey tool",
+        "user feedback",
+        "feature request board",
+        "feature voting",
+        "questionnaire",
+        "问卷",
+        "调研",
+        "反馈收集"
+      ],
+      "alias": [
+        "做个问卷",
+        "发问卷",
+        "做问卷",
+        "用户调研",
+        "收用户反馈",
+        "收集用户需求",
+        "功能投票",
+        "做表单",
+        "问卷工具"
+      ],
+      "also": [
+        "https://github.com/formbricks/formbricks",
+        "https://github.com/heyform/heyform",
+        "https://heyform.net",
+        "https://github.com/getfider/fider",
+        "https://fider.io",
+        "https://github.com/ClearFlask/ClearFlask",
+        "https://clearflask.com"
+      ]
     }
   ]
 }

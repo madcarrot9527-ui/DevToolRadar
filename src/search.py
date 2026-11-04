@@ -27,6 +27,10 @@ STOP_PREFIX = re.compile(
     r"用来|用于|做一个|做个|弄一个|弄个|搞一个|搞个|写一个|写个|搭一个|搭个|"
     r"建一个|建个|整一个|整个|一个|一款|工具|软件|库|平台|方案|推荐|的|了|吗|呢|啊|请|想|做)+"
 )
+# 尾部的通用名词。中文里「找 X 工具」和「找 X」是同一件事，标签名却只写 X。
+# 不含「应用」「产品」：剥掉它们会把「开发手机应用」变成「开发手机」，
+# 比不剥更差 —— 剥完必须还是个说法，不能剥成一句没意义的话。
+STOP_SUFFIX = re.compile(r"(工具集|工具|软件|平台|方案|系统|服务)$")
 
 # 中文查询展开出的英文词命中「名字」时给的分。
 # 一档是 100 分，所以这个数决定它能不能跨档；超过 100 就等于当成「点名」，
@@ -109,7 +113,17 @@ def norm(s: str) -> str:
     while prev != s:
         prev = s
         s = STOP_PREFIX.sub("", s).strip(" 　,，、的")
-    return re.sub(r"\s+", " ", s).strip()
+    s = re.sub(r"\s+", " ", s).strip()
+    # 尾部的通用名词同样要剥。「地图工具」整串对不上任何标签（标签叫「地图LBS」），
+    # 于是 score 从 483 掉到 62，排序全交给巧合 —— 实测 ★0 的 NextGIS Web 和
+    # ★0 的 EasyMap Desktop 双双排到 ★45,819 的 Leaflet 前面。
+    # 剥完不足两个字就不剥（「工具」本身剥成空串没有意义）。
+    m = STOP_SUFFIX.search(s)
+    if m:
+        cut = s[:m.start()].strip(" 　,，、的")
+        if len(cut) >= 2:
+            s = cut
+    return s
 
 
 def _tag_terms() -> dict[str, set[str]]:

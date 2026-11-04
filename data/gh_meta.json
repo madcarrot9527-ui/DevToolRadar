@@ -53,6 +53,12 @@
 "src": "ungh",
 "stars": 39976
 },
+"3z9w/3z9wopt": {
+"desc": "一款能清垃圾、优化系统、查硬件、管理启动项、查磁盘空间占用、分析蓝屏——等10个模块，外加 34 个系统原生小工具的小巧好用的软件。",
+"pushed_at": "2026-10-29",
+"src": "ungh",
+"stars": 125
+},
 "567-labs/instructor": {
 "desc": "structured outputs for llms",
 "pushed_at": "2026-10-26",
@@ -67,6 +73,12 @@
 },
 "9001/copyparty": {
 "missing": true
+},
+"99percentpeople/weblink": {
+"desc": "Control your desktop from a browser, with P2P chat, file sharing, voice, video, and screen sharing powered by WebRTC.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 844
 },
 "Achno/gowall": {
 "desc": "A tool to convert a Wallpaper's color scheme / palette, OCR with VLM's Traditional & Hybrid, Image Compression ,color palette extraction,  image upsacling with Adversarial Networks  and more image processing features.",
@@ -654,6 +666,12 @@
 "src": "ungh",
 "stars": 24
 },
+"Konata9/inkstone": {
+"desc": "Theme from Chinese traditional color for IDE, Terminal, Agent, etc",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 169
+},
 "Kozea/WeasyPrint": {
 "desc": "The awesome document factory",
 "pushed_at": "2026-10-30",
@@ -683,6 +701,12 @@
 "pushed_at": "2026-10-30",
 "src": "ungh",
 "stars": 9443
+},
+"LexianLix/manxia": {
+"desc": "漫匣：以实体书质感为核心的 Flutter 漫画阅读器，默认动漫屋。",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 13
 },
 "Liberty-liu/Everright-formEditor": {
 "desc": ":guide_dog: Powerful lowcode|vue form editor,generator,designer,builder library. It provides an easy way to create custom forms. The project is extensible, easy to use and configure, and provides many commonly used form components and functions(vue可视化低代码表单设计器、表单编辑器、element-plus vant表单设计)",
@@ -735,6 +759,12 @@
 "src": "ungh",
 "stars": 196
 },
+"MapMetrics/mapmetrics-gl": {
+"desc": "",
+"pushed_at": "2026-08-27",
+"src": "ungh",
+"stars": 2
+},
 "MauriceNino/dashdot": {
 "desc": "A simple, modern server dashboard, primarily used by smaller private servers",
 "pushed_at": "2026-10-29",
@@ -746,6 +776,12 @@
 "pushed_at": "2025-04-07",
 "src": "ungh",
 "stars": 9274
+},
+"MelihAltintas/vue3-openlayers": {
+"desc": "Web map Vue 3.x components with the power of OpenLayers",
+"pushed_at": "2026-02-27",
+"src": "ungh",
+"stars": 798
 },
 "MidnightCommander/mc": {
 "desc": "Midnight Commander's repository",
@@ -816,6 +852,12 @@
 "src": "ungh",
 "stars": 1525
 },
+"Oleafly/Oleafly": {
+"desc": "LaTeX and Typst editor with live collaboration and AI agents. Open-source IDE and Overleaf alternative for Mac, Windows and Linux.",
+"pushed_at": "2026-10-31",
+"src": "ungh",
+"stars": 794
+},
 "OmarTawfik/github-actions-js": {
 "desc": "Provides linting APIs on the command line, through Node.js, and rich code editing through VSCode.",
 "pushed_at": "2019-05-02",
@@ -827,6 +869,12 @@
 "pushed_at": "2024-09-09",
 "src": "ungh",
 "stars": 2376
+},
+"OnsenUI/OnsenUI": {
+"desc": "Mobile app development framework and SDK using HTML5 and JavaScript. Create beautiful and performant cross-platform mobile apps. Based on Web Components, and provides bindings for Angular 1, 2, React and Vue.js.",
+"pushed_at": "2026-06-17",
+"src": "ungh",
+"stars": 8856
 },
 "OpenVPN/easy-rsa": {
 "missing": true
@@ -968,6 +1016,12 @@
 "pushed_at": "2021-02-10",
 "src": "ungh",
 "stars": 123
+},
+"SamVerschueren/mobisplash-cli": {
+"desc": "Mobile app splash screen generator",
+"pushed_at": "2017-03-30",
+"src": "ungh",
+"stars": 75
 },
 "Schrodinger-Hat/youtube-to-anchorfm": {
 "desc": "An automation process to convert YouTube video into audio file and uploading it to Anchor.fm podcast",
@@ -1371,6 +1425,12 @@
 "src": "ungh",
 "stars": 7061
 },
+"adoin/git-Agent": {
+"desc": "",
+"pushed_at": "2026-10-27",
+"src": "ungh",
+"stars": 200
+},
 "adra2n/otpbox": {
 "desc": "",
 "pushed_at": "2026-07-23",
@@ -1611,6 +1671,12 @@
 "pushed_at": "2026-09-25",
 "src": "ungh",
 "stars": 1472
+},
+"antonreshetov/massCode": {
+"desc": "This repository is outdated and no longer maintained. A new version of massCode is available! https://github.com/massCodeIO/massCode. A free and open source code snippets manager for developers.",
+"pushed_at": "2022-05-04",
+"src": "ungh",
+"stars": 2015
 },
 "anymail/django-anymail": {
 "desc": "Django email backends and webhooks for Amazon SES, Brevo, MailerSend, Mailgun, Mailjet, Mailtrap, Postmark, Postal, Resend, Scaleway TEM, SendGrid, SparkPost, Unisender Go and more",
@@ -1924,6 +1990,12 @@
 "src": "ungh",
 "stars": 51
 },
+"beilunyang/openhongguo": {
+"desc": "红果短剧的非官方匿名 SDK，提供 Go、Node.js、Android、iOS、React Native 和 Flutter 版本，附命令行演示程序 ohg CLI",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 235
+},
 "bencherdev/bencher": {
 "desc": "🐰 Bencher - Continuous Benchmarking",
 "pushed_at": "2026-11-01",
@@ -2019,6 +2091,12 @@
 "pushed_at": "2026-10-30",
 "src": "ungh",
 "stars": 20465
+},
+"bonguynvan/tradecanvas": {
+"desc": "Trading charts for the web, drawn with Canvas 2D or WebGL: 134 indicators, 69 drawing tools, 18 chart types, live exchange feeds, orders on the chart, replay and backtesting, touch-ready on phones. Zero dependencies. TypeScript, React, Vue, Svelte.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 31
 },
 "boolean-maybe/tiki": {
 "desc": "Terminal Markdown-based shapeless workflow builder",
@@ -2200,6 +2278,12 @@
 "pushed_at": "2026-10-28",
 "src": "ungh",
 "stars": 674
+},
+"codecept-js/ui": {
+"desc": "Web UI for CodeceptJS",
+"pushed_at": "2026-10-13",
+"src": "ungh",
+"stars": 84
 },
 "coder/code-server": {
 "desc": "VS Code in the browser",
@@ -2455,6 +2539,12 @@
 },
 "diegomura/react-pdf": {
 "missing": true
+},
+"dingdaoyi/simple-iot": {
+"desc": "The Minimal IoT Platform — single-binary Spring Boot 4 + Vue 3 IoT platform. Built-in MQTT broker, visual rule engine, hot-loaded protocol scripts.",
+"pushed_at": "2026-08-03",
+"src": "ungh",
+"stars": 33
 },
 "django-cms/django-cms": {
 "desc": "The easy-to-use and developer-friendly enterprise CMS powered by Django",
@@ -2810,6 +2900,13 @@
 "src": "ungh",
 "stars": 7172
 },
+"facebook/react-native": {
+"desc": "A framework for building native applications using React",
+"lang": "C++",
+"pushed_at": "2026-11-03",
+"src": "api",
+"stars": 126851
+},
 "fancydirty/subtitle-scout": {
 "missing": true
 },
@@ -2861,6 +2958,12 @@
 "pushed_at": "2026-10-23",
 "src": "ungh",
 "stars": 9601
+},
+"ferreira-tb/tauri-store": {
+"desc": "Persistent stores for Tauri",
+"pushed_at": "2026-10-13",
+"src": "ungh",
+"stars": 137
 },
 "fivetran/great_expectations": {
 "desc": "Always know what to expect from your data.",
@@ -3035,6 +3138,12 @@
 "pushed_at": "2026-10-19",
 "src": "ungh",
 "stars": 2694
+},
+"godfengliang/billcraft": {
+"desc": "Free invoice generator that runs entirely in the browser. No signup, no backend, no subscription. 3 templates, 7 currencies, works offline.",
+"pushed_at": "2026-05-16",
+"src": "ungh",
+"stars": 0
 },
 "gokcehan/lf": {
 "desc": "Terminal file manager",
@@ -3294,6 +3403,9 @@
 "pushed_at": "2026-10-12",
 "src": "ungh",
 "stars": 294
+},
+"ifer47/markeron": {
+"missing": true
 },
 "iggredible/Learn-Vim": {
 "desc": "Learning Vim and Vimscript doesn't have to be hard. This is the guide that you're looking for 📖",
@@ -3672,6 +3784,12 @@
 "pushed_at": "2026-08-15",
 "src": "ungh",
 "stars": 72
+},
+"kasual1/kritzel": {
+"desc": "Open-source, framework agnostic infinite canvas development kit.",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 5
 },
 "kdabir/has": {
 "desc": "✅ checks presence of various command line tools and their versions on the path",
@@ -4070,6 +4188,12 @@
 "src": "ungh",
 "stars": 293
 },
+"maillab/cloud-mail": {
+"desc": "An all-in-one email service platform powered by Cloudflare  | 基于 Cloudflare 的一站式邮箱服务平台  | Cloudflare Email 邮箱 Mail",
+"pushed_at": "2026-10-25",
+"src": "ungh",
+"stars": 15313
+},
 "majodev/google-webfonts-helper": {
 "desc": "A Hassle-Free Way to Self-Host Google Fonts. Get eot, ttf, svg, woff and woff2 files + CSS snippets",
 "pushed_at": "2026-10-01",
@@ -4087,6 +4211,12 @@
 "pushed_at": "2026-10-29",
 "src": "ungh",
 "stars": 31889
+},
+"marcelotduarte/cx_Freeze": {
+"desc": "Creates standalone executables from Python scripts with the same performance as the original script. It is cross-platform and should work on any platform that Python runs on.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 1564
 },
 "marimo-team/marimo": {
 "desc": "A reactive notebook for Python — run reproducible experiments, query with SQL, execute as a script, deploy as an app, and version with git. Stored as pure Python. All in a modern, AI-native editor.",
@@ -4154,6 +4284,12 @@
 "src": "ungh",
 "stars": 11123
 },
+"maxel01/vue-leaflet": {
+"desc": "vue-leaflet compatible with vue3",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 55
+},
 "maxim-top/maxim-web": {
 "desc": "蓝莺 IM web版",
 "pushed_at": "2026-09-10",
@@ -4214,6 +4350,12 @@
 "src": "ungh",
 "stars": 404
 },
+"meta/prophet": {
+"desc": "Tool for producing high quality forecasts for time series data that has multiple seasonality with linear or non-linear growth.",
+"pushed_at": "2026-10-22",
+"src": "ungh",
+"stars": 20472
+},
 "metrue/fx": {
 "desc": "A Function as a Service tool makes a function as a  container-based service in seconds.",
 "pushed_at": "2023-10-24",
@@ -4258,9 +4400,10 @@
 },
 "microsoft/playwright": {
 "desc": "Playwright is a framework for Web Testing and Automation. It allows testing Chromium, Firefox and WebKit with a single API.",
+"lang": "TypeScript",
 "pushed_at": "2026-11-03",
-"src": "ungh",
-"stars": 99138
+"src": "api",
+"stars": 99200
 },
 "microsoft/playwright-python": {
 "desc": "Python version of the Playwright testing and automation library.",
@@ -4701,6 +4844,12 @@
 "src": "ungh",
 "stars": 75
 },
+"onehumanbeing/esp32-iphone-agent": {
+"desc": "Let an AI model use a real iPhone with a $7 ESP32: AirPlay eyes, USB HID hands, any OpenAI-compatible vision model. No Mac, no developer account, no jailbreak.",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 4269
+},
 "onionshare/onionshare": {
 "desc": "Securely and anonymously share files, host websites, and chat with friends using the Tor network",
 "pushed_at": "2026-10-29",
@@ -4731,6 +4880,12 @@
 "pushed_at": "2026-10-24",
 "src": "ungh",
 "stars": 74874
+},
+"openvi-foundation/openvue": {
+"desc": "MIT-licensed fork of PrimeVue. 80+ Vue 3 UI components, Nuxt support and one-command migration.",
+"pushed_at": "2026-11-02",
+"src": "ungh",
+"stars": 421
 },
 "optuna/optuna": {
 "desc": "A hyperparameter optimization framework",
@@ -4771,6 +4926,12 @@
 "src": "ungh",
 "stars": 124
 },
+"overflowy/make-look-scanned": {
+"desc": "Makes PDFs look scanned (CLI or in the browser via WASM)",
+"pushed_at": "2026-06-21",
+"src": "ungh",
+"stars": 959
+},
 "ovh/utask": {
 "desc": "µTask is an automation engine that models and executes business processes declared in yaml. ✏️📋",
 "pushed_at": "2026-07-29",
@@ -4788,6 +4949,12 @@
 "pushed_at": "2026-10-27",
 "src": "ungh",
 "stars": 1220
+},
+"oxynote/oxynote": {
+"desc": "An open‑source technical wiki connected to the systems it describes",
+"pushed_at": "2026-11-03",
+"src": "ungh",
+"stars": 488
 },
 "ozeranskii/httptap": {
 "desc": "Rich-powered CLI that breaks each HTTP request into DNS, connect, TLS, wait, and transfer phases with waterfall timelines, compact summaries, or metrics-only output.",
@@ -5095,6 +5262,12 @@
 "src": "ungh",
 "stars": 7421
 },
+"pygame-community/pygame-ce": {
+"desc": "🐍🎮 pygame - Community Edition is a FOSS Python library for multimedia applications (like games). Built on top of the excellent SDL library.",
+"pushed_at": "2026-11-01",
+"src": "ungh",
+"stars": 1712
+},
 "pyinfra-dev/pyinfra": {
 "desc": "🔧 pyinfra turns Python code into shell commands and runs them on your servers. Execute ad-hoc commands and write declarative operations. Target SSH servers, local machine and Docker containers. Fast and scales from one server to thousands.",
 "pushed_at": "2026-10-29",
@@ -5161,6 +5334,12 @@
 "src": "ungh",
 "stars": 13963
 },
+"pythonarcade/arcade": {
+"desc": "Easy to use Python library for creating 2D arcade games.",
+"pushed_at": "2026-10-30",
+"src": "ungh",
+"stars": 2098
+},
 "pytorch/pytorch": {
 "desc": "Tensors and Dynamic neural networks in Python with strong GPU acceleration",
 "lang": "Python",
@@ -5179,6 +5358,18 @@
 "pushed_at": "2026-07-03",
 "src": "ungh",
 "stars": 31
+},
+"qmk/qmk_configurator": {
+"desc": "The QMK Configurator",
+"pushed_at": "2026-01-28",
+"src": "ungh",
+"stars": 850
+},
+"quasarframework/quasar": {
+"desc": "Quasar Framework - Build high-performance VueJS user interfaces in record time",
+"pushed_at": "2026-10-19",
+"src": "ungh",
+"stars": 27210
 },
 "raforg/rawhide": {
 "desc": "find files using pretty C expressions",
@@ -5263,6 +5454,18 @@
 "pushed_at": "2026-10-23",
 "src": "ungh",
 "stars": 12691
+},
+"react-native-device-info/react-native-device-info": {
+"desc": "Device Information for React Native iOS and Android",
+"pushed_at": "2026-10-15",
+"src": "ungh",
+"stars": 6685
+},
+"react-navigation/react-navigation": {
+"desc": "Routing and navigation for React Native and Web apps",
+"pushed_at": "2026-10-29",
+"src": "ungh",
+"stars": 24520
 },
 "realm/realm-js": {
 "desc": "Realm is a mobile database: an alternative to SQLite & key-value stores",
@@ -5664,6 +5867,12 @@
 "pushed_at": "2026-09-24",
 "src": "ungh",
 "stars": 289
+},
+"shanghaiyangming/lighttranslate": {
+"desc": "轻译：Windows 划词翻译与英语查词工具，支持 DeepSeek、自带 API Key、流式译文和全局快捷键。MIT 开源。",
+"pushed_at": "2026-10-07",
+"src": "ungh",
+"stars": 13
 },
 "sharevb/it-tools": {
 "desc": "My additions (and of others) to it-tools! (Collection of handy online tools for developers, with great UX. )",
@@ -6446,6 +6655,12 @@
 "src": "ungh",
 "stars": 11258
 },
+"vue-leaflet/vue-leaflet": {
+"desc": "vue-leaflet compatible with vue3",
+"pushed_at": "2024-07-10",
+"src": "ungh",
+"stars": 859
+},
 "vue-styleguidist/vue-styleguidist": {
 "desc": "Created from react styleguidist for Vue Components with a living style guide",
 "pushed_at": "2026-07-31",
@@ -6694,6 +6909,12 @@
 "pushed_at": "2026-10-19",
 "src": "ungh",
 "stars": 3895
+},
+"yarin-zhang/AI-Gist": {
+"desc": "✨ AI Gist 是一款隐私优先的 AI 提示词管理工具，致力于让个人收藏的 AI 提示词能够发挥最大价值。支持变量替换、Jinja 模板、AI 生成与调优、历史版本记录、云端备份等核心功能。",
+"pushed_at": "2026-10-29",
+"src": "ungh",
+"stars": 910
 },
 "yaronn/wopr": {
 "desc": "A simple markup language for creating rich terminal reports, presentations and infographics",
