@@ -430,11 +430,16 @@ def tool_compare_tools(args: dict) -> str:
     return "\n".join(lines)
 
 
+# 描述里的条数不能写死。这份索引从 5426 涨到 6782 之后，schema 里的数字还停在
+# 上一版 —— 模型读到「索引含 5426 条」，get_stats 却报 6782，同一个服务自相矛盾。
+# 改成模块加载时数一次：进程重启即更新，和实际数据永远同步。
+_TOOL_COUNT = len(load_json(DATA_DIR / "tools.json", []) or [])
+
 TOOLS = [
     {
         "name": "find_tool",
         "description": (
-            "在本地开发工具索引中查找工具。索引含 5426 条，覆盖 GitHub 高星项目、"
+            f"在本地开发工具索引中查找工具。索引含 {_TOOL_COUNT} 条，覆盖 GitHub 高星项目、"
             "awesome 人工精选清单、国内 SaaS/AI 产品，按「你想干什么」而非技术栈归类。\n\n"
             "何时使用（漏得最多的是第一种）：\n"
             "1. 用户描述了一个开发任务，而不是「要个工具」——「我想做一个后台管理系统」"
