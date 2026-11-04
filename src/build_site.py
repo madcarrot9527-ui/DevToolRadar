@@ -149,6 +149,9 @@ const TAGMAP = __TAGMAP__;
 // 上位说法 → 一组能力位（「美术设计」= AI 绘图 + 像素画 + 矢量化 + 图标 + 修图 + 原型）。
 // 与 Python 端 resolve_concept 同一张表、同一条顺序：格子优先，展开只做兜底。
 const CONCEPTS = __CONCEPTS__;
+// 产品目标 → 一组能力位（「桌面宠物」= 桌面框架 + 像素画 + AI 出图）。
+// 和 concepts 分开：concepts 是一格都没命中时兜底，goals 是需求句里合并。
+const GOALS = __GOALS__;
 const TERMS = __TERMS__;
 const q = document.getElementById('q');
 const res = document.getElementById('results');
@@ -174,6 +177,20 @@ function norm(s){
 }
 
 // 口语 → 场景标签。只取最长匹配，避免「本地大模型」同时召回「模型服务」和「大模型应用」
+// 在上位表里按最长匹配找一条，返回 [key, labels] 或 null。concepts/goals 共用。
+function matchTable(table, qn){
+  let bestK = null, bestLn = 0;
+  for(const k in table){
+    const kn = norm(k);
+    if(!kn) continue;
+    if(kn === qn) return [k, table[k]];
+    if((qn.includes(kn) || kn.includes(qn)) && Math.min(kn.length, qn.length) > bestLn){
+      bestK = k; bestLn = Math.min(kn.length, qn.length);
+    }
+  }
+  return bestLn >= 2 ? [bestK, table[bestK]] : null;
+}
+
 function queryTags(qn){
   if(!qn) return [];
   const hits = [];
@@ -188,16 +205,24 @@ function queryTags(qn){
   }
   if(!hits.length){
     // 一格都没命中，再看是不是「美术设计」这种横跨几格的上位说法。
-    let bestK = '', bestLn = 0;
-    for(const k in CONCEPTS){
-      const kn = norm(k);
-      if(!kn) continue;
-      if(kn === qn) return CONCEPTS[k].slice();
-      if((qn.includes(kn) || kn.includes(qn)) && Math.min(kn.length, qn.length) > bestLn){
-        bestK = k; bestLn = Math.min(kn.length, qn.length);
+    const hit = matchTable(CONCEPTS, qn);
+    return hit ? hit[1].slice() : [];
+  }
+  // 需求句 vs 找东西，两种问法两种口径。判定和 Python 端一致：够长就不是品类名。
+  // 网页拿不到未规范化前的原文（STOP 已经把「我想/我要」剥掉了），所以这里只用
+  // 长度这一个信号；命令行那边还能靠需求动词多保一层。
+  if(qn.length >= 10){
+    const out = hits.slice().sort((a,b)=>b[0]-a[0]).map(h=>h[1])
+                     .filter((v,i,arr)=>arr.indexOf(v)===i).slice(0,5);
+    // 产品目标补一层：「吉伊的桌面宠物」只命中「桌面与系统工具」，但真做出来还要
+    // 桌面框架和画素材。只在需求句里并，短查询（「桌宠」本身）不走这条。
+    const goal = matchTable(GOALS, qn);
+    if(goal){
+      for(const lab of goal[1]){
+        if(!out.includes(lab) && out.length < 6) out.push(lab);
       }
     }
-    return bestLn >= 2 ? CONCEPTS[bestK].slice() : [];
+    return out;
   }
   const mx = Math.max(...hits.map(h=>h[0]));
   return hits.filter(h=>h[0]>=mx).map(h=>h[1]);
@@ -628,13 +653,16 @@ def build(tools: list[dict] | None = None) -> str:
             tagmap[rule["label"]] = list(dict.fromkeys(terms))
 
     terms_map = load_config("terms.json").get("terms", {})
-    concepts = load_config("concepts.json").get("concepts", {})
+    ccfg = load_config("concepts.json")
+    concepts = ccfg.get("concepts", {})
+    goals = ccfg.get("goals", {})
 
     html = (TEMPLATE
             .replace("__DATA__", json.dumps(packed, ensure_ascii=False, separators=(",", ":")))
             .replace("__TAGS__", json.dumps(tags, ensure_ascii=False, separators=(",", ":")))
             .replace("__TAGMAP__", json.dumps(tagmap, ensure_ascii=False, separators=(",", ":")))
             .replace("__CONCEPTS__", json.dumps(concepts, ensure_ascii=False, separators=(",", ":")))
+            .replace("__GOALS__", json.dumps(goals, ensure_ascii=False, separators=(",", ":")))
             .replace("__TERMS__", json.dumps(terms_map, ensure_ascii=False, separators=(",", ":")))
             .replace("__STATS__", stats))
 

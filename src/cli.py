@@ -123,7 +123,7 @@ def cmd_compose(args) -> int:
         return 1
 
     gaps = [x for x in items if not x["label"]]
-    expanded: dict[str, int] = {}
+    expanded: list[str] = []
     for item in items:
         if not item["label"]:
             print(f"\n[{_c('31', '缺口', color)}] 「{item['slot']}」— "
@@ -131,7 +131,9 @@ def cmd_compose(args) -> int:
             continue
         via = item.get("via")
         if via:
-            expanded[via] = expanded.get(via, 0) + 1
+            for v in via.split(" / "):
+                if v not in expanded:
+                    expanded.append(v)
         head = f"（说「{item['slot']}」，该场景共 {item['total']} 条，这里取前 {len(item['tools'])}）"
         if via:
             head = f"（由「{via}」展开，该场景共 {item['total']} 条，这里取前 {len(item['tools'])}）"
@@ -154,9 +156,9 @@ def cmd_compose(args) -> int:
     print()
     if gaps:
         print(f"有 {len(gaps)} 个能力位没有对应场景，这部分要么靠自己写，要么换个说法再 find。")
-    for via, cnt in expanded.items():
-        print(f"「{via}」不是一个能力位，是横跨 {cnt} 格的上位说法，已按每格一条展开；"
-              f"想多看某一格就直接点它的名字。")
+    for via in expanded:
+        print(f"「{via}」不是能力位，已按上位说法展开成几格，每格只给代表作；"
+              f"要细看哪一格就直接点那一格的名字。")
     print(f"以上是 {len(items)} 个能力位的候选，只含元数据（star / 维护状态 / 场景），"
           f"不含许可、部署方式、性能数据。")
     return 0
@@ -210,6 +212,18 @@ def cmd_find(args) -> int:
             print(f"    {_c('90', ' · '.join(t['tags']), color)}")
 
     print(f"\n共 {len(rows)} 条。更多见网页：tool open")
+    # 和 MCP 那条建议同一个意思：一句话命中多个能力位时，上面只是混合排序的清单，
+    # 用户要的是「这一套怎么拼」。命令行里也得说，否则同一个查询在终端和对话里
+    # 得到的下一步不一样。
+    if args.query:
+        tags_hit = s.query_tags(args.query)
+        if len(tags_hit) >= 2:
+            cnt = dict(s.all_tags())
+            print("这条需求涉及 "
+                  + f"{len(tags_hit)} 个能力位："
+                  + "、".join(f"{x}({cnt.get(x, 0)})" for x in tags_hit))
+            print("要按位各取再拼，用：tool compose "
+                  + " ".join(f"\"{x}\"" for x in tags_hit[:6]))
     return 0
 
 

@@ -168,6 +168,15 @@ def _tag_terms() -> dict[str, set[str]]:
     return _TAG_CACHE
 
 
+# 「在描述目标」而不是「在找某个品类」的句式。用于区分两种问法：
+# 找东西的取最长匹配（防串味），描述目标的取全部命中（要的是组合）。
+_REQUEST = re.compile(
+    r"(我想|我要|我要做|帮我|给我|需要|想要|想要一|希望|打算|计划|"
+    r"做一个|做个|做一|搭一个|搭个|建一个|建个|弄一个|弄个|搞一个|搞个|"
+    r"实现|开发一个|能不能|可不可以|有没有办法|有没有什么|怎么|如何|用什么)"
+)
+
+
 def query_tags(query: str) -> list[str]:
     """把用户问法翻译成场景标签。
 
@@ -200,6 +209,38 @@ def query_tags(query: str) -> list[str]:
             known = set(_tag_terms())
             return [x for x in hit[1] if x in known]
         return []
+    # 需求句 vs 找东西，是两种问法，不能共用一个口径。
+    #
+    # 「本地大模型」是找东西：用户心里有一个品类，同时召回「模型服务」和
+    # 「大模型应用」只会把两个格子的货混在一起（所以上一段要取最长匹配）。
+    #
+    # 「我想做一个吉伊的桌面宠物」是描述目标：这句话里藏着好几个能力位
+    # —— 本体要桌面应用开发、画素材要像素与精灵和 AI 绘图。这时候还取最长匹配，
+    # 结果就是只给「桌面与系统工具」一格，其余全丢，组合根本不会发生。
+    # 实测 6 个真实需求句里 4 个只出 1 格、2 个直接空。
+    #
+    # 判据用两个信号：长度（≥10 字基本不可能是个品类名）或需求动词。
+    # 短查询一律不走这里，保持原来的严格口径。
+    if len(qn) >= 10 or _REQUEST.search(query):
+        # 按命中长度降序、去重，最多 5 格。多了等于没排。
+        ordered = sorted(hits, key=lambda h: -h[0])
+        out: list[str] = []
+        for _, label in ordered:
+            if label not in out:
+                out.append(label)
+            if len(out) >= 5:
+                break
+        # 产品目标再补一层。「我想做一个吉伊的桌面宠物」只命中「桌面与系统工具」，
+        # 但真做出桌宠还要桌面框架和画素材 —— goals 表把「桌宠」展开成三格，
+        # 这里并进去。只在需求句里并，短查询（「桌宠」本身）不走这条，
+        # 否则「桌宠」会一次给出三格，等于替用户决定。
+        goal = resolve_concept(query, "goals")
+        if goal:
+            known = set(_tag_terms())
+            for lab in goal[1]:
+                if lab in known and lab not in out and len(out) < 6:
+                    out.append(lab)
+        return out
     mx = max(h[0] for h in hits)
     return [label for ln, label in hits if ln >= mx]
 
@@ -591,10 +632,18 @@ def resolve_tag(name: str) -> str | None:
     先精确匹配标签，再走别名/中文关键词，最后退到双向子串。解析不出来就返回 None，
     让上层如实告诉模型「这个能力位索引里没有」，而不是硬套一个错的场景。
     """
+    labels = [t["label"] for t in load_config("scenarios.json").get("tags", [])]
+    # 先拿原话直接对标签名，**不要先过 norm()**。
+    # norm() 会剥尾部的「工具/系统/平台」这些通用词，而这几个字恰好长在标签名里：
+    # 「桌面与系统工具」被剥成「桌面与系统」，于是模型照着 list_scenarios 一字不差
+    # 传进来的标签名，反而被判成缺口。精确匹配就该用精确的字符串。
+    raw_l = (name or "").strip().lower()
+    for lab in labels:
+        if raw_l == lab.lower():
+            return lab
     q = norm(name)
     if not q:
         return None
-    labels = [t["label"] for t in load_config("scenarios.json").get("tags", [])]
     for lab in labels:
         if q == lab.lower():
             return lab
@@ -636,19 +685,32 @@ def resolve_tag(name: str) -> str | None:
 
 
 _CONCEPTS: dict[str, list[str]] | None = None
+_GOALS: dict[str, list[str]] | None = None
+
+
+def _concept_table(kind: str) -> dict[str, list[str]]:
+    """读 concepts.json 的一张表。kind: concepts（横切说法）/ goals（产品目标）。"""
+    global _CONCEPTS, _GOALS
+    if _CONCEPTS is None:
+        cfg = load_config("concepts.json")
+        _CONCEPTS = {str(k).strip(): [str(x) for x in v if str(x).strip()]
+                     for k, v in (cfg.get("concepts") or {}).items()}
+        _GOALS = {str(k).strip(): [str(x) for x in v if str(x).strip()]
+                  for k, v in (cfg.get("goals") or {}).items()}
+    return _GOALS if kind == "goals" else _CONCEPTS
 
 
 def load_concepts() -> dict[str, list[str]]:
-    global _CONCEPTS
-    if _CONCEPTS is None:
-        raw = load_config("concepts.json").get("concepts", {}) or {}
-        _CONCEPTS = {str(k).strip(): [str(x) for x in v if str(x).strip()]
-                     for k, v in raw.items()}
-    return _CONCEPTS
+    """横切说法表（兼容旧调用）。"""
+    return _concept_table("concepts")
 
 
-def resolve_concept(name: str) -> tuple[str, list[str]] | None:
-    """把上位说法（「美术设计」）展开成一组能力位，取最长匹配。
+def resolve_concept(name: str, kind: str = "concepts") -> tuple[str, list[str]] | None:
+    """把上位说法展开成一组能力位，取最长匹配。
+
+    两张表，两种用法：
+      concepts —— 「美术设计」这类横跨几格的说法，一格都没命中时兜底；
+      goals    —— 「桌面宠物」这类产品目标，需求句里与命中结果合并。
 
     存在的理由：scenarios.json 有一条硬纪律 —— 一个词只能归属一个格子，否则两格
     互相抢结果。但「美术设计」不属于任何单一格子，它是矢量化、像素画、图标素材、
@@ -656,13 +718,13 @@ def resolve_concept(name: str) -> tuple[str, list[str]] | None:
     （用户的原话：怎么会在这个美术设计上没有工具呢）。
 
     所以单开一层：格子的 alias 管「等于哪一格」，这里管「横跨哪几格」。
-    上层先试 resolve_tag，失败才落到这里 —— 精确的格子永远优先于展开。
     """
     q = norm(name)
     if not q:
         return None
+    table = _concept_table(kind)
     best, best_ln = None, 0
-    for k, labels in load_concepts().items():
+    for k, labels in table.items():
         kn = norm(k)
         if not kn:
             continue
@@ -690,30 +752,62 @@ def compose(slots: list[str], per_slot: int = 2,
     out: list[dict] = []
     used: set[str] = set()
     known = {t["label"] for t in load_config("scenarios.json").get("tags", [])}
+
+    def _expand(raw: str, labels: list[str], via: str) -> None:
+        """把一格里展开出来的几格各取一条。
+
+        concepts.json 里写错一个字就静默少一格，所以按现有标签过滤一次，
+        漏掉的由 doctor 的「概念表」那一项报出来。
+        每格只取一条：用户没点名要哪一格，给多了就是替他做决定。
+        """
+        for lab in [x for x in labels if x in known]:
+            total = sum(1 for t in load_index() if lab in (t.get("tags") or []))
+            # 展开的格子取「该格 star 最高的」，不是「质量分最高的」。
+            # 两个都试过：质量分排出来 AI 绘图格第一条是 unsloth（微调框架，描述里
+            # 有 diffusion）、像素与精灵格第一条是 pyxel（复古游戏引擎）—— 分数高
+            # 只说明信息全，不代表是这个品类的门面。star 排则是 SD-WebUI、Aseprite、
+            # electron，用户一眼认得出这是什么东西。
+            rows = [t for t in load_index()
+                    if lab in (t.get("tags") or []) and not (exclude_lists and is_list(t))]
+            rows.sort(key=lambda t: -(t.get("stars") or 0))
+            picked = [t for t in rows
+                      if (t.get("url") or t.get("name")) not in used][:1]
+            for t in picked:
+                used.add(t.get("url") or t.get("name"))
+            # 多个 slot 展开到同一格时合并成一项，候选累积到 per_slot 上限。
+            # 传 ["桌面宠物","美术设计"] 时「AI 绘图」会被两个说法各展开一次，
+            # 不合并就会出现两个同标题的段落（由「桌面宠物」展开 / 由「美术设计」展开），
+            # 读起来像重复推荐，其实是同一格的两条候选。
+            for item in out:
+                if item["label"] == lab and item.get("via"):
+                    if len(item["tools"]) < per_slot:
+                        item["tools"].extend(picked)
+                    if via not in item["via"]:
+                        item["via"] = item["via"] + " / " + via
+                    break
+            else:
+                out.append({"slot": raw, "label": lab, "total": total,
+                            "tools": picked, "via": via})
+
     for raw in slots:
         label = resolve_tag(raw)
+        # 先认「目标」，再认「格子」。
+        #
+        # 「桌面宠物」能被 resolve_tag 认成一个格子（桌面与系统工具），但用户/AI 说
+        # 这三个字时想的是「做一个桌宠」——那还要桌面框架和画素材。当成单格处理，
+        # 组合就退化成一条线了。判据是：goals 命中，且原话不是那个格子的名字本身
+        # （说「桌面与系统工具」就是点名要这一格，照办）。
+        goal = resolve_concept(raw, "goals")
+        if goal and (not label or norm(raw) != norm(label)):
+            _expand(raw, goal[1], goal[0])
+            continue
         if not label:
             # 格子解析不出来，再看是不是「美术设计」这种横跨几格的上位说法。
-            # 顺序不能反：精确的格子永远优先，展开只是兜底。
+            # 顺序不能反：精确的格子优先，展开只是兜底。
             hit = resolve_concept(raw)
             if hit:
-                cname, labels = hit
-                # concepts.json 里写错一个字就静默少一格，所以这里按现有标签过滤一次，
-                # 漏掉的由 doctor 的「概念表」那一项报出来。
-                labels = [x for x in labels if x in known][:6]
-                for lab in labels:
-                    total = sum(1 for t in load_index() if lab in (t.get("tags") or []))
-                    # 展开的格子每格只取一条：用户没点名要哪一格，给多了就是替他做决定。
-                    got = search(raw, tag=lab, limit=per_slot + 4)
-                    cand = [t for t in got if not (exclude_lists and is_list(t))]
-                    cand = [t for t in cand if (t.get("url") or t.get("name")) not in used]
-                    picked = cand[:1]
-                    for t in picked:
-                        used.add(t.get("url") or t.get("name"))
-                    out.append({"slot": raw, "label": lab, "total": total,
-                                "tools": picked, "via": cname})
-                if labels:
-                    continue
+                _expand(raw, hit[1], hit[0])
+                continue
             out.append({"slot": raw, "label": None, "total": 0, "tools": []})
             continue
         total = sum(1 for t in load_index() if label in (t.get("tags") or []))

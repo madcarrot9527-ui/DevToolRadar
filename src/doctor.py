@@ -168,17 +168,18 @@ def check_index(tools: list[dict]) -> None:
     # 里面写错一个字不会报错，只会静默少展开一格 —— 用户看到的是「怎么少了矢量化」，
     # 而不是错误。所以逐条对着 scenarios.json 验。
     cc = _load(ROOT / "config" / "concepts.json", {}) or {}
-    concepts = cc.get("concepts") or {}
-    bad_concept = [(k, x) for k, v in concepts.items()
-                   for x in v if x not in known]
-    thin = [k for k, v in concepts.items() if len(v) < 2]
+    allc: dict[str, list[str]] = {}
+    allc.update(cc.get("concepts") or {})
+    allc.update(cc.get("goals") or {})
+    bad_concept = [(k, x) for k, v in allc.items() for x in v if x not in known]
+    thin = [k for k, v in allc.items() if len(v) < 2]
     # key 会被 norm() 规范化（剥「我要」「做」这类前缀）后再比对，所以
     # 「做美术」和「美术」是两个 key、一个身份 —— 查「美术」会先撞上前者。
     # 只差前缀/空格的 key 一律算重复。
     from search import norm as _norm
     seen_k: dict[str, str] = {}
     dup_k = []
-    for k in concepts:
+    for k in allc:
         nk = _norm(k)
         if nk in seen_k:
             dup_k.append((seen_k[nk], k))
@@ -192,7 +193,8 @@ def check_index(tools: list[dict]) -> None:
         rec("FAIL", "概念表", f"只展开一格的应写成该格子的 alias，不必占概念表：{thin[:3]}")
     else:
         rec("PASS", "概念表",
-            f"{len(concepts)} 条上位说法，展开的标签全部存在")
+            f"{len(cc.get('concepts') or {})} 条横切说法 + "
+            f"{len(cc.get('goals') or {})} 条产品目标，展开的标签全部存在")
 
     # 说明完整性。原来只看「有没有」——只要 desc 非空就算过，于是一条
     # 写着 "ORM"、一条写着 "NOW MANAGED ON CODEBERG" 都算满分。
@@ -427,6 +429,23 @@ def check_search() -> None:
         rec("FAIL", f"冒烟 {len(SMOKE)} 条", "；".join(bad[:2]))
     else:
         rec("PASS", f"冒烟 {len(SMOKE)} 条", "期望工具都在前 5")
+
+    # 需求句必须能拆出多个能力位。这条是「AI 会不会组合工具」的前提：
+    # 一句「我想做一个吉伊的桌面宠物」如果只识别出「桌面与系统工具」一格，
+    # 后面的组合就退化成单点搜索，用户看到的就是「你又只给我一个工具」。
+    # 实测未改之前 6 句里 4 句只出 1 格、2 句直接空。
+    bad_req = []
+    for q, least in (("我想做一个吉伊的桌面宠物", 3),
+                     ("我要给公司做个内部知识库，能搜文档", 2),
+                     ("做个带登录和支付的后台管理系统", 3),
+                     ("我想本地跑个大模型做客服", 2)):
+        got = search.query_tags(q)
+        if len(got) < least:
+            bad_req.append(f"「{q}」只出 {len(got)} 格（要 ≥{least}）：{got}")
+    if bad_req:
+        rec("FAIL", "需求句拆分", "；".join(bad_req[:2]))
+    else:
+        rec("PASS", "需求句拆分", "4 条模糊需求分别拆出 2-5 个能力位")
 
 
 def _write_health(fails: list, warns: list) -> None:

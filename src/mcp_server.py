@@ -197,7 +197,24 @@ def tool_find_tool(args: dict) -> str:
                       + "\n".join(_fmt_brief(t) for t in rest))
     tail = (f"共 {len(rows)} 条。以上只含索引里的元数据（star / 维护状态 / 场景标签），"
             f"不包含安装方式、费用、与同类工具的取舍细节——这些需要看项目文档确认。")
-    return "\n".join(head + [b for b in blocks if b] + [tail]).strip()
+    # 一句话把「找工具」推向「组合方案」。
+    #
+    # 这条需求命中多个能力位时，上面给的是一张混合排序的清单 —— 用户问「做个桌宠」，
+    # 他要的不是「哪几个仓库相关」，是「桌面框架 + 素材绘制 + 出图」这一套怎么拼。
+    # 只返回清单，模型很容易挑一条交差，这正是「AI 不会组合工具」的实际原因：
+    # 不是它不想组合，是这一步的返回值里没有任何东西提示它「这里有三格」。
+    plan = []
+    if query:
+        tags_hit = S.query_tags(query)
+        if len(tags_hit) >= 2:
+            cnt = dict(S.all_tags())
+            plan.append(
+                f"这条需求涉及 {len(tags_hit)} 个能力位："
+                + "、".join(f"{x}（{cnt.get(x, 0)} 条）" for x in tags_hit)
+                + f"。上面是按整句混合排的近似结果，不是逐格候选。"
+                f"要按位各取再拼，直接调 compose_stack(slots={tags_hit[:6]})。"
+                f"只挑一个工具交差不等于把这件事做完。")
+    return "\n".join(head + [b for b in blocks if b] + plan + [tail]).strip()
 
 
 def tool_list_scenarios(args: dict) -> str:
@@ -244,7 +261,7 @@ def tool_compose_stack(args: dict) -> str:
 
     items = S.compose(slots, per_slot=per)
     gaps = [x["slot"] for x in items if not x["label"]]
-    expanded: dict[str, int] = {}
+    expanded: list[str] = []
     blocks = [f"按 {len(items)} 个能力位各取 {per} 条"
               f"（每格按对症程度排、同分看 star，清单/教程已排除，跨能力位不重复）："]
     for item in items:
@@ -252,7 +269,10 @@ def tool_compose_stack(args: dict) -> str:
             continue
         via = item.get("via")
         if via:
-            expanded[via] = expanded.get(via, 0) + 1
+            seen = via.split(" / ")
+            for v in seen:
+                if v not in expanded:
+                    expanded.append(v)
         said = f"由「{via}」展开" if via else f"说「{item['slot']}」"
         blocks.append(f"\n【{item['label']}】{said}，"
                       f"该场景共 {item['total']} 条，取 {len(item['tools'])}：")
@@ -279,10 +299,10 @@ def tool_compose_stack(args: dict) -> str:
         blocks.append("\n缺口：" + "、".join(f"「{g}」" for g in gaps)
                       + f" 在 {S.tag_count()} 个能力位里没有对应场景。这块要么自己写，"
                         "要么换个说法再 find_tool 试一次。")
-    for via, cnt in expanded.items():
-        blocks.append(f"\n「{via}」不是一个能力位，是横跨 {cnt} 格的上位说法，已按每格一条展开"
-                      f"（每格只给 1 条，因为没点名要哪一格）。要更多就在 slots 里直接点"
-                      f"具体格子名。")
+    for via in expanded:
+        blocks.append(f"\n「{via}」不是一个能力位，是上位说法，已展开成几格"
+                      f"（每格只给代表作，因为没点名要哪一格）。要更多就在 slots 里"
+                      f"直接点具体格子名。")
     blocks.append("\n拼装注意：以上只有元数据（star / 语言 / 维护状态 / 场景标签），"
                   "不含许可协议、部署方式、性能数据，装之前先看项目文档。"
                   "组合时要判断三件事：同一格只能选一个（两个 ORM 不能一起上）、"
