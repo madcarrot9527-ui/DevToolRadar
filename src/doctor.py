@@ -118,6 +118,39 @@ def check_index(tools: list[dict]) -> None:
     else:
         rec("PASS", "仓库搬家", f"{len(mv)} 条记录，旧地址都已并走")
 
+    # 配置里的 URL 引用：also 白名单、人工判读表、人工说明表，全部按 URL 精确匹配。
+    # 仓库一搬家（facebook/react-native → react/react-native），这些表就**静默失效** ——
+    # 不报错、不提示，★126,851 的项目掉了标签，要等人工比对才发现。
+    # 所以每次体检都验一遍，让失效自己跳出来。
+    mv_norm = {k.lower().rstrip("/"): v.lower().rstrip("/") for k, v in mv.items()}
+
+    def _alive(u: str) -> bool:
+        k = str(u).lower().rstrip("/")
+        return mv_norm.get(k, k) in urls
+
+    refs: list[tuple[str, str, str]] = []
+    for t in (_load(ROOT / "config" / "scenarios.json", {}) or {}).get("tags", []):
+        for u in (t.get("also") or []):
+            refs.append(("also", t.get("label") or "?", str(u)))
+    for fn in ("manual_tags.json", "manual_desc.json"):
+        d = (_load(ROOT / "config" / fn, {}) or {}).get("by_url") or {}
+        # 人工判读表里值为 null 的条目是「否决权」——确认它不属于任何场景，
+        # 条目本身下架后地址自然消失，那是正常收尾；而且否决一条不存在的记录
+        # 依然是有效防御（万一它被查询重新抓回来，结论照样生效）。
+        # 所以只把「给了具体标签」的条目算作引用。
+        if fn == "manual_tags.json":
+            d = {k: v for k, v in d.items() if v}
+        refs.extend((fn, "—", str(u)) for u in d)
+
+    dead = [(s, u) for s, _, u in refs if not _alive(u)]
+    if dead:
+        # WARN 不是 FAIL：人工判读表里有一部分是「确认它不属于任何场景」的结论，
+        # 对应条目被下架后地址自然消失，那是正常收尾，不是失灵。
+        head = "；".join(f"[{s}] {u}" for s, u in dead[:3])
+        rec("WARN", "配置引用", f"{len(dead)}/{len(refs)} 条指向索引里没有的地址：{head}")
+    else:
+        rec("PASS", "配置引用", f"{len(refs)} 条全部命中")
+
     # 标签必须在配置里存在，否则网页点进去是空列表
     cfg = _load(ROOT / "config" / "scenarios.json", {}) or {}
     known = {t["label"] for t in cfg.get("tags", []) if "label" in t}

@@ -43,6 +43,29 @@ def norm_url(u: str) -> str:
     return u
 
 
+def _strict_kws() -> set[str]:
+    """多义关键词表（config/ambiguous_kw.json）：只认 name / topics 里的命中。
+
+    为什么需要这一层：description 是作者自由发挥的地方，一个词出现在里面，
+    证明的是「这个项目提到了它」，不是「这个项目就是干这个的」。绝大多数词
+    这个差别无所谓（写了 benchmark 就是压测工具），但少数词有跟本场景完全
+    无关的日常义——redux 的 "State Container"、录屏软件捕获的 "Cursor"、
+    网络工具的 "high performance and security"——只凭 desc 命中就会判错。
+
+    为什么要单独列一张表而不是改权重：权重是全局的，抬高等于把所有词一起
+    削弱；多义是逐词的属性，只能逐词声明。这张表也便于 doctor 报出来审。
+
+    曾经想在算法里按「词频」自动判定（某个词在多少条描述里出现过），
+    实测高频 ≠ 多义：monitoring、deployment 也都是高频词，但写进描述里就是
+    本行当的定位，判成 strict 会把 uptime-kuma 这类正经工具踢出去。
+    """
+    global _STRICT
+    if _STRICT is None:
+        raw = load_config("ambiguous_kw.json").get("strict") or []
+        _STRICT = {str(x).lower().strip() for x in raw if str(x).strip()}
+    return _STRICT
+
+
 def _build_matchers(tag_rules: list[dict]):
     """把关键词编译成匹配器。英文走边界断言，中文走子串。
 
@@ -60,6 +83,7 @@ def _build_matchers(tag_rules: list[dict]):
     的显式兜底，那条路径按构造零回归。
     """
     out = []
+    strict = _strict_kws()
     for t in tag_rules:
         kws = []
         for kw in t.get("kw", []):
@@ -67,14 +91,14 @@ def _build_matchers(tag_rules: list[dict]):
             if not k:
                 continue
             if CJK.search(k):
-                kws.append(("in", k, k))
+                kws.append(("in", k, k, k in strict))
             else:
                 # 允许常见词形后缀：关键词写 "load test"，要能命中 "load testing"；
                 # 写 "container" 要能命中 "containers"。否则大量真实命中会漏掉。
                 pat = re.compile(
                     r"(?<![a-z0-9\-])" + re.escape(k)
                     + r"(?:s|es|ed|ing|er|ers|ion|ions)?(?![a-z0-9\-])")
-                kws.append(("re", pat, pat))
+                kws.append(("re", pat, pat, k in strict))
         out.append((t["label"], kws))
     return out
 
@@ -137,6 +161,7 @@ def _is_enum_desc(desc: str) -> bool:
 
 
 _TOPIC_MAP: dict[str, str] | None = None
+_STRICT: set[str] | None = None
 
 
 _MANUAL_DESC: dict[str, str] | None = None
@@ -327,10 +352,14 @@ def _score_one(fields: dict[str, str],
         body = False
         dpos = 10 ** 6
         skip_cat = label in NO_CATEGORY_LABELS
-        for kind, k, k_name in kws:
+        for kind, k, k_name, is_strict in kws:
             hit_any = False
             for fname, text in fields.items():
                 if not text:
+                    continue
+                # 多义词（见 config/ambiguous_kw.json）：说明里出现只是「提到了」，
+                # 不能当定位证据。与 category 同理，精选清单的分类也不是作者本意。
+                if is_strict and fname in ("desc", "category"):
                     continue
                 # 见 NO_CATEGORY_LABELS：这类场景的章节标题不算用途证据。
                 if skip_cat and fname == "category":

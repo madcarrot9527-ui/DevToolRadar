@@ -227,7 +227,6 @@
         "做图表",
         "图表",
         "大屏",
-        "看板",
         "仪表盘",
         "画图",
         "数据展示",
@@ -388,9 +387,7 @@
         "wrk",
         "压测",
         "性能测试",
-        "性能分析",
-        "profiler",
-        "profiling"
+        "性能分析"
       ],
       "alias": [
         "压测",
@@ -450,7 +447,6 @@
         "时间戳",
         "json 格式化",
         "url 编码",
-        "jwt",
         "瑞士军刀",
         "开发者工具箱",
         "小工具合集",
@@ -808,12 +804,14 @@
         "text editor",
         "source code editor",
         "代码编辑器",
-        "文本编辑器"
+        "文本编辑器",
+        "编辑器"
       ],
       "alias": [
         "编辑器",
         "写代码的软件",
-        "ide"
+        "ide",
+        "代码编辑器"
       ]
     },
     {
@@ -869,13 +867,18 @@
         "customer relationship",
         "客户关系管理",
         "进销存",
-        "企业资源"
+        "企业资源",
+        "salesforce",
+        "pipeline 管理"
       ],
       "alias": [
         "客户管理",
         "erp",
         "crm",
         "进销存"
+      ],
+      "also": [
+        "https://github.com/twentyhq/twenty"
       ]
     },
     {
@@ -986,15 +989,16 @@
         "copilot",
         "code completion",
         "ai coding",
-        "code generation",
         "代码补全",
-        "代码生成",
         "通义灵码",
         "codeium",
         "tabnine",
         "ai ide",
         "编程助手",
-        "cursor"
+        "cursor",
+        "vibe coding",
+        "ai 编码",
+        "ai code review"
       ],
       "alias": [
         "ai 写代码",
@@ -1170,16 +1174,16 @@
         "editor plugin",
         "neovim",
         "jetbrains",
-        "编辑器",
         "ide 插件",
         "emacs",
         "语言服务器",
-        "language server"
+        "language server",
+        "编辑器插件",
+        "写插件"
       ],
       "alias": [
         "插件",
         "vscode 插件",
-        "编辑器",
         "ide 插件"
       ]
     },
@@ -1252,9 +1256,7 @@
       ],
       "alias": [
         "写文档",
-        "markdown",
         "在线文档",
-        "文档站",
         "技术文档"
       ]
     },
@@ -1291,7 +1293,6 @@
         "文件传输",
         "sftp",
         "rsync",
-        "对象存储",
         "文件分享",
         "大文件传输",
         "file synchronization",
@@ -1341,8 +1342,7 @@
         "短信",
         "notification service",
         "通知服务",
-        "邮件模板",
-        "邮件营销"
+        "邮件模板"
       ],
       "alias": [
         "发邮件",
@@ -1366,7 +1366,6 @@
         "vulnerability scanner",
         "port scanner",
         "security scanner",
-        "安全加固",
         "cve",
         "代码审计",
         "waf"
@@ -1466,8 +1465,7 @@
         "抠图",
         "水印",
         "resize",
-        "图像识别",
-        "图片编辑"
+        "图像识别"
       ],
       "alias": [
         "压缩图片",
@@ -1496,7 +1494,6 @@
         "视频剪辑",
         "视频合成",
         "字幕",
-        "录屏",
         "video downloader",
         "download video",
         "youtube-dl",
@@ -1507,7 +1504,6 @@
         "剪辑",
         "转码",
         "处理视频",
-        "录屏",
         "视频压缩"
       ]
     },
@@ -2116,7 +2112,8 @@
         "用户增长",
         "邮件列表",
         "网站分析",
-        "营销自动化"
+        "营销自动化",
+        "邮件营销"
       ],
       "alias": [
         "做营销",
@@ -2134,9 +2131,6 @@
         "https://github.com/knadh/listmonk",
         "https://github.com/matomo-org/matomo",
         "https://github.com/umami-software/umami",
-        "https://umami.is",
-        "https://github.com/twentyhq/twenty",
-        "https://twenty.com",
         "https://github.com/mautic/mautic",
         "https://github.com/plausible/analytics",
         "https://github.com/PostHog/posthog"
@@ -2169,9 +2163,7 @@
       "also": [
         "https://github.com/formbricks/formbricks",
         "https://github.com/heyform/heyform",
-        "https://heyform.net",
         "https://github.com/getfider/fider",
-        "https://fider.io",
         "https://github.com/ClearFlask/ClearFlask",
         "https://clearflask.com"
       ]
@@ -2189,7 +2181,9 @@
         "合规",
         "等保",
         "基线",
-        "加固"
+        "加固",
+        "安全加固",
+        "基线加固"
       ],
       "alias": [
         "做合规",
@@ -2209,7 +2203,11 @@
         "https://github.com/prowler-cloud/prowler",
         "https://github.com/kubescape/kubescape",
         "https://github.com/bridgecrewio/checkov",
-        "https://github.com/aquasecurity/tfsec"
+        "https://github.com/aquasecurity/tfsec",
+        "https://github.com/open-policy-agent/opa",
+        "https://github.com/OpenSCAP/openscap",
+        "https://github.com/inspec/inspec",
+        "https://github.com/cloud-custodian/cloud-custodian"
       ]
     }
   ]

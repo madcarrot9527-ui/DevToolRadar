@@ -74,6 +74,25 @@ def expand_en(qn: str) -> list[tuple[str, list[str]]]:
     return [(zh, ens) for zh, ens in terms.items() if zh and zh in qn and len(zh) == best]
 
 
+_MOVED: dict[str, str] | None = None
+
+
+def _moved_map() -> dict[str, str]:
+    """GitHub 仓库搬家的「旧地址 → 新地址」，来自 data/gh_moved.json 的 moved 段。
+
+    为什么别名表要过这一层：also 白名单是按 URL 精确匹配的，而仓库会搬家。
+    facebook/react-native 已经迁到 react/react-native，写死旧地址的表会**静默失效**
+    —— 不报错、不提示，★126,851 的项目就这么掉了标签，要等人工比对才发现。
+    同理也覆盖另一头：条目自己还挂着旧地址时，映射成新地址一样能对上。
+    """
+    global _MOVED
+    if _MOVED is None:
+        raw = (load_json(DATA_DIR / "gh_moved.json", {}) or {}).get("moved") or {}
+        _MOVED = {str(k).rstrip("/").lower(): str(v).rstrip("/").lower()
+                  for k, v in raw.items()}
+    return _MOVED
+
+
 def apply_also(rows: list[dict]) -> None:
     """把场景标签里声明的「跨格成员」补进条目的 tags。
 
@@ -86,15 +105,17 @@ def apply_also(rows: list[dict]) -> None:
     属性，不是工具的属性，改场景时能一眼看到它借了谁。
     """
     rules = load_config("scenarios.json").get("tags", []) or []
+    moved = _moved_map()
     url2tags: dict[str, list[str]] = {}
     for rule in rules:
         for u in (rule.get("also") or []):
-            url2tags.setdefault(str(u).rstrip("/").lower(), []).append(rule["label"])
+            k = str(u).rstrip("/").lower()
+            url2tags.setdefault(moved.get(k, k), []).append(rule["label"])
     if not url2tags:
         return
     for t in rows:
         u = (t.get("url") or "").rstrip("/").lower()
-        for g in url2tags.get(u, ()):
+        for g in url2tags.get(moved.get(u, u), ()):
             tags = t.setdefault("tags", [])
             if g not in tags:
                 tags.append(g)

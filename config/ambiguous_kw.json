@@ -1,0 +1,20 @@
+{
+ "_note": "多义关键词：这些词在英文技术描述里有跟本场景完全无关的常见含义，出现在说明里只能算「提到了」，不能算「这就是它的定位」。列进 strict 的词只在 name / topics 里命中才算证据，desc 与 category 里命中的一律忽略。",
+ "_门槛": "只收「正交多义」——另一个含义指向的软件品类跟本场景毫无重叠。container / chart / security / shell 这类词看着更泛，但它们在描述里就是本行当的定位（containerd 的 'container runtime'、recharts 的 'chart library'），判成 strict 会一次踢掉 71 条正经工具，实测已回退。",
+ "strict": [
+  "cursor",
+  "copilot"
+ ],
+ "_why": {
+  "cursor": "鼠标光标、文本光标、输入框光标都叫 cursor，跟 AI 编辑器这个 Cursor 毫无关系。只凭 desc 命中，Captura 这类录屏工具（'Capture Screen, Audio, Cursor, Mouse'）会进「AI 编码」。",
+  "copilot": "产品名一旦成了行业动词，描述里就会出现「兼容列表」：diagram-design 写 'for Claude Code, Codex, GitHub Copilot, Cursor…'、LongMemory 写 'including claude desktop, github copilot, codex…'、RemoveWindowsAI 写 'Force Remove Copilot'——三句都是「提到」，不是「我是」。名字里带 copilot 的（CopilotForXcode）照常命中，不受影响。"
+ },
+ "_试过但撤回": {
+  "container": "redux 的 'Predictable State Container' 会误判，但同时让 containerd / runc / moby / podman 系全部丢掉「容器与 K8s」——它们只在 desc 里写 container，这条改判不可接受。改用人工判读表单独纠正 redux。",
+  "chart": "gantt / TradeCanvas 这类都是正经图表库，desc 里的 chart 就是定位，没有误判可修。",
+  "security": "Nebula 这类 'performance and security' 的形容词确实误判，但 bandit / falco / wazuh / OpenSCAP 也只在 desc 里写 security，一收就把整格清空。",
+  "shell": "watchdog / pyinfra 的 'shell utilities' 是误判，但 fish / xonsh / Ammonite 也只在 desc 里写 shell，代价远大于收益。",
+  "ai coding": "infracost / sealos 顺嘴提一句该收，但 qwen-code / plandex / sweep / Archon 这些真编码助手也只在 desc 里写 ai coding，收掉反而伤主力。",
+  "docker": "LocalAI / thingsboard / saleor 这类「只是能跑在 docker 里」的确实误判，但 compose(38k)、distroless、docker-elk、ctop、dockle 也只在 desc 里写 docker，收严后整库少 197 条，连正牌容器工具一起清空，已回退。"
+ }
+}

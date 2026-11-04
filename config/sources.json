@@ -378,7 +378,7 @@
   "pinned": {
     "_comment": "必收录仓库。纯 topic 搜索会漏掉一些核心工具（它们没打热门 topic），这里按仓库全名直接抓，保证一定在索引里。注意 core API 未认证只有 60 次/小时，所以抓过的仓库会缓存 7 天，加新条目时一次只花几个额度。",
     "repos": [
-      "ggerganov/llama.cpp",
+      "ggml-org/llama.cpp",
       "ollama/ollama",
       "vllm-project/vllm",
       "apache/jmeter",
@@ -456,7 +456,7 @@
       "inkscape/inkscape",
       "blender/blender",
       "penpot/penpot",
-      "comfyanonymous/ComfyUI",
+      "Comfy-Org/ComfyUI",
       "piskelapp/piskel",
       "juspay/hyperswitch",
       "getlago/lago",
@@ -492,7 +492,16 @@
       "PostHog/posthog",
       "formbricks/formbricks",
       "getfider/fider",
-      "ClearFlask/ClearFlask"
+      "ClearFlask/ClearFlask",
+      "open-policy-agent/opa",
+      "OpenSCAP/openscap",
+      "inspec/inspec",
+      "cloud-custodian/cloud-custodian",
+      "twentyhq/twenty",
+      "umami-software/umami",
+      "heyform/heyform",
+      "OpenCTI-Platform/opencti",
+      "curl/everything-curl"
     ]
   },
   "cn": {
