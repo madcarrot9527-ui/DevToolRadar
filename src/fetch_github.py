@@ -38,9 +38,18 @@ def _to_row(r: dict, label: str) -> dict:
 def _fetch_pinned(cfg: dict, delay: float, timeout: int, retries: int) -> dict[str, dict]:
     """按仓库全名逐个抓。用 core API（额度比 search 宽松）。
 
-    注意：core API 未认证只有 60 次/小时，而必收录清单迟早会超过这个数。
-    所以结果按仓库缓存 7 天，只抓“没缓存或过期”的。否则每次刷新都把整份
-    清单重抓一遍，额度全浪费在已经有的数据上，topic 检索反而被饿死。
+    注意：core API 未认证只有 60 次/小时，而必收录清单（124 个）本身就超过
+    一个小时的额度。所以结果按仓库缓存，只抓“没缓存或过期”的。
+
+    TTL 定 30 天而不是 7 天（2026-11-19 改）：这几天的日志显示，7 天 TTL 会让
+    缓存集中到期——124 个按 7 天过期，平均每天要重抓约 18 个，一旦某天配额被
+    gh_meta 抢走（例如 11-19 开跑时 core 只剩 9 次），当天到期的就补不回来，
+    第二天又叠上新的到期量，形成「越欠越多」的尖峰（11-18/11-19 连续两轮
+    必收录失败 22~54 个都是这个形状）。30 天把尖峰从每周一次压到每月一次。
+
+    TTL 拉长的代价只有星数/语言晚三周更新：星数在检索里只是
+    `25×log10(stars)` 的加分项（上限 120 分），三周的星数变化折算不到 1 分，
+    对排序没有可观测影响。
     """
     out: dict[str, dict] = {}
     repos = (cfg.get("pinned") or {}).get("repos") or []
@@ -48,7 +57,7 @@ def _fetch_pinned(cfg: dict, delay: float, timeout: int, retries: int) -> dict[s
         return out
 
     cache = load_json(PINNED_CACHE, {}) or {}
-    ttl = 7 * 86400
+    ttl = 30 * 86400
     now = time.time()
     fresh = {k: v for k, v in cache.items()
              if isinstance(v, dict) and (now - (v.get("_cached_at") or 0)) < ttl}

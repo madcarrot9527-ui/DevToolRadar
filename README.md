@@ -54,8 +54,14 @@ python src/cli.py find "造测试数据"     # Windows 也可以直接双击 too
 **想把数据刷新到当天**，跑一次完整抓取：
 
 ```bash
-python src/refresh.py                   # 抓取 → 打标 → 建站 → 自检，约 15-20 分钟
+python src/refresh.py                   # 三源全抓 → 打标 → 建站 → 自检，约 20-50 分钟
+python src/refresh.py --daily           # 只抓 GitHub，awesome/cn 沿用上次缓存，约 15-25 分钟
 ```
+
+`--daily` 是给定时任务用的日常模式：awesome 的 12 个清单和国内 167 个站点是周/月级数据，
+每天重抓纯属白费请求（这两块的数据变化速度比 GitHub 慢一个数量级）。跳过的源会读
+`data/raw_*.json` 沿用上次结果，索引条数不会因此变少，只是 `stats.json` 里记成 `skipped`。
+建议每天 `--daily`、每周跑一次完整刷新。
 
 第一次跑会重建全部三个源，速度卡在 GitHub 未认证限流（搜索 API 10 次/分钟）。
 配个 token 能快 5 倍：
@@ -440,11 +446,12 @@ tool doctor        # 22 项：数据新鲜度 / 索引完整性 / 说明覆盖�
 **手动：**
 
 ```bash
-python src/refresh.py            # 完整刷新 + 自检，约 15-20 分钟
+python src/refresh.py            # 完整刷新 + 自检，约 20-50 分钟（每周一次）
+python src/refresh.py --daily    # 只抓 GitHub，awesome/cn 沿用缓存，约 15-25 分钟（每天）
 python src/refresh.py --fast     # 不联网，用缓存重建，约 7 秒（改完 config 用这个）
 ```
 
-双击 `refresh.cmd` 等价于第一条。每次运行都往 `logs/refresh.log` 追加一段，含 python 路径、工作目录、每一步的退出码和耗时，输出是流式的——跑一半卡住也能看出卡在哪。
+双击 `refresh.cmd` 等价于第一条。日志头部会写 `mode: full / daily / fast`，「awesome 是 skipped」到底是本次轻量模式的设计还是抓取失败，看这一行就能分清。每次运行都往 `logs/refresh.log` 追加一段，含 python 路径、工作目录、每一步的退出码和耗时，输出是流式的——跑一半卡住也能看出卡在哪。
 
 **为什么不用 `update.py` 直接跑**：它只负责抓数据和建站，不跑自检。以前三个触发点都只调它，于是 `health.json` 永远是旧的，坏了也没人知道。`refresh.py` 是唯一入口，这条缝已经堵上。
 
@@ -581,7 +588,9 @@ PDF补丁丁、这图能改、匠工具箱——全是「专用工具箱」，�
 
   `lang` 补不动：ungh 代理的返回里根本没有 `language` 字段；GitHub 仓库页面的语言区块是
   React 骨架屏，HTML 里拿不到实际值；只剩 GitHub API 一条路，而无 token 只有 60 次/小时。
-  剩下 1129 条按星数降序排进每日刷新，一天 60 条，约 18 天补完 —— 先补用户最可能遇到的。
+  剩下 1129 条按星数降序排进每日刷新。2026-11-19 起这 60 次不再全给 language：预留 40 次
+  给必收录抓取（`--reserve-core 40`），每天补 20 条，约 50 天补完 —— 语言标签只是展示字段，
+  优先级低于「工具本身在不在库里」。
 
   补元数据的直接后果是**排序整体变了**，不是补信息：当时 5426 条里 5405 条发生位移，718 条位移
   超过 1000 名。上升最猛的是原本被当成 0 星的：`oh-my-zsh`（19 万星）从 5331 名到 23 名，

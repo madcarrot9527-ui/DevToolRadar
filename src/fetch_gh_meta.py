@@ -283,6 +283,8 @@ def main() -> int:
     ap.add_argument("--stats", action="store_true", help="只看现状")
     ap.add_argument("--api", action="store_true",
                     help="同时走 GitHub API 补 language（会消耗 60/h 配额）")
+    ap.add_argument("--reserve-core", type=int, default=0,
+                    help="给后续阶段留出的 core 配额（补 language 时扣掉这部分不用）")
     ap.add_argument("--moved", action="store_true",
                     help="查仓库搬家：疑似同一仓库的旧地址是否 301 到新地址")
     args = ap.parse_args()
@@ -349,6 +351,14 @@ def main() -> int:
         rl = _get("https://api.github.com/rate_limit") or {}
         left = (rl.get("resources", {}).get("core", {}) or {}).get("remaining", 0)
         print(f"\n缺 language 的缓存条目 {len(no_lang)} 条，当前 API 配额剩 {left}")
+        # 配额要留给 update.py 里的必收录抓取：那一步缺的是「工具本身在不在库里」，
+        # 这一条缺的只是「语言标签好不好看」。之前不留额度，gh_meta 把 60 次吃干，
+        # 必收录就只能一个个挨 403（11-18/11-19 连续两天如此），所以这里先扣掉
+        # 预留量再决定补多少。--reserve-core 0 时行为与旧版一致。
+        if args.reserve_core:
+            usable = max(0, left - args.reserve_core)
+            print(f"  预留 {args.reserve_core} 次给必收录抓取，本次可用于补 language 的额度 {usable}")
+            left = usable
         if left and no_lang:
             todo_api = no_lang[:left]
             print(f"  本次按星数降序补前 {len(todo_api)} 条")
