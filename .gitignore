@@ -4,9 +4,16 @@ __pycache__/
 logs/
 *.tmp
 
-# ---- 数据：只提交「clone 完就能用」的那部分 ----
-# 入库：data/tools.json（索引）、data/stats.json、data/gh_meta.json、data/gh_moved.json、site/index.html
-# 下面的 raw_*.json 是抓取中间产物，跑一次 src/update.py 就能重来，放进去只会让每天刷新的 diff 变成几 MB
+# ---- 数据：只有代码和配置入库，刷新产物一律不入库 ----
+# 2026-11-19 改：tools.json 和 site/index.html 是每日刷新的产物，之前入库导致
+# 历史里 24 个 index.html 版本 + 18 个 tools.json 版本，合计约 72 MB 原始对象，
+# 把仓库撑到 26 MB。git 存版本、不存快照，每天提交一次 2 MB 的 JSON 就是每天
+# 多一份历史，一年几十 MB，且无法回收。
+# 现在这两份由刷新生成：跑一次 python src/refresh.py 即可；clone 后首次查询会
+# 自动提示并在后台抓取（见 src/cli.py 的新鲜度自愈）。
+# 小体积、低频变动的元数据仍入库，便于对照与排错。
+data/tools.json
+site/index.html
 data/raw_*.json
 data/health.json
 # README 页面缓存（2.6 MB / 24 个文件），删了下次重新下

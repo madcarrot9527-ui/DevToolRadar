@@ -41,8 +41,14 @@ git clone https://github.com/<your-name>/DevToolRadar.git
 cd DevToolRadar
 ```
 
-仓库里带着索引和网页快照，clone 完直接打开 `site/index.html` 就有 5498 条可搜——
-离线、零外部请求、不需要服务器。
+clone 完先跑一次刷新，索引和网页就有了：
+
+```bash
+python src/refresh.py                   # 约 20-50 分钟；配了 token 约 5 分钟
+```
+
+之后 `site/index.html` 直接双击打开即可搜索——离线、零外部请求、不需要服务器。
+（索引和网页都是刷新的产物，不入库，原因见文末「哪些东西入库」。）
 
 想要命令行：
 
@@ -412,10 +418,17 @@ DevToolRadar/
 └── .gitignore
 ```
 
-**哪些东西入库**：代码、`config/`、`data/tools.json` + 少量元数据缓存、`site/index.html`。
-**哪些不入库**：`data/raw_*.json`（抓取中间产物，3.7 MB，可重新抓）、`logs/`、`data/health.json`。
+**哪些东西入库**：代码、`config/`、`docs/`、少量低频变动的元数据缓存。
+**哪些不入库**：`data/tools.json`（索引本体，约 2.5 MB）、`site/index.html`（约 1.8 MB）、
+`data/raw_*.json`（抓取中间产物）、`logs/`、`data/health.json`、`data/.cache/`。
 
-所以 clone 下来就有索引、能立刻搜；但 `--fast` 那种「不联网重建」要等你跑过一次完整刷新。
+后两个大文件不入库是 2026-11-19 改的。它们每天刷新都会变，而 git 存的是版本不是快照：
+入库 33 个提交就已经攒下 24 个 `index.html` 版本和 18 个 `tools.json` 版本，合计约 72 MB
+原始对象、26 MB 仓库体积，且只会继续变大。
+
+所以 clone 下来**没有索引**，第一次 `./tool find` 会提示「还没有数据，已在后台开始首次抓取」
+并自动跑一次刷新（15-50 分钟，取决于有没有配 token）。也可以自己先跑
+`python src/refresh.py`。
 
 ## 更新机制
 
