@@ -28,3 +28,9 @@ Thumbs.db
 
 # ---- 配置备份 ----
 config/*.bak*
+
+# ---- 本地产物：文档生成中间件与交付包，不入库 ----
+output/
+deliverables/
+*.genie
+debug.log
