@@ -24,6 +24,7 @@ refresh.cmd 保留，改成一行调用本文件，兼容已经配好的旧任�
 
 退出码约定：取 update 的退出码。doctor 失败只写警告，不改退出码——
 自检红不代表数据坏，数据已经在盘上了，不该因此让计划任务报错重试。
+README 数字同步（sync_readme.py）失败同理，只在日志里留一行警告。
 """
 from __future__ import annotations
 
@@ -157,9 +158,17 @@ def main() -> int:
         _run("gh_meta", ROOT / "src" / "fetch_gh_meta.py",
              ["--api", "--moved", "--reserve-core", "40"], logf)
     rc_u = _run("update", ROOT / "src" / "update.py", extra, logf)
+    # README 首屏的「现在是 N 个工具 / M 个场景标签」是活口径，每轮刷新都会过时。
+    # 放在 update 之后，因为 stats.json 这时才写成本次的值；放在 doctor 之前，
+    # 让日志里「数据 → README」两步连在一起，方便核对两处数字是否一致。
+    # 它失败不改变退出码：README 过时是文档问题，数据已经在盘上了。
+    rc_r = _run("readme", ROOT / "src" / "sync_readme.py", [], logf)
     rc_d = _run("doctor", ROOT / "src" / "doctor.py", [], logf)
 
     logf.write(f"========== {_now()} done (update={rc_u} doctor={rc_d}) ==========\n")
+    if rc_r != 0:
+        logf.write("[警告] README 数字同步未完全成功（见 readme 段），首屏条数可能已过时\n")
+
     if rc_d != 0:
         logf.write("[警告] 自检未通过，详见上文 doctor 段\n")
     if rc_u != 0:
