@@ -10,6 +10,7 @@
     python src/refresh.py            # 完整刷新：抓取 → 打标 → 生成网页 → 自检
     python src/refresh.py --daily    # 日常轻量：只抓 GitHub，awesome/cn 沿用缓存
     python src/refresh.py --fast     # 只重建，不联网（改配置后验证用）
+    python src/refresh.py --daily --publish   # 再发布到公开地址并校验线上一致
 
 为什么分 --daily 和完整刷新（2026-11-19 加）：
     各源的数据变化速度差两个数量级，每天全量重抓等于把周级、月级的数据按日级
@@ -24,7 +25,14 @@ refresh.cmd 保留，改成一行调用本文件，兼容已经配好的旧任�
 
 退出码约定：取 update 的退出码。doctor 失败只写警告，不改退出码——
 自检红不代表数据坏，数据已经在盘上了，不该因此让计划任务报错重试。
-README 数字同步（sync_readme.py）失败同理，只在日志里留一行警告。
+README 数字同步（sync_readme.py）与发布（publish.py）失败同理，只在日志里留一行警告。
+
+为什么 --publish 默认关（2026-11-23 加）：
+    发布是外部写操作，会覆盖别人可能已经打开的线上页面，不该由「每天自动跑」
+    默认触发。2026-11-19 手动发布过一次之后，线上就冻结在那天的 6831 条，
+    而本地每天在长——四天差 25 条，页面上看不出来，doctor 的「站点同步」也照样
+    给 ✓，因为它只比本地两个文件。所以发布要显式开关，且发布完必须校验线上字节数，
+    否则「发布成功」只是接口返回了 200。
 """
 from __future__ import annotations
 
@@ -86,6 +94,8 @@ def main() -> int:
                     help="不联网，只用缓存重建（改配置后验证用）")
     ap.add_argument("--daily", action="store_true",
                     help="日常轻量：只抓 GitHub，awesome/cn 沿用缓存（每周跑一次完整刷新）")
+    ap.add_argument("--publish", action="store_true",
+                    help="刷新后发布到公开地址（GitHub Pages）并校验线上与本地一致")
     args = ap.parse_args()
 
     if args.fast and args.daily:
@@ -102,7 +112,7 @@ def main() -> int:
     # 设计，还是抓取失败，只看 update 段是分不出来的。
     mode = "fast（不联网，仅重建）" if args.fast else (
         "daily（仅 GitHub，awesome/cn 沿用缓存）" if args.daily else "full（三源全抓）")
-    logf.write(f"mode  : {mode}\n")
+    logf.write(f"mode  : {mode}{'，发布后校验线上' if args.publish else '，不发布'}\n")
     logf.flush()
 
     # --fast 靠 data/raw_*.json 重建，而那些文件不入库（可重新抓，且每天刷新
@@ -163,11 +173,25 @@ def main() -> int:
     # 让日志里「数据 → README」两步连在一起，方便核对两处数字是否一致。
     # 它失败不改变退出码：README 过时是文档问题，数据已经在盘上了。
     rc_r = _run("readme", ROOT / "src" / "sync_readme.py", [], logf)
-    rc_d = _run("doctor", ROOT / "src" / "doctor.py", [], logf)
+    # 发布放在 doctor 之前：doctor 这轮要校验「线上是不是本次这份」，必须先把
+    # 线上推上去，否则它验到的永远是上一版。发布失败不拦后面 —— 自检照样要说
+    # 实话，线上没跟上这件事由 doctor 的在线项自己报出来。
+    rc_p = None
+    if args.publish:
+        rc_p = _run("publish", ROOT / "src" / "publish.py", [], logf)
+    # 只有本轮承诺过发布，才允许 doctor 把「线上不一致」判成 FAIL。没开 --publish
+    # 时线上落后是正常状态（人还没决定发不发），那时它只能是一条警告。
+    rc_d = _run("doctor", ROOT / "src" / "doctor.py",
+                ["--expect-online-current"] if args.publish else [], logf)
 
-    logf.write(f"========== {_now()} done (update={rc_u} doctor={rc_d}) ==========\n")
+    tail = f"update={rc_u} doctor={rc_d}"
+    if rc_p is not None:
+        tail += f" publish={rc_p}"
+    logf.write(f"========== {_now()} done ({tail}) ==========\n")
     if rc_r != 0:
         logf.write("[警告] README 数字同步未完全成功（见 readme 段），首屏条数可能已过时\n")
+    if rc_p not in (None, 0):
+        logf.write("[警告] 发布未完成（见 publish 段），线上可能仍是上一版\n")
 
     if rc_d != 0:
         logf.write("[警告] 自检未通过，详见上文 doctor 段\n")
@@ -175,7 +199,7 @@ def main() -> int:
         logf.write("[警告] 刷新异常，索引可能仍是上一版\n")
     logf.close()
 
-    print(f"update={rc_u} doctor={rc_d}，日志：{LOGS / 'refresh.log'}")
+    print(f"{tail}，日志：{LOGS / 'refresh.log'}")
     return rc_u
 
 
