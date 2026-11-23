@@ -1,15 +1,17 @@
 {
 "0-AI-UG/cate": {
 "desc": "An infinite zoomable canvas for coding. Editor, terminal, and browser panels in a spatial workspace.",
-"pushed_at": "2026-10-29",
-"src": "ungh",
-"stars": 2213
+"lang": "TypeScript",
+"pushed_at": "2026-11-22",
+"src": "api",
+"stars": 2252
 },
 "0x2E/fusion": {
 "desc": "A lightweight, self-hosted friendly RSS reader",
-"pushed_at": "2026-10-07",
-"src": "ungh",
-"stars": 2201
+"lang": "TypeScript",
+"pushed_at": "2026-11-22",
+"src": "api",
+"stars": 2430
 },
 "0xjuanma/helm": {
 "desc": "A minimalistic and customizable pomodoro-like timer for your terminal written in Go. Includes default pomodoro timer and lets users define their own.",
@@ -674,9 +676,10 @@
 },
 "JMBeresford/retrom": {
 "desc": "A centralized game library/collection management service with a focus on emulation",
-"pushed_at": "2026-10-29",
-"src": "ungh",
-"stars": 2102
+"lang": "TypeScript",
+"pushed_at": "2026-11-01",
+"src": "api",
+"stars": 2110
 },
 "JackUait/blok": {
 "desc": "AI-powered block-based rich text editor for the web, like the one in Notion",
@@ -1557,9 +1560,10 @@
 },
 "TheOrcDev/8bitcn-ui": {
 "desc": "A set of retro-designed, accessible components and a code distribution platform. Open Source. Open Code.",
-"pushed_at": "2026-10-26",
-"src": "ungh",
-"stars": 2062
+"lang": "TypeScript",
+"pushed_at": "2026-11-05",
+"src": "api",
+"stars": 2083
 },
 "TheWicklowWolf/BookBounty": {
 "desc": "Retrieve missing Readarr books from Library Genesis.",
@@ -2272,8 +2276,9 @@
 },
 "antoine92190/vue-advanced-chat": {
 "desc": "Framework-neutral chat web component and typed Vue 3 component library",
+"lang": "TypeScript",
 "pushed_at": "2026-09-10",
-"src": "ungh",
+"src": "api",
 "stars": 2084
 },
 "antoniomika/sish": {
@@ -2479,9 +2484,10 @@
 },
 "astefanutti/kubebox": {
 "desc": "⎈❏ Terminal and Web console for Kubernetes",
+"lang": "JavaScript",
 "pushed_at": "2024-06-17",
-"src": "ungh",
-"stars": 2228
+"src": "api",
+"stars": 2225
 },
 "astral-sh/ruff": {
 "desc": "An extremely fast Python linter and code formatter, written in Rust.",
@@ -4522,6 +4528,13 @@
 "src": "ungh",
 "stars": 483
 },
+"homer-dashboard/homer": {
+"desc": "A very simple static homepage for your server.",
+"lang": "Vue",
+"pushed_at": "2026-11-19",
+"src": "api",
+"stars": 11738
+},
 "hrueger/setup-nativescript": {
 "desc": "A GitHub Action to setup the NativeScript development environment on Windows, Linux and MacOSX.",
 "pushed_at": "2025-02-12",
@@ -4989,7 +5002,7 @@
 "desc": "Master the command line, in one page",
 "pushed_at": "2024-06-25",
 "src": "api",
-"stars": 162823
+"stars": 162835
 },
 "jmcnamara/XlsxWriter": {
 "desc": "A Python module for creating Excel XLSX files.",
@@ -5983,9 +5996,10 @@
 },
 "metrue/fx": {
 "desc": "A Function as a Service tool makes a function as a  container-based service in seconds.",
+"lang": "Go",
 "pushed_at": "2023-10-24",
-"src": "ungh",
-"stars": 2227
+"src": "api",
+"stars": 2225
 },
 "mgrachev/action-dotenv-linter": {
 "desc": "GitHub Action to run dotenv-linter ⚡️",
@@ -6259,9 +6273,10 @@
 },
 "mrzool/bash-sensible": {
 "desc": "An attempt at saner Bash defaults",
+"lang": "Shell",
 "pushed_at": "2024-10-17",
-"src": "ungh",
-"stars": 2115
+"src": "api",
+"stars": 2114
 },
 "msiemens/tinydb": {
 "desc": "TinyDB is a lightweight document oriented database optimized for your happiness :)",
@@ -6342,9 +6357,10 @@
 },
 "nat-n/poethepoet": {
 "desc": "A task runner that works well with poetry or uv.",
-"pushed_at": "2026-10-18",
-"src": "ungh",
-"stars": 2093
+"lang": "Python",
+"pushed_at": "2026-11-22",
+"src": "api",
+"stars": 2100
 },
 "navig-me/telert": {
 "desc": "Command‑line and Python utility that alerts on command completion, code execution and system monitoring events",
@@ -6611,6 +6627,13 @@
 "pushed_at": "2022-12-03",
 "src": "ungh",
 "stars": 386
+},
+"oh-my-fish/oh-my-fish": {
+"desc": "The Fish Shell Framework",
+"lang": "Shell",
+"pushed_at": "2026-09-30",
+"src": "api",
+"stars": 11422
 },
 "olivr/copybara-action": {
 "desc": "Transform and move code between repositories. Start with ZERO config and 100% customizable.",
@@ -7190,9 +7213,10 @@
 },
 "pydoit/doit": {
 "desc": "CLI task management & automation tool",
-"pushed_at": "2026-09-21",
-"src": "ungh",
-"stars": 2096
+"lang": "Python",
+"pushed_at": "2026-11-21",
+"src": "api",
+"stars": 2098
 },
 "pyenv-win/pyenv-win": {
 "desc": "pyenv for Windows. pyenv is a simple python version management tool. It lets you easily switch between multiple versions of Python. It's simple, unobtrusive, and follows the UNIX tradition of single-purpose tools that do one thing well.",
@@ -7216,9 +7240,10 @@
 },
 "pyglet/pyglet": {
 "desc": "pyglet is a cross-platform windowing and multimedia library for Python, for developing games and other visually rich applications.",
-"pushed_at": "2026-11-06",
-"src": "ungh",
-"stars": 2225
+"lang": "Python",
+"pushed_at": "2026-11-21",
+"src": "api",
+"stars": 2231
 },
 "pyinfra-dev/pyinfra": {
 "desc": "🔧 pyinfra turns Python code into shell commands and runs them on your servers. Execute ad-hoc commands and write declarative operations. Target SSH servers, local machine and Docker containers. Fast and scales from one server to thousands.",
@@ -7308,9 +7333,10 @@
 },
 "pythonarcade/arcade": {
 "desc": "Easy to use Python library for creating 2D arcade games.",
+"lang": "Python",
 "pushed_at": "2026-10-30",
-"src": "ungh",
-"stars": 2098
+"src": "api",
+"stars": 2107
 },
 "pytorch/pytorch": {
 "desc": "Tensors and Dynamic neural networks in Python with strong GPU acceleration",
@@ -7397,9 +7423,10 @@
 },
 "rapidloop/rtop": {
 "desc": "rtop is an interactive, remote system monitoring tool based on SSH",
+"lang": "Go",
 "pushed_at": "2022-06-06",
-"src": "ungh",
-"stars": 2189
+"src": "api",
+"stars": 2188
 },
 "rastapasta/mapscii": {
 "desc": "🗺  MapSCII is a Braille & ASCII world map renderer for your console - enter => telnet mapscii.me <= on Mac (brew install telnet) and Linux, connect with PuTTY on Windows",
@@ -7811,9 +7838,10 @@
 },
 "s1t5/mail-archiver": {
 "desc": "Mail-Archiver is a web application for archiving, searching, and exporting emails from multiple accounts. Featuring folder sync, attachment support, mailbox migration  and a dashboard.",
-"pushed_at": "2026-10-28",
-"src": "ungh",
-"stars": 2230
+"lang": "C#",
+"pushed_at": "2026-11-23",
+"src": "api",
+"stars": 2267
 },
 "sE2EEnd/sE2EEnd": {
 "desc": "File transfer solution with end-to-end encryption.",
@@ -8117,7 +8145,7 @@
 "desc": "BigBanana AI Director是一个工业级一站式  AI 短剧，AI 漫剧,AI 导演平台，面向创作者，实现从灵感到成片的高效生产。  它摇弃了传统的“抽卡式”生成，采用 \"Script-to-Asset-to-Keyframe\" 的工业化工作流。实现 “一句话生成完整短剧，从剧本到成片全自动化”，同时精准控制角色一致性、场景连续性与镜头运动。",
 "pushed_at": "2026-11-08",
 "src": "api",
-"stars": 2473
+"stars": 2478
 },
 "shuyu-labs/WebCode": {
 "desc": "WebCode is a browser-based AI coding platform that lets you remotely run CLI assistants like Claude Code and Codex. Code anywhere with just a web browser. We’re also adding an office-assistant mode for planning, research/summaries, meeting notes, and drafting docs/emails—connected to your project context.",
@@ -8133,9 +8161,10 @@
 },
 "simonw/sqlite-utils": {
 "desc": "Python CLI utility and library for manipulating SQLite databases",
-"pushed_at": "2026-10-11",
-"src": "ungh",
-"stars": 2180
+"lang": "Python",
+"pushed_at": "2026-11-12",
+"src": "api",
+"stars": 2220
 },
 "simplex-chat/simplex-chat": {
 "desc": "SimpleX - the first messaging network operating without user identifiers of any kind - 100% private by design! iOS, Android and desktop apps 📱!",
@@ -9013,9 +9042,10 @@
 },
 "viljamis/vue-design-system": {
 "desc": "An open source tool for building UI Design Systems with Vue.js",
+"lang": "JavaScript",
 "pushed_at": "2023-04-19",
-"src": "ungh",
-"stars": 2195
+"src": "api",
+"stars": 2194
 },
 "vim/vim": {
 "missing": true

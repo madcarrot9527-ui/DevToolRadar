@@ -2,9 +2,12 @@
 
 按「你想干什么」找开发工具，而不是按技术栈。覆盖 GitHub 高星项目、awesome 人工精选清单、国内 SaaS/AI 产品，每天自动刷新。
 
-**在线版（不用装任何东西）**：[devtool-radar.app.workbuddy.host](https://devtool-radar.app.workbuddy.host/?sharecode=UDQEOOEBY5)
+**在线版（不用装任何东西，直接打开）**：<https://madcarrot9527-ui.github.io/DevToolRadar/>
 
-现在是 **6575 个工具**，82 个场景标签。**每一条都有自己的一句话说明**，没有一条是空的、也没有两条共用同一段说明。
+> 上面是公开地址，无需登录、无需分享码。备用入口（WorkBuddy 应用托管）：<https://devtool-radar.app.workbuddy.host/?sharecode=UDQEOOEBY5>
+> 注意备用入口**必须带 `?sharecode=` 才能打开**，只输域名会返回「链接不完整」。
+
+现在是 **6856 个工具**，82 个场景标签。**每一条都有自己的一句话说明**，没有一条是空的、也没有两条共用同一段说明。
 
 > 上面这个数字不是手改的：每轮刷新的最后一步会跑 `src/sync_readme.py`，把首屏计数对齐 `data/stats.json`。
 > 想知道当前值：`python src/cli.py stats`。下面正文里的数字属于当时那次实验的记录，不随刷新变化。
@@ -17,7 +20,7 @@
 ## 一分钟上手
 
 **只想搜工具的话，双击仓库根目录的「打开雷达.cmd」。** 浏览器直接打开检索页，
-6575 条随你搜。
+6856 条随你搜。
 
 不用装 Python、不用联网、不用起服务——网页里带着全部数据。macOS / Linux 双击
 `site/index.html`，或者 `open site/index.html`。
@@ -290,7 +293,7 @@ python tools/audit_data.py -d desc  # 细看说明缺口
 python tools/find.py -e bun         # 看单条的全部字段
 ```
 
-### 说明：6575 条全都有，没有一条是空的
+### 说明：6856 条全都有，没有一条是空的
 
 这件事不是自然发生的。有三类条目天生没有说明：
 
@@ -405,7 +408,7 @@ DevToolRadar/
 │   ├── search.py              检索核心（CLI/MCP/skill 共用）
 │   └── cli.py                 命令行入口
 ├── data/
-│   ├── tools.json             归一化后的索引（当前 6575 条）
+│   ├── tools.json             归一化后的索引（当前 6856 条）
 │   ├── stats.json             刷新时间、各源状态、分布统计
 │   └── raw_*.json             各源原始落盘（单源故障时的回退）
 ├── tools/

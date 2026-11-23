@@ -27,6 +27,7 @@
 "https://github.com/OpenMontageInc/OpenMontage": "2026-11-09",
 "https://github.com/Python3WebSpider/ProxyPool": "2026-10-30",
 "https://github.com/QwenAudio/CosyVoice": "2026-10-30",
+"https://github.com/RIOT-OS/RIOT": "2026-11-23",
 "https://github.com/Renato66/auto-label": "2026-11-05",
 "https://github.com/TabbyML/tabby": "2026-10-30",
 "https://github.com/TandoorRecipes/recipes": "2026-10-30",
@@ -194,6 +195,7 @@
 "https://github.com/urfave/cli": "2026-10-30",
 "https://github.com/usehelix/helix": "2026-11-04",
 "https://github.com/usememos/memos": "2026-10-30",
+"https://github.com/vcaesar/riot": "2026-11-23",
 "https://github.com/vektra/mockery": "2026-10-30",
 "https://github.com/vercel/hyper": "2026-10-30",
 "https://github.com/vesoft-inc/nebula": "2026-10-30",
@@ -226,5 +228,5 @@
 "https://github.com/zeit/hyper": "https://github.com/vercel/hyper",
 "https://github.com/zyedidia/micro": "https://github.com/micro-editor/micro"
 },
-"updated": "2026-11-18"
+"updated": "2026-11-23"
 }
