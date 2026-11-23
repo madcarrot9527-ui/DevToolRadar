@@ -396,6 +396,79 @@ def check_site() -> None:
         rec("PASS", "站点同步", "网页与数据一致")
 
 
+def _fetch_online(url: str, bust: bool = False) -> tuple[int, str]:
+    """HEAD 取线上页面的 Content-Length；失败返回 (-1, 错误)。
+
+    为什么用 HEAD：整页 1.8 MB，GET 实测 69s，HEAD 3s。这一项要判的只是
+    「线上是不是本地这份」，有了长度就够了，没必要每次自检都拉一遍全页。
+    bust=True 加时间戳绕 CDN 缓存，只在长度对不上时用来排除「刚发布还没刷」。
+    """
+    import urllib.request
+    target = url
+    if bust:
+        target = f"{url}{'&' if '?' in url else '?'}_={int(time.time())}"
+    try:
+        req = urllib.request.Request(
+            target, method="HEAD",
+            headers={"Cache-Control": "no-cache", "User-Agent": "devtoolradar-doctor"})
+        with urllib.request.urlopen(req, timeout=45) as r:
+            return int(r.headers.get("Content-Length") or -1), ""
+    except Exception as e:  # noqa: BLE001
+        return -1, f"{type(e).__name__}: {e}"
+
+
+def check_online(expect_current: bool) -> None:
+    """线上那一份，是不是本地这一份。
+
+    为什么必须单独一项：上面那个「站点同步」比的是本地 index.html 与本地
+    tools.json，它证明的是「本地网页没落后于本地数据」，对线上一个字都没说。
+    2026-11-19 发布之后线上就冻住了，到 11-23 停在 6831 条，而本地已经 6856，
+    每天 PASS 都照给——这个门当时是空的。
+
+    expect_current 的含义：只有本轮真的发布了（refresh.py --publish），才允许
+    把「线上不一致」判 FAIL；平时线上落后是人的决定（还没发），只能算 WARN。
+    不自己发明"落后超过 N 天算失败"这种阈值——判据是"本轮承诺发但没生效"，确定。
+    """
+    html = ROOT / "site" / "index.html"
+    if not html.exists():
+        rec("SKIP", "在线快照", "本地没有 index.html，无从比对")
+        return
+    try:
+        sys.path.insert(0, str(SRC))
+        import publish as _pub
+        url = _pub.page_url()
+    except Exception as e:  # noqa: BLE001
+        rec("WARN", "在线快照", f"无法确定公开地址：{e}")
+        return
+
+    size, err = _fetch_online(url)
+    if size < 0:
+        rec("FAIL" if expect_current else "WARN", "在线快照", f"取不到线上页面：{err}")
+        return
+
+    local = html.read_bytes()
+    lsize, litems = len(local), local.count(b'"n":')
+    if size == lsize:
+        rec("PASS", "在线快照", f"{size / 1024:.0f} KB / {litems} 条，与本地一致")
+        return
+
+    # 对不上先别下结论：刚发布时 CDN 可能还是旧页。带时间戳再看一次，
+    # 两次都不一样才算真的落后——发布完立刻自检不该被缓存误判成失败。
+    if expect_current:
+        size2, _ = _fetch_online(url, bust=True)
+        if size2 == lsize:
+            rec("PASS", "在线快照", f"{size2 / 1024:.0f} KB / {litems} 条，与本地一致（CDN 已刷新）")
+            return
+        if size2 >= 0:
+            size = size2
+
+    detail = (f"线上 {size / 1024:.0f} KB，本地 {litems} 条 / {lsize / 1024:.0f} KB")
+    if expect_current:
+        rec("FAIL", "在线快照", detail + "（本轮要求发布，但线上不是本次这份）")
+    else:
+        rec("WARN", "在线快照", detail + "（本轮未发布属预期，要上线跑 --publish）")
+
+
 # ---------- 6. 检索冒烟 ----------
 SMOKE = [
     ("内网穿透", "frp"),
@@ -492,11 +565,14 @@ def _write_health(fails: list, warns: list) -> None:
 def main() -> int:
     print("DevToolRadar 自检")
     print("=" * 52)
+    # 由 refresh.py --publish 传入：本轮承诺过发布，线上不一致就是失败。
+    expect_online = "--expect-online-current" in sys.argv[1:]
     d = check_data()
     check_index(d.get("tools") or [])
     check_mcp()
     check_clients()
     check_site()
+    check_online(expect_online)
     check_search()
 
     fails = [r for r in results if r[0] == "FAIL"]
